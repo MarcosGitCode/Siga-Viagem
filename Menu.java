@@ -1,68 +1,8 @@
 import java.awt.*;
-import java.awt.event.ActionListener;
-import java.awt.event.MouseAdapter;
-import java.awt.event.MouseEvent;
+import java.awt.event.*;
 import javax.swing.*;
-import javax.swing.border.AbstractBorder;
-
-
-
-
-class RoundedBorder extends AbstractBorder {
-    private final int radius;
-
-    public RoundedBorder(int radius) {
-        this.radius = radius;
-    }
-
-    @Override
-    public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
-        Graphics2D g2d = (Graphics2D) g.create();
-        g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-        g2d.setColor(c.getForeground());
-        g2d.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
-        g2d.dispose();
-    }
-
-    @Override
-    public Insets getBorderInsets(Component c) {
-        return new Insets(radius + 1, radius + 1, radius + 1, radius + 1);
-    }
-
-    @Override
-    public Insets getBorderInsets(Component c, Insets insets) {
-        insets.left = insets.right = insets.top = insets.bottom = radius + 1;
-        return insets;
-    }
-}
-
-
-
-
-class PainelComImagem extends JPanel {
-    private final Image backgroundImage;
-
-    public PainelComImagem(String imagePath) {
-        this.backgroundImage = new ImageIcon(imagePath).getImage();
-        setLayout(null);
-    }
-
-    @Override
-    protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        if (backgroundImage != null) {
-            Graphics2D g2d = (Graphics2D) g;
-            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-            g2d.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-        }
-    }
-}
-
-
-
 
 public class Menu extends JFrame {
-
     private CardLayout layout;
     private JPanel painelPrincipal;
     private JPanel painelCentral;
@@ -81,34 +21,6 @@ public class Menu extends JFrame {
     private JPasswordField txtSenha;
     private JButton btnEntrar;
 
-
-    
-    private JButton criarBotao(String texto) {
-        JButton botao = new JButton(texto) {
-            @Override
-            protected void paintComponent(Graphics g) {
-                Graphics2D g2d = (Graphics2D) g.create();
-                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
-                g2d.setColor(getBackground());
-                g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
-                g2d.dispose();
-                super.paintComponent(g);
-            }
-
-            @Override
-            public void setContentAreaFilled(boolean b) {
-            }
-        };
-
-        botao.setPressedIcon(null);
-
-        return botao;
-    }
-
-
-
-    
     public Menu() {
         setTitle("Siga");
         setSize(1280, 853);
@@ -118,21 +30,8 @@ public class Menu extends JFrame {
         layout = new CardLayout();
         painelPrincipal = new JPanel(layout);
 
-        JPanel painel = new JPanel(new BorderLayout()) {
-            private Image backgroundImage = new ImageIcon("C:\\Users\\User1\\Downloads\\metro.png").getImage();
-
-            @Override
-            protected void paintComponent(Graphics g) {
-                super.paintComponent(g);
-                Graphics2D g2d = (Graphics2D) g;
-                g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BICUBIC);
-                g2d.setRenderingHint(RenderingHints.KEY_RENDERING, RenderingHints.VALUE_RENDER_QUALITY);
-                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
-                g2d.setRenderingHint(RenderingHints.KEY_COLOR_RENDERING, RenderingHints.VALUE_COLOR_RENDER_QUALITY);
-                g2d.setRenderingHint(RenderingHints.KEY_ALPHA_INTERPOLATION, RenderingHints.VALUE_ALPHA_INTERPOLATION_QUALITY);
-                g2d.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
-            }
-        };
+        JPanel painel = new PainelComImagem("C:\\Users\\User1\\Downloads\\metro.png");
+        painel.setLayout(new BorderLayout());
 
         painelCentral = new JPanel(null);
         painelCentral.setOpaque(false);
@@ -184,10 +83,7 @@ public class Menu extends JFrame {
             botao.addMouseListener(mouseAdapter);
         }
 
-        btnSair.addActionListener(e -> {
-            System.exit(0);
-        });
-
+        btnSair.addActionListener(e -> System.exit(0));
         btnOpcoes.addActionListener(e -> layout.show(painelPrincipal, "Opções"));
 
         int panelWidth = getWidth();
@@ -217,9 +113,29 @@ public class Menu extends JFrame {
         setVisible(true);
     }
 
+    private JButton criarBotao(String texto) {
+        JButton botao = new JButton(texto) {
+            @Override
+            protected void paintComponent(Graphics g) {
+                Graphics2D g2d = (Graphics2D) g.create();
+                g2d.setRenderingHint(RenderingHints.KEY_ANTIALIASING, RenderingHints.VALUE_ANTIALIAS_ON);
+                g2d.setComposite(AlphaComposite.getInstance(AlphaComposite.SRC_OVER, 0.5f));
+                g2d.setColor(getBackground());
+                g2d.fillRoundRect(0, 0, getWidth(), getHeight(), 20, 20);
+                g2d.dispose();
+                super.paintComponent(g);
+            }
 
+            @Override
+            public void setContentAreaFilled(boolean b) {
+            }
+        };
 
-    
+        botao.setPressedIcon(null);
+
+        return botao;
+    }
+
     private void criarPainelOpcoes() {
         painelOpcoes = new PainelComImagem("imagens/metroBlur.png");
         painelOpcoes.setBackground(Color.WHITE);
@@ -305,9 +221,6 @@ public class Menu extends JFrame {
 
         painelPrincipal.add(painelOpcoes, "Opções");
     }
-
-
-
 
     private void criarPainelLogin() {
         JPanel painelLogin = new PainelComImagem("imagens/metroBlur.png");
