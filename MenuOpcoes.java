@@ -1,16 +1,18 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class MenuOpcoes extends PainelComImagem {
+public class MenuOpcoes extends JPanel {
     private final JLabel lblVolume;
     private final JSlider sliderVolume;
     private final JLabel lblTela;
     private final JButton btnTelaCheia;
     private final JButton btnModoJanela;
     private final JButton btnVoltar;
+    private Image backgroundImage;
 
     public MenuOpcoes(CardLayout layout, JPanel painelPrincipal) {
-        super("imagens/metro_blur.jpg");
+        // Load the background image
+        backgroundImage = new ImageIcon("imagens/metro_blur.jpg").getImage();
         setLayout(null);
 
         lblVolume = new JLabel("Volume:", SwingConstants.CENTER);
@@ -47,6 +49,37 @@ public class MenuOpcoes extends PainelComImagem {
             layout.show(painelPrincipal, "Menu");
         });
         add(btnVoltar);
+    }
+    
+    // Define the RoundedBorder class
+    class RoundedBorder implements javax.swing.border.Border {
+        private final int radius;
+    
+        RoundedBorder(int radius) {
+            this.radius = radius;
+        }
+    
+        @Override
+        public Insets getBorderInsets(Component c) {
+            return new Insets(this.radius + 1, this.radius + 1, this.radius + 2, this.radius);
+        }
+    
+        @Override
+        public boolean isBorderOpaque() {
+            return true;
+        }
+    
+        @Override
+        public void paintBorder(Component c, Graphics g, int x, int y, int width, int height) {
+            g.drawRoundRect(x, y, width - 1, height - 1, radius, radius);
+        }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // Draw the background image
+        g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
 
     private void alternarTelaCheia() {
