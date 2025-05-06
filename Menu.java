@@ -1,11 +1,15 @@
 import java.awt.*;
+import java.awt.event.ActionListener;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
 import javax.swing.*;
 import javax.swing.border.AbstractBorder;
 
+
+
+
 class RoundedBorder extends AbstractBorder {
-    private int radius;
+    private final int radius;
 
     public RoundedBorder(int radius) {
         this.radius = radius;
@@ -32,8 +36,11 @@ class RoundedBorder extends AbstractBorder {
     }
 }
 
+
+
+
 class PainelComImagem extends JPanel {
-    private Image backgroundImage;
+    private final Image backgroundImage;
 
     public PainelComImagem(String imagePath) {
         this.backgroundImage = new ImageIcon(imagePath).getImage();
@@ -51,6 +58,9 @@ class PainelComImagem extends JPanel {
     }
 }
 
+
+
+
 public class Menu extends JFrame {
 
     private CardLayout layout;
@@ -67,7 +77,12 @@ public class Menu extends JFrame {
     private JButton btnModoJanela;
     private JButton btnVoltar;
     private JPanel painelOpcoes;
+    private JTextField txtUsuario;
+    private JPasswordField txtSenha;
+    private JButton btnEntrar;
 
+
+    
     private JButton criarBotao(String texto) {
         JButton botao = new JButton(texto) {
             @Override
@@ -91,6 +106,9 @@ public class Menu extends JFrame {
         return botao;
     }
 
+
+
+    
     public Menu() {
         setTitle("Siga");
         setSize(1280, 853);
@@ -192,14 +210,18 @@ public class Menu extends JFrame {
         painelPrincipal.add(painel, "Menu");
 
         criarPainelOpcoes();
+        criarPainelLogin();
 
         add(painelPrincipal);
 
         setVisible(true);
     }
 
+
+
+    
     private void criarPainelOpcoes() {
-        painelOpcoes = new PainelComImagem("C:\\Users\\user1\\Downloads\\metroBlur.png");
+        painelOpcoes = new PainelComImagem("imagens/metroBlur.png");
         painelOpcoes.setBackground(Color.WHITE);
 
         int panelWidth = 1280;
@@ -282,6 +304,66 @@ public class Menu extends JFrame {
         adicionarAnimacoesBotoes(botoes);
 
         painelPrincipal.add(painelOpcoes, "Opções");
+    }
+
+
+
+
+    private void criarPainelLogin() {
+        JPanel painelLogin = new PainelComImagem("imagens/metroBlur.png");
+        painelLogin.setLayout(null);
+
+        JLabel lblUsuario = new JLabel("Usuário:");
+        lblUsuario.setFont(new Font("Arial", Font.BOLD, 18));
+        lblUsuario.setForeground(Color.WHITE);
+        lblUsuario.setBounds(490, 300, 100, 30);
+        painelLogin.add(lblUsuario);
+
+        txtUsuario = new JTextField();
+        txtUsuario.setFont(new Font("Arial", Font.PLAIN, 18));
+        txtUsuario.setBounds(600, 300, 200, 30);
+        painelLogin.add(txtUsuario);
+
+        JLabel lblSenha = new JLabel("Senha:");
+        lblSenha.setFont(new Font("Arial", Font.BOLD, 18));
+        lblSenha.setForeground(Color.WHITE);
+        lblSenha.setBounds(490, 350, 100, 30);
+        painelLogin.add(lblSenha);
+
+        txtSenha = new JPasswordField();
+        txtSenha.setFont(new Font("Arial", Font.PLAIN, 18));
+        txtSenha.setBounds(600, 350, 200, 30);
+        painelLogin.add(txtSenha);
+
+        JButton btnEntrar = criarBotao("Entrar");
+        btnEntrar.setFont(new Font("Arial", Font.BOLD, 18));
+        btnEntrar.setBounds(600, 400, 200, 40);
+        painelLogin.add(btnEntrar);
+
+        JButton btnVoltar = criarBotao("Voltar");
+        btnVoltar.setFont(new Font("Arial", Font.BOLD, 18));
+        btnVoltar.setBounds(600, 450, 200, 40);
+        painelLogin.add(btnVoltar);
+
+        ActionListener loginAction = e -> {
+            String usuario = txtUsuario.getText();
+            String senha = new String(txtSenha.getPassword());
+
+            if (usuario.equals("admin") && senha.equals("admin")) {
+                JOptionPane.showMessageDialog(this, "Login bem-sucedido!", "Sucesso", JOptionPane.INFORMATION_MESSAGE);
+                layout.show(painelPrincipal, "Jogo");
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        };
+
+        btnEntrar.addActionListener(loginAction);
+        txtSenha.addActionListener(loginAction);
+        btnVoltar.addActionListener(e -> layout.show(painelPrincipal, "Menu"));
+
+        adicionarAnimacoesBotoes(new JButton[]{btnEntrar, btnVoltar});
+
+        painelPrincipal.add(painelLogin, "Login");
     }
 
     private void adicionarAnimacoesBotoes(JButton[] botoes) {
