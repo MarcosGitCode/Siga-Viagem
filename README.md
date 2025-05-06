@@ -1,5 +1,13 @@
 # Siga-Viagem
 
 Projeto Integrador 2025
+    Jogo em java que simula falha de portas do metrô de São Paulo
 
-Jogo em java que simula falhas de portas do metro
+
+    Por:
+    - Marcos de Salles
+    - Guilherme 
+    - Demetrius
+    - Nikolas
+    - Guilherme
+    - Guilherme
