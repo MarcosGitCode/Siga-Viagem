@@ -2,7 +2,7 @@ import java.awt.*;
 import javax.swing.border.AbstractBorder;
 
 public class RoundedBorder extends AbstractBorder {
-    private final int radius;
+    private int radius;
 
     public RoundedBorder(int radius) {
         this.radius = radius;

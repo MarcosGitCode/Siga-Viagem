@@ -2,7 +2,7 @@ import java.awt.*;
 import javax.swing.*;
 
 public class PainelComImagem extends JPanel {
-    private final Image backgroundImage;
+    private Image backgroundImage;
 
     public PainelComImagem(String imagePath) {
         this.backgroundImage = new ImageIcon(imagePath).getImage();

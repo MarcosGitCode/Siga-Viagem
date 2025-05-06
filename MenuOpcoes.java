@@ -1,34 +1,88 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class MenuOpcoes extends JPanel {
+public class MenuOpcoes extends PainelComImagem {
+    private final JLabel lblVolume;
+    private final JSlider sliderVolume;
+    private final JLabel lblTela;
+    private final JButton btnTelaCheia;
+    private final JButton btnModoJanela;
+    private final JButton btnVoltar;
+
     public MenuOpcoes(CardLayout layout, JPanel painelPrincipal) {
+        super("imagens/metro_blur.jpg");
         setLayout(null);
 
-        JLabel lblVolume = new JLabel("Volume:", SwingConstants.CENTER);
+        lblVolume = new JLabel("Volume:", SwingConstants.CENTER);
         lblVolume.setFont(new Font("Arial", Font.BOLD, 24));
         lblVolume.setForeground(Color.WHITE);
         lblVolume.setBounds(390, 100, 500, 40);
         add(lblVolume);
 
-        JSlider sliderVolume = new JSlider(0, 100, 50);
+        sliderVolume = new JSlider(0, 100, 50);
         sliderVolume.setBounds(390, 160, 500, 40);
         sliderVolume.setOpaque(false);
         add(sliderVolume);
 
-        JButton btnTelaCheia = criarBotao("Tela Cheia");
-        JButton btnModoJanela = criarBotao("Modo Janela");
-        JButton btnVoltar = criarBotao("Voltar");
+        lblTela = new JLabel("Tela:", SwingConstants.CENTER);
+        lblTela.setFont(new Font("Arial", Font.BOLD, 24));
+        lblTela.setForeground(Color.WHITE);
+        lblTela.setBounds(390, 240, 500, 40);
+        add(lblTela);
 
-        btnTelaCheia.setBounds(390, 240, 220, 60);
-        btnModoJanela.setBounds(670, 240, 220, 60);
-        btnVoltar.setBounds(490, 320, 300, 80);
-
-        btnVoltar.addActionListener(e -> layout.show(painelPrincipal, "Menu"));
-
+        btnTelaCheia = criarBotao("Tela Cheia");
+        btnTelaCheia.setBounds(390, 300, 220, 60);
+        btnTelaCheia.addActionListener(e -> alternarTelaCheia());
         add(btnTelaCheia);
+
+        btnModoJanela = criarBotao("Modo Janela");
+        btnModoJanela.setBounds(670, 300, 220, 60);
+        btnModoJanela.addActionListener(e -> sairTelaCheia());
         add(btnModoJanela);
+
+        btnVoltar = criarBotao("Voltar");
+        btnVoltar.setBounds(490, 400, 300, 80);
+        btnVoltar.addActionListener(e -> {
+            System.out.println("Botão Voltar clicado!");
+            layout.show(painelPrincipal, "Menu");
+        });
         add(btnVoltar);
+    }
+
+    private void alternarTelaCheia() {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        if (frame != null) {
+            frame.dispose();
+            frame.setUndecorated(true);
+            frame.setExtendedState(JFrame.MAXIMIZED_BOTH);
+            frame.setVisible(true);
+            centralizarComponentes(frame.getWidth(), frame.getHeight());
+        }
+    }
+
+    private void sairTelaCheia() {
+        JFrame frame = (JFrame) SwingUtilities.getWindowAncestor(this);
+        if (frame != null) {
+            frame.dispose();
+            frame.setUndecorated(false);
+            frame.setExtendedState(JFrame.NORMAL);
+            frame.setSize(1280, 853);
+            frame.setLocationRelativeTo(null);
+            frame.setVisible(true);
+            centralizarComponentes(frame.getWidth(), frame.getHeight());
+        }
+    }
+
+    private void centralizarComponentes(int windowWidth, int windowHeight) {
+        lblVolume.setBounds((windowWidth - 500) / 2, 100, 500, 40);
+        sliderVolume.setBounds((windowWidth - 500) / 2, 160, 500, 40);
+        lblTela.setBounds((windowWidth - 500) / 2, 240, 500, 40);
+        btnTelaCheia.setBounds((windowWidth - 500) / 2, 300, 220, 60);
+        btnModoJanela.setBounds((windowWidth - 500) / 2 + 280, 300, 220, 60);
+        btnVoltar.setBounds((windowWidth - 300) / 2, windowHeight - 160, 300, 80);
+
+        revalidate();
+        repaint();
     }
 
     private JButton criarBotao(String texto) {

@@ -1,5 +1,7 @@
+// Menu.java
 import java.awt.*;
 import javax.swing.*;
+
 
 public class Menu extends JFrame {
     private final CardLayout layout;
@@ -15,8 +17,9 @@ public class Menu extends JFrame {
         painelPrincipal = new JPanel(layout);
 
         painelPrincipal.add(new MenuPrincipal(layout, painelPrincipal), "Menu");
-        painelPrincipal.add(new MenuOpcoes(layout, painelPrincipal), "Opções");
         painelPrincipal.add(new MenuLogin(layout, painelPrincipal), "Login");
+        painelPrincipal.add(new MenuOpcoes(layout, painelPrincipal), "Opções");
+        painelPrincipal.add(new MenuJogo(layout, painelPrincipal), "Jogo");
 
         add(painelPrincipal);
         setVisible(true);
