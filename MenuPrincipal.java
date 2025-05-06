@@ -8,7 +8,7 @@ public class MenuPrincipal extends JPanel {
 
         int buttonWidth = 300;
         int buttonHeight = 60;
-        int spacing = 20;
+        
 
         JButton btnJogar = criarBotao("Jogar");
         JButton btnOpcoes = criarBotao("Opções");
@@ -20,8 +20,8 @@ public class MenuPrincipal extends JPanel {
         btnPlacar.setBounds(490, 360, buttonWidth, buttonHeight);
         btnSair.setBounds(490, 440, buttonWidth, buttonHeight);
 
-        btnSair.addActionListener(e -> System.exit(0));
-        btnOpcoes.addActionListener(e -> layout.show(painelPrincipal, "Opções"));
+        btnSair.addActionListener(_ -> System.exit(0));
+        btnOpcoes.addActionListener(_ -> layout.show(painelPrincipal, "Opções"));
 
         add(btnJogar);
         add(btnOpcoes);
