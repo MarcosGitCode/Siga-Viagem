@@ -2,8 +2,8 @@ import java.awt.*;
 import javax.swing.*;
 
 public class Menu extends JFrame {
-    private CardLayout layout;
-    private JPanel painelPrincipal;
+    private final CardLayout layout;
+    private final JPanel painelPrincipal;
 
     public Menu() {
         setTitle("Siga");
@@ -23,6 +23,6 @@ public class Menu extends JFrame {
     }
 
     public static void main(String[] args) {
-        new Menu();
+        Menu menu = new Menu();
     }
 }
