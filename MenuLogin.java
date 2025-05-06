@@ -33,7 +33,7 @@ public class MenuLogin extends JPanel {
         btnEntrar.setBounds(600, 400, 200, 40);
         btnVoltar.setBounds(600, 450, 200, 40);
 
-        btnEntrar.addActionListener(_ -> {
+        btnEntrar.addActionListener(e -> {
             String usuario = txtUsuario.getText();
             String senha = new String(txtSenha.getPassword());
             if (usuario.equals("admin") && senha.equals("admin")) {
@@ -44,12 +44,10 @@ public class MenuLogin extends JPanel {
             }
         });
 
-        btnVoltar.addActionListener(_ -> layout.show(painelPrincipal, "Menu"));
+        btnVoltar.addActionListener(e -> layout.show(painelPrincipal, "Menu"));
 
         add(btnEntrar);
         add(btnVoltar);
-
-        adicionarAnimacoesBotoes(new JButton[]{btnEntrar, btnVoltar});
     }
 
     private JButton criarBotao(String texto) {
@@ -61,36 +59,5 @@ public class MenuLogin extends JPanel {
         botao.setContentAreaFilled(false);
         botao.setBorder(new RoundedBorder(20));
         return botao;
-    }
-
-    private void adicionarAnimacoesBotoes(JButton[] botoes) {
-        Color buttonBackground = new Color(128, 128, 128, 128);
-        Color buttonHoverBackground = new Color(100, 100, 100, 128);
-
-        for (JButton botao : botoes) {
-            botao.setBackground(buttonBackground);
-            botao.setForeground(Color.WHITE);
-            botao.setFocusPainted(false);
-            botao.setContentAreaFilled(false);
-            botao.setBorder(new RoundedBorder(20));
-
-            botao.addMouseListener(new java.awt.event.MouseAdapter() {
-                @Override
-                public void mouseEntered(java.awt.event.MouseEvent e) {
-                    botao.setBackground(buttonHoverBackground);
-                    botao.setBounds(botao.getX() - 5, botao.getY() - 5, botao.getWidth() + 10, botao.getHeight() + 10);
-                    botao.revalidate();
-                    botao.repaint();
-                }
-
-                @Override
-                public void mouseExited(java.awt.event.MouseEvent e) {
-                    botao.setBackground(buttonBackground);
-                    botao.setBounds(botao.getX() + 5, botao.getY() + 5, botao.getWidth() - 10, botao.getHeight() - 10);
-                    botao.revalidate();
-                    botao.repaint();
-                }
-            });
-        }
     }
 }
