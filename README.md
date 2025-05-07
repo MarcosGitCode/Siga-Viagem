@@ -6,8 +6,8 @@ Projeto Integrador 2025
 
     Por:
     - Marcos de Salles
-    - Guilherme 
-    - Demetrius
-    - Nikolas
-    - Guilherme
-    - Guilherme
+    - Guilherme Britto
+    - Demetrius Demasio
+    - Nikolas Figura
+    - Guilherme Nunes
+    - Guilherme Calderan
