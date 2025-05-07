@@ -122,11 +122,11 @@ public class MenuOpcoes extends JPanel {
         JButton botao = new JButton(texto);
         botao.setFont(new Font("Arial", Font.BOLD, 18));
         botao.setBackground(new Color(128, 128, 128, 128)); // Cor cinza com transparência
-        botao.setForeground(Color.WHITE); // Cor do texto
+        botao.setForeground(Color.WHITE);
         botao.setFocusPainted(false);
-        botao.setContentAreaFilled(true); // Permite que a cor de fundo seja exibida
-        botao.setOpaque(false); // Permite a transparência
-        botao.setBorder(new RoundedBorder(20)); // Borda arredondada
+        botao.setContentAreaFilled(true);
+        botao.setOpaque(false);
+        botao.setBorder(new RoundedBorder(20));
         return botao;
     }
 }
