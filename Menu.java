@@ -22,6 +22,9 @@ public class Menu extends JFrame {
         painelPrincipal.add(new MenuOpcoes(layout, painelPrincipal), "Opções");
         painelPrincipal.add(new MenuJogo(layout, painelPrincipal), "Jogo");
 
+        // Adiciona o painel de administração
+        painelPrincipal.add(new MenuAdmin(layout, painelPrincipal), "Admin");
+
         add(painelPrincipal);
         setVisible(true);
     }

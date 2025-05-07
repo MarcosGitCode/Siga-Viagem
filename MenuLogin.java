@@ -36,7 +36,20 @@ public class MenuLogin extends PainelComImagem {
         btnVoltar.addActionListener(e -> layout.show(painelPrincipal, "Menu"));
         add(btnVoltar);
 
-        btnEntrar.addActionListener(e -> layout.show(painelPrincipal, "Jogo"));
+        btnEntrar.addActionListener(e -> {
+            String usuario = txtUsuario.getText().trim();
+            String senha = new String(txtSenha.getPassword()).trim();
+
+            if ("admin".equals(usuario) && "admin".equals(senha)) {
+                // Redireciona para o painel de administração
+                layout.show(painelPrincipal, "Admin");
+            } else if (!usuario.isEmpty() && !senha.isEmpty()) {
+                // Redireciona para o jogo se as credenciais forem válidas (simulação)
+                layout.show(painelPrincipal, "Jogo");
+            } else {
+                JOptionPane.showMessageDialog(this, "Usuário ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+            }
+        });
 
         // Centraliza ao iniciar e ao redimensionar
         addComponentListener(new java.awt.event.ComponentAdapter() {
