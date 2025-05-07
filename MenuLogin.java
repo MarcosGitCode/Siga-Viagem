@@ -1,44 +1,65 @@
 import java.awt.*;
 import javax.swing.*;
 
-
 public class MenuLogin extends PainelComImagem {
+    private JLabel lblUsuario, lblSenha;
+    private JTextField txtUsuario;
+    private JPasswordField txtSenha;
+    private JButton btnEntrar, btnVoltar;
+
     public MenuLogin(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/metro_blur.jpg");
         setLayout(null);
 
-        JLabel lblUsuario = new JLabel("Usuário:", SwingConstants.CENTER);
+        lblUsuario = new JLabel("Usuário:", SwingConstants.CENTER);
         lblUsuario.setFont(new Font("Arial", Font.BOLD, 24));
         lblUsuario.setForeground(Color.WHITE);
-        lblUsuario.setBounds(390, 300, 500, 40);
         add(lblUsuario);
 
-        JTextField txtUsuario = new JTextField();
+        txtUsuario = new JTextField();
         txtUsuario.setFont(new Font("Arial", Font.PLAIN, 18));
-        txtUsuario.setBounds(390, 350, 500, 40);
         add(txtUsuario);
 
-        JLabel lblSenha = new JLabel("Senha:", SwingConstants.CENTER);
+        lblSenha = new JLabel("Senha:", SwingConstants.CENTER);
         lblSenha.setFont(new Font("Arial", Font.BOLD, 24));
         lblSenha.setForeground(Color.WHITE);
-        lblSenha.setBounds(390, 410, 500, 40);
         add(lblSenha);
 
-        JPasswordField txtSenha = new JPasswordField();
+        txtSenha = new JPasswordField();
         txtSenha.setFont(new Font("Arial", Font.PLAIN, 18));
-        txtSenha.setBounds(390, 460, 500, 40);
         add(txtSenha);
 
-        JButton btnEntrar = criarBotao("Entrar");
-        btnEntrar.setBounds(390, 530, 220, 60);
+        btnEntrar = criarBotao("Entrar");
         add(btnEntrar);
 
-        JButton btnVoltar = criarBotao("Voltar");
-        btnVoltar.setBounds(670, 530, 220, 60);
+        btnVoltar = criarBotao("Voltar");
         btnVoltar.addActionListener(e -> layout.show(painelPrincipal, "Menu"));
         add(btnVoltar);
 
         btnEntrar.addActionListener(e -> layout.show(painelPrincipal, "Jogo"));
+
+        // Centraliza ao iniciar e ao redimensionar
+        addComponentListener(new java.awt.event.ComponentAdapter() {
+            public void componentResized(java.awt.event.ComponentEvent evt) {
+                centralizarComponentes();
+            }
+        });
+        centralizarComponentes();
+    }
+
+    private void centralizarComponentes() {
+        int w = getWidth();
+        int h = getHeight();
+        int compW = 500;
+        int compH = 40;
+        int x = (w - compW) / 2;
+
+        lblUsuario.setBounds(x, h / 2 - 150, compW, compH);
+        txtUsuario.setBounds(x, h / 2 - 100, compW, compH);
+        lblSenha.setBounds(x, h / 2 - 40, compW, compH);
+        txtSenha.setBounds(x, h / 2 + 10, compW, compH);
+        btnEntrar.setBounds(x, h / 2 + 80, 220, 60);
+        btnVoltar.setBounds(x + 280, h / 2 + 80, 220, 60);
     }
 
     private JButton criarBotao(String texto) {

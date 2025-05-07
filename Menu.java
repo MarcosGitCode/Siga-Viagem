@@ -5,7 +5,7 @@ import javax.swing.*;
 
 public class Menu extends JFrame {
     private final CardLayout layout;
-    private final JPanel painelPrincipal;
+    private JPanel painelPrincipal;
 
     public Menu() {
         setTitle("Siga");
@@ -15,6 +15,7 @@ public class Menu extends JFrame {
 
         layout = new CardLayout();
         painelPrincipal = new JPanel(layout);
+        painelPrincipal.setOpaque(false); // Permite transparência no painel principal
 
         painelPrincipal.add(new MenuPrincipal(layout, painelPrincipal), "Menu");
         painelPrincipal.add(new MenuLogin(layout, painelPrincipal), "Login");
