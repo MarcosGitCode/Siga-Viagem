@@ -50,9 +50,9 @@ public class Parte1 extends PainelComImagem {
             System.out.println("Botao seta esquerda clicado!");
         });
 
-        painelPrincipal.add(new JogoDDU(), "JogoDDU");
-        painelPrincipal.add(new JogoADU(), "JogoADU");
-        painelPrincipal.add(new JogoReversora(), "JogoReversora");
+        painelPrincipal.add(new JogoDDU(layout, painelPrincipal), "JogoDDU");
+        painelPrincipal.add(new JogoADU(layout, painelPrincipal), "JogoADU");
+        painelPrincipal.add(new JogoReversora(layout, painelPrincipal), "JogoReversora");
     }
 
     // Método para criar botões visíveis
