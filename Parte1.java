@@ -1,11 +1,15 @@
 import java.awt.*;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import javax.swing.*;
 
-public class MenuJogo extends PainelComImagem {
-    public MenuJogo(CardLayout layout, JPanel painelPrincipal) {
+public class Parte1 extends PainelComImagem {
+    private JPanel painelBotoes;
+
+    public Parte1(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/01 - Painel.jpg"); // Define a imagem de fundo
-        
+
         // Layout geral com BorderLayout
         var bl = new BorderLayout();
         setLayout(bl);
@@ -16,44 +20,42 @@ public class MenuJogo extends PainelComImagem {
         lblBemVindo.setForeground(Color.WHITE);
         add(lblBemVindo, BorderLayout.NORTH); // Adiciona a label no topo
 
-        // Painel para os botões visíveis
-        JPanel painelBotoes = new JPanel();
+        // Painel para os botões
+        painelBotoes = new JPanel();
         painelBotoes.setLayout(null); // Layout absoluto para posicionar os botões
         painelBotoes.setOpaque(false); // Garantir que o fundo do painel seja transparente
+        add(painelBotoes, BorderLayout.CENTER);
 
-        // Criar botões visíveis com base nas áreas coloridas da nova imagem
-        // vermelho
+        // Criar botões
         criarBotaoVisivel(painelBotoes, 40, 260, 300, 220, Color.RED, e -> {
             System.out.println("Botão vermelho clicado!");
             layout.show(painelPrincipal, "Login");
         });
 
-        // azul escuro
         criarBotaoVisivel(painelBotoes, 300, 440, 50, 60, Color.BLUE, e -> {
             System.out.println("Botão azul escuro clicado!");
-            // Ação alternativa
         });
 
-        // rosa
         criarBotaoVisivel(painelBotoes, 360, 240, 330, 220, Color.PINK, e -> {
             System.out.println("Botão rosa clicado!");
             layout.show(painelPrincipal, "Opções");
         });
 
-        // verde
         criarBotaoVisivel(painelBotoes, 520, 470, 70, 130, Color.GREEN, e -> {
             System.out.println("Botão verde clicado!");
-            // Ação alternativa
         });
 
-        // amarelo
         criarBotaoVisivel(painelBotoes, 720, 230, 290, 250, Color.YELLOW, e -> {
             System.out.println("Botão amarelo clicado!");
-            // Ação alternativa
         });
 
-        // Adicionar o painel com os botões visíveis no centro
-        add(painelBotoes, BorderLayout.CENTER);
+        // Adicionar listener para redimensionamento da janela
+        addComponentListener(new ComponentAdapter() {
+            @Override
+            public void componentResized(ComponentEvent e) {
+                reposicionarBotoes();
+            }
+        });
     }
 
     // Método para criar botões visíveis
@@ -65,5 +67,24 @@ public class MenuJogo extends PainelComImagem {
         botao.setBorderPainted(true); // Exibe as bordas do botão
         botao.addActionListener(acao); // Define a ação para o botão
         painel.add(botao); // Adiciona o botão ao painel
+    }
+
+    // Método para reposicionar os botões ao redimensionar a janela
+    private void reposicionarBotoes() {
+        int largura = painelBotoes.getWidth();
+        int altura = painelBotoes.getHeight();
+
+        // Reposicionar os botões proporcionalmente
+        for (Component comp : painelBotoes.getComponents()) {
+            if (comp instanceof JButton) {
+                Rectangle bounds = comp.getBounds();
+                comp.setBounds(
+                    (int) (bounds.x * largura / 1280.0), // Proporção horizontal
+                    (int) (bounds.y * altura / 853.0),   // Proporção vertical
+                    (int) (bounds.width * largura / 1280.0),
+                    (int) (bounds.height * altura / 853.0)
+                );
+            }
+        }
     }
 }

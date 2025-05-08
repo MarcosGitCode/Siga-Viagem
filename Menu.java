@@ -8,8 +8,9 @@ public class Menu extends JFrame {
     private JPanel painelPrincipal;
 
     public Menu() {
-        setTitle("Siga");
+        setTitle("Siga Viagem");
         setSize(1280, 853);
+        setResizable(false); // Impede que a janela seja redimensionável
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
@@ -20,7 +21,7 @@ public class Menu extends JFrame {
         painelPrincipal.add(new MenuPrincipal(layout, painelPrincipal), "Menu");
         painelPrincipal.add(new MenuLogin(layout, painelPrincipal), "Login");
         painelPrincipal.add(new MenuOpcoes(layout, painelPrincipal), "Opções");
-        painelPrincipal.add(new MenuJogo(layout, painelPrincipal), "Jogo");
+        painelPrincipal.add(new Parte1(layout, painelPrincipal), "Jogo");
 
         // Adiciona o painel de administração
         painelPrincipal.add(new MenuAdmin(layout, painelPrincipal), "Admin");
