@@ -1,7 +1,5 @@
 import java.awt.*;
 import java.awt.event.ActionListener;
-import java.awt.event.ComponentAdapter;
-import java.awt.event.ComponentEvent;
 import javax.swing.*;
 
 public class Parte1 extends PainelComImagem {
@@ -13,13 +11,7 @@ public class Parte1 extends PainelComImagem {
         // Layout geral com BorderLayout
         var bl = new BorderLayout();
         setLayout(bl);
-
-        // Label de boas-vindas no topo
-        JLabel lblBemVindo = new JLabel("Bem-vindo ao Jogo!", SwingConstants.CENTER);
-        lblBemVindo.setFont(new Font("Arial", Font.BOLD, 32));
-        lblBemVindo.setForeground(Color.WHITE);
-        add(lblBemVindo, BorderLayout.NORTH); // Adiciona a label no topo
-
+        
         // Painel para os botões
         painelBotoes = new JPanel();
         painelBotoes.setLayout(null); // Layout absoluto para posicionar os botões
@@ -28,63 +20,49 @@ public class Parte1 extends PainelComImagem {
 
         // Criar botões
         criarBotaoVisivel(painelBotoes, 40, 260, 300, 220, Color.RED, e -> {
-            System.out.println("Botão vermelho clicado!");
-            layout.show(painelPrincipal, "Login");
+            System.out.println("Botão DDU clicado!");
+            layout.show(painelPrincipal, "JogoDDU"); // Alterna para o painel JogoDDU
         });
 
-        criarBotaoVisivel(painelBotoes, 400, 440, 50, 60, Color.BLUE, e -> {
-            System.out.println("Botão azul escuro clicado!");
+        criarBotaoVisivel(painelBotoes, 400, 400, 50, 60, Color.BLUE, e -> {
+            System.out.println("Botão chave reversora clicado!");
+            layout.show(painelPrincipal, "JogoReversora"); // Alterna para o painel JogoReversora
         });
 
         criarBotaoVisivel(painelBotoes, 450, 240, 330, 220, Color.PINK, e -> {
-            System.out.println("Botão rosa clicado!");
-            layout.show(painelPrincipal, "Opções");
+            System.out.println("Botão ADU clicado!");
+            layout.show(painelPrincipal, "JogoADU"); // Alterna para o painel JogoADU
         });
 
         criarBotaoVisivel(painelBotoes, 700, 470, 70, 130, Color.GREEN, e -> {
-            System.out.println("Botão verde clicado!");
+            System.out.println("Botão alanvanca de comando clicado!");
         });
 
         criarBotaoVisivel(painelBotoes, 900, 230, 290, 250, Color.YELLOW, e -> {
-            System.out.println("Botão amarelo clicado!");
+            System.out.println("Botão VDU clicado!");
         });
 
-        // Adicionar listener para redimensionamento da janela
-        addComponentListener(new ComponentAdapter() {
-            @Override
-            public void componentResized(ComponentEvent e) {
-                reposicionarBotoes();
-            }
+        criarBotaoVisivel(painelBotoes, 900, 500, 290, 250, Color.RED, e -> {
+            System.out.println("Botao seta direita clicado!");
         });
+
+        criarBotaoVisivel(painelBotoes, 40, 500, 290, 250, Color.RED, e -> {
+            System.out.println("Botao seta esquerda clicado!");
+        });
+
+        painelPrincipal.add(new JogoDDU(), "JogoDDU");
+        painelPrincipal.add(new JogoADU(), "JogoADU");
+        painelPrincipal.add(new JogoReversora(), "JogoReversora");
     }
 
     // Método para criar botões visíveis
     private void criarBotaoVisivel(JPanel painel, int x, int y, int largura, int altura, Color cor, ActionListener acao) {
         JButton botao = new JButton();
         botao.setBounds(x, y, largura, altura); // Posicionar o botão
-        botao.setBackground(cor); // Define a cor de fundo do botão
-        botao.setOpaque(true); // Torna o botão visível
-        botao.setBorderPainted(true); // Exibe as bordas do botão
+        botao.setContentAreaFilled(false); // Torna o fundo do botão transparente
+        botao.setFocusPainted(false); // Remove o destaque ao focar no botão
+        botao.setBorderPainted(false); // Remove as bordas do botão
         botao.addActionListener(acao); // Define a ação para o botão
         painel.add(botao); // Adiciona o botão ao painel
-    }
-
-    // Método para reposicionar os botões ao redimensionar a janela
-    private void reposicionarBotoes() {
-        int largura = painelBotoes.getWidth();
-        int altura = painelBotoes.getHeight();
-
-        // Reposicionar os botões proporcionalmente
-        for (Component comp : painelBotoes.getComponents()) {
-            if (comp instanceof JButton) {
-                Rectangle bounds = comp.getBounds();
-                comp.setBounds(
-                    (int) (bounds.x * largura / 1280.0), // Proporção horizontal
-                    (int) (bounds.y * altura / 853.0),   // Proporção vertical
-                    (int) (bounds.width * largura / 1280.0),
-                    (int) (bounds.height * altura / 853.0)
-                );
-            }
-        }
     }
 }
