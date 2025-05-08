@@ -32,20 +32,20 @@ public class Parte1 extends PainelComImagem {
             layout.show(painelPrincipal, "Login");
         });
 
-        criarBotaoVisivel(painelBotoes, 300, 440, 50, 60, Color.BLUE, e -> {
+        criarBotaoVisivel(painelBotoes, 400, 440, 50, 60, Color.BLUE, e -> {
             System.out.println("Botão azul escuro clicado!");
         });
 
-        criarBotaoVisivel(painelBotoes, 360, 240, 330, 220, Color.PINK, e -> {
+        criarBotaoVisivel(painelBotoes, 450, 240, 330, 220, Color.PINK, e -> {
             System.out.println("Botão rosa clicado!");
             layout.show(painelPrincipal, "Opções");
         });
 
-        criarBotaoVisivel(painelBotoes, 520, 470, 70, 130, Color.GREEN, e -> {
+        criarBotaoVisivel(painelBotoes, 700, 470, 70, 130, Color.GREEN, e -> {
             System.out.println("Botão verde clicado!");
         });
 
-        criarBotaoVisivel(painelBotoes, 720, 230, 290, 250, Color.YELLOW, e -> {
+        criarBotaoVisivel(painelBotoes, 900, 230, 290, 250, Color.YELLOW, e -> {
             System.out.println("Botão amarelo clicado!");
         });
 
