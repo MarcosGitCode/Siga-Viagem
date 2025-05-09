@@ -7,6 +7,28 @@ public class JogoEsquerda extends BasePainelComBotao {
         super("imagens/Fotos editadas/Botoeiras e sinaleira lateral - detalhe.jpg", layout, painelPrincipal);
         setLayout(null); // Layout absoluto para posicionar componentes, se necessário
 
-        // Outros componentes específicos do JogoEsquerda podem ser adicionados aqui
+        painelPrincipal.add(new JogoTrem1(layout, painelPrincipal), "JogoTrem1");
+
+        JPanel painelBotoes = new JPanel();
+        painelBotoes.setBounds(0, 0, 800, 600);
+        painelBotoes.setLayout(null);
+        painelBotoes.setOpaque(false); // Torna o painel transparente
+        add(painelBotoes);
+
+        criarBotaoVisivel(painelBotoes, 10, 200, 200, 200, Color.GREEN, e -> {
+            System.out.println("Botão JogoTrem1 clicado!");
+            layout.show(painelPrincipal, "JogoTrem1"); // Alterna para o painel JogoTrem1
+        });
+    }
+
+    private void criarBotaoVisivel(JPanel painel, int x, int y, int width, int height, Color color, java.awt.event.ActionListener action) {
+        JButton botao = new JButton();
+        botao.setBounds(x, y, width, height);
+        botao.setBackground(color); // Define a cor de fundo como verde
+        botao.setContentAreaFilled(false); // Remove o fundo visível
+        botao.setOpaque(false); // Garante que o botão seja transparente
+        botao.setBorderPainted(false); // Remove as bordas do botão
+        botao.addActionListener(action);
+        painel.add(botao);
     }
 }
