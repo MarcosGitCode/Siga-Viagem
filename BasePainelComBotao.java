@@ -16,7 +16,7 @@ public abstract class BasePainelComBotao extends PainelComImagem {
         botaoConfiguracoes.setBorderPainted(true); // Exibe as bordas temporariamente
         botaoConfiguracoes.addActionListener(e -> {
             System.out.println("Botão de configurações clicado!");
-            layout.show(painelPrincipal, "Parte1"); // Volta para o painel principal (Parte1)
+            layout.show(painelPrincipal, "Jogo"); // Volta para o painel principal (Parte1)
         });
         add(botaoConfiguracoes); // Adiciona o botão ao painel
         setComponentZOrder(botaoConfiguracoes, 0); // Garante que o botão fique no topo
