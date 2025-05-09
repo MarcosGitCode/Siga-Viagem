@@ -7,7 +7,7 @@ public class JogoEsquerda extends BasePainelComBotao {
         super("imagens/Fotos editadas/Botoeiras e sinaleira lateral - detalhe.jpg", layout, painelPrincipal);
         setLayout(null); // Layout absoluto para posicionar componentes, se necessário
 
-        painelPrincipal.add(new JogoTrem1(layout, painelPrincipal), "JogoTrem1");
+        painelPrincipal.add(new Trem1(layout, painelPrincipal), "Trem1");
 
         JPanel painelBotoes = new JPanel();
         painelBotoes.setBounds(0, 0, 800, 600);
@@ -16,8 +16,8 @@ public class JogoEsquerda extends BasePainelComBotao {
         add(painelBotoes);
 
         criarBotaoVisivel(painelBotoes, 10, 200, 200, 200, Color.GREEN, e -> {
-            System.out.println("Botão JogoTrem1 clicado!");
-            layout.show(painelPrincipal, "JogoTrem1"); // Alterna para o painel JogoTrem1
+            System.out.println("Botão Trem1 clicado!");
+            layout.show(painelPrincipal, "Trem1"); // Alterna para o painel JogoTrem1
         });
     }
 
