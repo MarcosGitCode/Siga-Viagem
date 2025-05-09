@@ -49,7 +49,8 @@ public class Parte1 extends PainelComImagem {
         });
 
         criarBotaoVisivel(painelBotoes, 40, 500, 290, 250, Color.RED, e -> {
-            System.out.println("Botao seta esquerda clicado!");
+            System.out.println("Botão seta esquerda clicado!");
+            layout.show(painelPrincipal, "JogoEsquerda"); // Alterna para o painel JogoEsquerda
         });
 
         painelPrincipal.add(new JogoDDU(layout, painelPrincipal), "JogoDDU");
@@ -57,6 +58,7 @@ public class Parte1 extends PainelComImagem {
         painelPrincipal.add(new JogoReversora(layout, painelPrincipal), "JogoReversora");
         painelPrincipal.add(new JogoVDU(layout, painelPrincipal), "JogoVDU");
         painelPrincipal.add(new JogoDireita(layout, painelPrincipal), "JogoDireita");
+        painelPrincipal.add(new JogoEsquerda(layout, painelPrincipal), "JogoEsquerda");
     }
 
     // Método para criar botões visíveis
