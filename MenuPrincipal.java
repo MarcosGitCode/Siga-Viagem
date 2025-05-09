@@ -13,10 +13,10 @@ public class MenuPrincipal extends PainelComImagem {
         JButton btnPlacar = criarBotao("Placar");
         JButton btnSair = criarBotao("Sair");
 
-        btnJogar.setBounds(490, 200, 300, 60);
-        btnOpcoes.setBounds(490, 280, 300, 60);
-        btnPlacar.setBounds(490, 360, 300, 60);
-        btnSair.setBounds(490, 440, 300, 60);
+        btnJogar.setBounds(430, 200, 400, 60);
+        btnOpcoes.setBounds(430, 280, 400, 60);
+        btnPlacar.setBounds(430, 360, 400, 60);
+        btnSair.setBounds(430, 440, 400, 60);
 
         btnJogar.addActionListener(e -> layout.show(painelPrincipal, "Login"));
         btnOpcoes.addActionListener(e -> layout.show(painelPrincipal, "Opções"));

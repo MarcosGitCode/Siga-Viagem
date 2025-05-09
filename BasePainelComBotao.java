@@ -8,10 +8,10 @@ public abstract class BasePainelComBotao extends PainelComImagem {
         setLayout(null); // Layout absoluto para posicionar o botão universal
 
         // Adicionar botão de configurações universal
-        JButton botaoConfiguracoes = new JButton("⚙");
-        botaoConfiguracoes.setBounds(10, 10, 40, 40); // Define o tamanho e a posição do botão
+        JButton botaoConfiguracoes = new JButton("<");
+        botaoConfiguracoes.setBounds(10, 10, 60, 60); // Define o tamanho e a posição do botão
         botaoConfiguracoes.setContentAreaFilled(true); // Torna o fundo visível temporariamente
-        botaoConfiguracoes.setBackground(Color.LIGHT_GRAY); // Cor de fundo temporária
+        botaoConfiguracoes.setBackground(Color.RED); // Cor de fundo temporária
         botaoConfiguracoes.setFocusPainted(false); // Remove o destaque ao focar
         botaoConfiguracoes.setBorderPainted(true); // Exibe as bordas temporariamente
         botaoConfiguracoes.addActionListener(e -> {
