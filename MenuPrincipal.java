@@ -33,7 +33,7 @@ public class MenuPrincipal extends PainelComImagem {
 
     private JButton criarBotao(String texto) {
         JButton botao = new JButton(texto);
-        botao.setFont(new Font("Arial", Font.BOLD, 18));
+        botao.setFont(new Font("Arial", Font.BOLD, 30));
         botao.setBackground(new Color(255, 255, 255, 128)); // Cor azul com transparência
         botao.setForeground(Color.WHITE); // Cor do texto
         botao.setFocusPainted(false);

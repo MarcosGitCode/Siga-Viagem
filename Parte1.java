@@ -35,7 +35,8 @@ public class Parte1 extends PainelComImagem {
         });
 
         criarBotaoVisivel(painelBotoes, 700, 470, 70, 130, Color.GREEN, e -> {
-            System.out.println("Botão alanvanca de comando clicado!");
+            System.out.println("Botão alavanca de comando clicado!");
+            layout.show(painelPrincipal, "JogoAlavanca"); // Alterna para o painel JogoAlavanca
         });
 
         criarBotaoVisivel(painelBotoes, 900, 230, 290, 250, Color.YELLOW, e -> {
@@ -59,6 +60,7 @@ public class Parte1 extends PainelComImagem {
         painelPrincipal.add(new JogoVDU(layout, painelPrincipal), "JogoVDU");
         painelPrincipal.add(new JogoDireita(layout, painelPrincipal), "JogoDireita");
         painelPrincipal.add(new JogoEsquerda(layout, painelPrincipal), "JogoEsquerda");
+        painelPrincipal.add(new JogoAlavanca(layout, painelPrincipal), "JogoAlavanca");
     }
 
     // Método para criar botões visíveis

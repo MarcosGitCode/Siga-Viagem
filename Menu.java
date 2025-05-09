@@ -6,6 +6,7 @@ import javax.swing.*;
 public class Menu extends JFrame {
     private final CardLayout layout;
     private JPanel painelPrincipal;
+    
 
     public Menu() {
         setTitle("Siga Viagem");
