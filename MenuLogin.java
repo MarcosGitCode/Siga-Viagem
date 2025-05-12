@@ -53,16 +53,38 @@ public class MenuLogin extends PainelComImagem {
         add(btnVoltar);
 
         btnEntrar.addActionListener(e -> {
-            String nome = txtNome.getText().trim();
+            String email = txtNome.getText().trim(); // txtNome agora recebe o email
             String senha = new String(txtSenha.getPassword()).trim();
 
-            if ("admin".equals(nome) && "admin".equals(senha)) {
-                layout.show(painelPrincipal, "Admin");
-            } else if (!nome.isEmpty() && !senha.isEmpty()) {
+            if (!email.isEmpty() && !senha.isEmpty()) {
+                // Verifica se é administrador no banco de dados
+                boolean adminEncontrado = false;
+                try (java.sql.Connection conn = Conexao.conectar();
+                     java.sql.PreparedStatement stmt = conn.prepareStatement(
+                         "SELECT * FROM administradores WHERE email = ? AND senha = ?")) {
+                    stmt.setString(1, email);
+                    stmt.setString(2, senha);
+                    try (java.sql.ResultSet rs = stmt.executeQuery()) {
+                        if (rs.next()) {
+                            adminEncontrado = true;
+                        }
+                    }
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Erro ao acessar o banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    return;
+                }
+
+                if (adminEncontrado) {
+                    layout.show(painelPrincipal, "Admin");
+                    return;
+                }
+
+                // Verifica se é metroviário
                 boolean encontrado = false;
                 List<Metroviario> lista = dao.listarTodos();
                 for (Metroviario m : lista) {
-                    if (m.getNome().equals(nome) && m.getSenha().equals(senha)) {
+                    if (m.getEmail().equals(email) && m.getSenha().equals(senha)) {
                         encontrado = true;
                         break;
                     }
@@ -70,10 +92,10 @@ public class MenuLogin extends PainelComImagem {
                 if (encontrado) {
                     layout.show(painelPrincipal, "Jogo");
                 } else {
-                    JOptionPane.showMessageDialog(this, "Nome ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "E-mail ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "Nome ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "E-mail ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
 
