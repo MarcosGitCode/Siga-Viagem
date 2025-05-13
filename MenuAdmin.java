@@ -1,6 +1,6 @@
 import java.awt.*;
-import javax.swing.*;
 import java.util.List;
+import javax.swing.*;
 
 public class MenuAdmin extends JPanel {
     private final JLabel lblTitulo, lblNome, lblEmail, lblRegistro, lblSenha;

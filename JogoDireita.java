@@ -7,6 +7,9 @@ public class JogoDireita extends BasePainelComBotao {
         super("imagens/Fotos editadas/direita2.png", layout, painelPrincipal);
         setLayout(null); // Layout absoluto para posicionar componentes, se necessário
 
+        // Adiciona o painel JogoItens ao painel principal
+        painelPrincipal.add(new JogoItens(layout, painelPrincipal), "JogoItens");
+
         // Botão visível no painel
         JButton botaoSetaDireita = new JButton(">");
         botaoSetaDireita.setBounds(900, 300, 290, 300); // Define a posição e o tamanho do botão
@@ -18,7 +21,7 @@ public class JogoDireita extends BasePainelComBotao {
         botaoSetaDireita.setFont(new Font("Arial", Font.BOLD, 20)); // Define a fonte do texto
         botaoSetaDireita.addActionListener(e -> {
             System.out.println("Botão seta direita clicado!");
-            layout.show(painelPrincipal, "JogoDireita"); // Alterna para o painel JogoDireita
+            layout.show(painelPrincipal, "JogoItens"); // Alterna para o painel JogoItens
         });
 
         add(botaoSetaDireita); // Adiciona o botão ao painel
