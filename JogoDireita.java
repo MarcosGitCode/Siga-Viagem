@@ -11,7 +11,7 @@ public class JogoDireita extends BasePainelComBotao {
         painelPrincipal.add(new JogoItens(layout, painelPrincipal), "JogoItens");
 
         // Botão visível no painel
-        JButton botaoSetaDireita = new JButton(">");
+        JButton botaoSetaDireita = new JButton("");
         botaoSetaDireita.setBounds(900, 300, 290, 300); // Define a posição e o tamanho do botão
         botaoSetaDireita.setContentAreaFilled(false); // Remove o fundo do botão
         botaoSetaDireita.setBorderPainted(false); // Remove as bordas do botão
