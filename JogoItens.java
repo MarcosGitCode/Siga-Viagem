@@ -4,10 +4,18 @@ import javax.swing.*;
 public class JogoItens extends JPanel {
 
     private Image imagemFundo;
+    private Image sobreposicaoCinturao;
+    private Image sobreposicaoFita;
+    private boolean mostrarCinturao = true; // Controle para exibir ou esconder a imagem do cinto
+    private boolean mostrarFita = true;    // Controle para exibir ou esconder a imagem da fita
 
     public JogoItens(CardLayout layout, JPanel painelPrincipal) {
         // Carrega a imagem de fundo
-        imagemFundo = new ImageIcon("imagens/Fotos editadas/itens2.png").getImage();
+        imagemFundo = new ImageIcon("imagens/Fotos editadas/fundoItens.png").getImage();
+        // Carrega as sobreposições
+        sobreposicaoCinturao = new ImageIcon("imagens/Fotos editadas/ItensCinturao.png").getImage();
+        sobreposicaoFita = new ImageIcon("imagens/Fotos editadas/ItensFita.png").getImage();
+
         setLayout(null); // Define layout absoluto, se necessário
 
         // Botão de voltar
@@ -15,8 +23,8 @@ public class JogoItens extends JPanel {
         botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
         botaoVoltar.setFont(new Font("Arial", Font.BOLD, 20)); // Define a fonte do texto
         botaoVoltar.setForeground(Color.WHITE); // Define a cor do texto
-        botaoVoltar.setBackground(Color.DARK_GRAY); // Define a cor de fundo
-        botaoVoltar.setFocusPainted(false); // Remove o destaque ao focar
+        botaoVoltar.setContentAreaFilled(false); // Remove o fundo visível
+        botaoVoltar.setOpaque(false); // Garante que o botão seja transparente
         botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
@@ -25,26 +33,28 @@ public class JogoItens extends JPanel {
         add(botaoVoltar); // Adiciona o botão ao painel
 
         // Botão quadrado 1
-        JButton botaoQuadrado1 = new JButton("Botão 1");
+        JButton botaoQuadrado1 = new JButton();
         botaoQuadrado1.setBounds(100, 250, 200, 400); // Define a posição e o tamanho do botão
-        botaoQuadrado1.setFont(new Font("Arial", Font.BOLD, 20)); // Define a fonte do texto
-        botaoQuadrado1.setBackground(Color.BLUE); // Define a cor de fundo
-        botaoQuadrado1.setForeground(Color.WHITE); // Define a cor do texto
-        botaoQuadrado1.setFocusPainted(false); // Remove o destaque ao focar
+        botaoQuadrado1.setContentAreaFilled(false); // Remove o fundo visível
+        botaoQuadrado1.setOpaque(false); // Garante que o botão seja transparente
+        botaoQuadrado1.setBorderPainted(false); // Remove as bordas do botão
         botaoQuadrado1.addActionListener(e -> {
             System.out.println("Botão 1 clicado!");
+            mostrarCinturao = false; // Esconde a imagem do cinto
+            repaint(); // Atualiza o painel para refletir a mudança
         });
         add(botaoQuadrado1); // Adiciona o botão ao painel
 
         // Botão quadrado 2
-        JButton botaoQuadrado2 = new JButton("Botão 2");
+        JButton botaoQuadrado2 = new JButton();
         botaoQuadrado2.setBounds(380, 300, 800, 300); // Define a posição e o tamanho do botão
-        botaoQuadrado2.setFont(new Font("Arial", Font.BOLD, 20)); // Define a fonte do texto
-        botaoQuadrado2.setBackground(Color.RED); // Define a cor de fundo
-        botaoQuadrado2.setForeground(Color.WHITE); // Define a cor do texto
-        botaoQuadrado2.setFocusPainted(false); // Remove o destaque ao focar
+        botaoQuadrado2.setContentAreaFilled(false); // Remove o fundo visível
+        botaoQuadrado2.setOpaque(false); // Garante que o botão seja transparente
+        botaoQuadrado2.setBorderPainted(false); // Remove as bordas do botão
         botaoQuadrado2.addActionListener(e -> {
             System.out.println("Botão 2 clicado!");
+            mostrarFita = false; // Esconde a imagem da fita
+            repaint(); // Atualiza o painel para refletir a mudança
         });
         add(botaoQuadrado2); // Adiciona o botão ao painel
     }
@@ -52,9 +62,21 @@ public class JogoItens extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
+        Graphics2D g2d = (Graphics2D) g;
+
         // Desenha a imagem de fundo
         if (imagemFundo != null) {
-            g.drawImage(imagemFundo, 0, 0, getWidth(), getHeight(), this);
+            g2d.drawImage(imagemFundo, 0, 0, getWidth(), getHeight(), this);
+        }
+
+        // Desenha a sobreposição do cinto, se permitido
+        if (mostrarCinturao && sobreposicaoCinturao != null) {
+            g2d.drawImage(sobreposicaoCinturao, 0, 0, 1280, 853, this);
+        }
+
+        // Desenha a sobreposição da fita, se permitido
+        if (mostrarFita && sobreposicaoFita != null) {
+            g2d.drawImage(sobreposicaoFita, 0, 0, 1280, 853, this);
         }
     }
 }
