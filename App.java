@@ -6,7 +6,7 @@ public class App {
     public static void main(String[] args) {
         String url = "jdbc:mysql://localhost:3306/metro"; // substitua pelo nome do seu banco
         String user = "root"; // seu usuário do MySQL
-        String password = "Deco2005"; // sua senha do MySQL
+        String password = "imtdb"; // sua senha do MySQL
 
         try {
             Connection conn = DriverManager.getConnection(url, user, password);
