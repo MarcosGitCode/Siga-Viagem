@@ -11,3 +11,4 @@ Projeto Integrador 2025
     - Nikolas Figura
     - Guilherme Nunes
     - Guilherme Calderan
+![image](https://github.com/user-attachments/assets/65b54a0b-614d-48d2-987b-fc8e2a8d0137)

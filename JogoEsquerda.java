@@ -26,7 +26,7 @@ public class JogoEsquerda extends BasePainelComBotao {
         botao.setBounds(x, y, width, height);
         botao.setBackground(color); // Define a cor de fundo como verde
         botao.setContentAreaFilled(false); // Remove o fundo visível
-        botao.setOpaque(false); // Garante que o botão seja transparente
+         // Garante que o botão seja transparente
         botao.setBorderPainted(false); // Remove as bordas do botão
         botao.addActionListener(action);
         painel.add(botao);

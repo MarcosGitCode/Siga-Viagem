@@ -1,6 +1,6 @@
 import java.awt.*;
-import javax.swing.*;
 import java.util.List;
+import javax.swing.*;
 
 public class MenuLogin extends PainelComImagem {
     private JLabel lblUsuario, lblSenha, lblNome;
@@ -55,6 +55,12 @@ public class MenuLogin extends PainelComImagem {
         btnEntrar.addActionListener(e -> {
             String email = txtNome.getText().trim(); // txtNome agora recebe o email
             String senha = new String(txtSenha.getPassword()).trim();
+
+            // Login temporário para testes
+            if (email.equals("a") && senha.equals("a")) {
+                layout.show(painelPrincipal, "Jogo");
+                return;
+            }
 
             if (!email.isEmpty() && !senha.isEmpty()) {
                 // Verifica se é administrador no banco de dados
