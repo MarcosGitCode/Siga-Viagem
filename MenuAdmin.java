@@ -7,7 +7,7 @@ public class MenuAdmin extends JPanel {
     private final JTextField txtNome, txtEmail, txtRegistro;
     private final JPasswordField txtSenha;
     private final JCheckBox chkMostrarSenha;
-    private final JButton btnAdicionar, btnRemover, btnAlterar, btnVoltar;
+    private final JButton btnAdicionar, btnRemover, btnAlterar, btnVoltar, btnJogar; // Adicione este atributo
     private final JTextArea txtAreaUsuarios;
     private final MetroviarioDAO dao;
     private final Image imagemFundo;
@@ -115,9 +115,15 @@ public class MenuAdmin extends JPanel {
         add(scrollPane);
 
         btnVoltar = new JButton("Voltar");
-        btnVoltar.setBounds(490, 490, 300, 50);
+        btnVoltar.setBounds(390, 490, 200, 50);
         btnVoltar.addActionListener(e -> layout.show(painelPrincipal, "Menu"));
         add(btnVoltar);
+
+        btnJogar = new JButton("Jogar");
+        btnJogar.setFont(new Font("Arial", Font.PLAIN, 18));
+        btnJogar.setBounds(610, 490, 200, 50); // Ao lado do botão Voltar
+        btnJogar.addActionListener(e -> layout.show(painelPrincipal, "Jogo"));
+        add(btnJogar);
 
         atualizarListaUsuarios();
     }
@@ -126,7 +132,10 @@ public class MenuAdmin extends JPanel {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
         if (imagemFundo != null) {
-            g.drawImage(imagemFundo, 0, 0, getWidth(), getHeight(), this);
+            Graphics2D g2d = (Graphics2D) g.create();
+            g2d.setRenderingHint(RenderingHints.KEY_INTERPOLATION, RenderingHints.VALUE_INTERPOLATION_BILINEAR);
+            g2d.drawImage(imagemFundo, 0, 0, getWidth(), getHeight(), this);
+            g2d.dispose();
         }
 
         // Desenha contorno preto mais grosso nos textos dos labels
