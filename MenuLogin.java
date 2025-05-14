@@ -9,6 +9,7 @@ public class MenuLogin extends PainelComImagem {
     private JCheckBox chkMostrarSenha;
     private JButton btnEntrar, btnVoltar;
     private MetroviarioDAO dao = new MetroviarioDAO();
+    private int tempoDecorrido = 0; // Tempo em segundos
 
     public MenuLogin(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/metro_blur.jpg");
@@ -58,6 +59,7 @@ public class MenuLogin extends PainelComImagem {
 
             // Login temporário para testes
             if (registro.equals("a") && senha.equals("a")) {
+                iniciarTimer(); // Inicia o timer após login bem-sucedido
                 layout.show(painelPrincipal, "Jogo");
                 return;
             }
@@ -82,6 +84,7 @@ public class MenuLogin extends PainelComImagem {
                 }
 
                 if (adminEncontrado) {
+                    iniciarTimer(); // Inicia o timer após login bem-sucedido
                     layout.show(painelPrincipal, "Admin");
                     return;
                 }
@@ -96,6 +99,7 @@ public class MenuLogin extends PainelComImagem {
                     }
                 }
                 if (encontrado) {
+                    iniciarTimer(); // Inicia o timer após login bem-sucedido
                     layout.show(painelPrincipal, "Jogo");
                 } else {
                     JOptionPane.showMessageDialog(this, "Registro ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -139,5 +143,15 @@ public class MenuLogin extends PainelComImagem {
         botao.setContentAreaFilled(false);
         botao.setBorder(new RoundedBorder(20));
         return botao;
+    }
+
+    private void iniciarTimer() {
+        tempoDecorrido = 0; // Reseta o tempo ao iniciar o timer
+        Timer timer = new Timer(1000, e -> {
+            tempoDecorrido++; // Incrementa o tempo a cada segundo
+            System.out.println("Tempo decorrido: " + tempoDecorrido + " segundos.");
+            // Adicione aqui a lógica que deseja executar periodicamente
+        });
+        timer.start();
     }
 }
