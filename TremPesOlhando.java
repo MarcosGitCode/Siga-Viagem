@@ -5,47 +5,43 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class TremPortaAberta extends JPanel {
+public class TremPesOlhando extends JPanel {
 
     private JLabel labelImagem;
 
-    public TremPortaAberta(CardLayout layout, JPanel painelPrincipal) {
+    public TremPesOlhando(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
 
         // Carrega a imagem inicial
-        ImageIcon imagem = carregarImagem("imagens/Fotos editadas/14 - Porta aberta - externo.jpg");
+        ImageIcon imagem = carregarImagem("imagens/Fotos editadas/pes_olhando.jpg");
 
         // Adiciona a imagem inicial ao painel
         labelImagem = new JLabel(imagem);
         labelImagem.setBounds(0, 0, 1280, 856);
         add(labelImagem);
 
-        // Botão metade inferior (troca para TremPesOlhando)
+        // Botão metade superior (volta para TremPortaAberta)
+        JButton botaoSuperior = new JButton();
+        botaoSuperior.setBounds(0, 0, 1280, 628);
+        botaoSuperior.setOpaque(false);
+        botaoSuperior.setContentAreaFilled(false);
+        botaoSuperior.setBorderPainted(false);
+        botaoSuperior.addActionListener(e -> layout.show(painelPrincipal, "PortaAberta"));
+        add(botaoSuperior);
+
+        // Botão metade inferior (recarrega a imagem atual, opcional)
         JButton botaoInferior = new JButton();
         botaoInferior.setBounds(500, 650, 300, 300);
         botaoInferior.setOpaque(false);
         botaoInferior.setContentAreaFilled(false);
         botaoInferior.setBorderPainted(false);
-        botaoInferior.addActionListener(e -> layout.show(painelPrincipal, "PesOlhando"));
+        botaoInferior.addActionListener(e -> trocarImagem("imagens/Fotos editadas/pes_olhando.jpg"));
         add(botaoInferior);
-
-        // Botão "Emergência" visível no canto superior esquerdo
-        JButton botaoEmergencia = new JButton("Emergência");
-        botaoEmergencia.setFont(new Font("Arial", Font.PLAIN, 18));
-        botaoEmergencia.setForeground(Color.WHITE);
-        botaoEmergencia.setBackground(new Color(220, 53, 69)); // vermelho suave
-        botaoEmergencia.setFocusPainted(false);
-        botaoEmergencia.setBounds(300, 400, 180, 200); // canto superior esquerdo, fora da área do botão transparente
-        botaoEmergencia.addActionListener(e -> {
-            System.out.println("Cliquei em Emergência!"); // Para depuração
-            layout.show(painelPrincipal, "TremEmergencia");
-        });
-        add(botaoEmergencia);
 
         // Botão Voltar
         JButton botaoVoltar = new JButton("Voltar");
-        botaoVoltar.setBounds(220, 20, 100, 50);
-        botaoVoltar.addActionListener(e -> layout.show(painelPrincipal, "Trem1"));
+        botaoVoltar.setBounds(20, 20, 100, 50);
+        botaoVoltar.addActionListener(e -> layout.show(painelPrincipal, "Menu"));
         add(botaoVoltar);
     }
 

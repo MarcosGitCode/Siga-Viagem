@@ -27,6 +27,11 @@ public class Menu extends JFrame {
         // Adiciona o painel de administração
         painelPrincipal.add(new MenuAdmin(layout, painelPrincipal), "Admin");
 
+        // Adiciona os painéis adicionais
+        painelPrincipal.add(new TremPortaAberta(layout, painelPrincipal), "PortaAberta");
+        painelPrincipal.add(new TremPesOlhando(layout, painelPrincipal), "PesOlhando");
+        painelPrincipal.add(new TremEmergencia(layout, painelPrincipal), "TremEmergencia");
+
         add(painelPrincipal);
         setVisible(true);
     }
