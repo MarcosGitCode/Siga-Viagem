@@ -9,7 +9,7 @@ public class TremPortaAberta extends JPanel {
 
     private JLabel labelImagem;
 
-    public TremPortaAberta() {
+    public TremPortaAberta(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null); // Define o layout absoluto para posicionar os botões
 
         // Carrega a imagem inicial
@@ -37,6 +37,12 @@ public class TremPortaAberta extends JPanel {
         botaoInferior.setBorderPainted(false); // Remove as bordas
         botaoInferior.addActionListener(e -> trocarImagem("imagens/Fotos editadas/pes_olhando.jpg"));
         add(botaoInferior);
+
+        // Adiciona o botão de voltar
+        JButton botaoVoltar = new JButton("Voltar");
+        botaoVoltar.setBounds(20, 20, 100, 50); // Define o tamanho e posição do botão de voltar
+        botaoVoltar.addActionListener(e -> layout.show(painelPrincipal, "Menu")); // Volta para o painel "Menu"
+        add(botaoVoltar);
     }
 
     private void trocarImagem(String caminhoImagem) {

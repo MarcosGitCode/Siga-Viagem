@@ -8,7 +8,7 @@ public class Trem1 extends BasePainelComBotao {
         setLayout(null); // Layout absoluto para posicionar componentes, se necessário
 
         // Adiciona o painel TremPortaAberta ao painel principal
-        painelPrincipal.add(new TremPortaAberta(), "TremPortaAberta");
+        painelPrincipal.add(new TremPortaAberta(layout, painelPrincipal), "TremPortaAberta");
 
         // Criação do painel de botões
         JPanel painelBotoes = new JPanel();
