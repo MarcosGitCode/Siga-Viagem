@@ -46,12 +46,12 @@ public class Parte1 extends PainelComImagem {
 
         criarBotaoVisivel(painelBotoes, 900, 500, 290, 250, Color.RED, e -> {
             System.out.println("Botao seta direita clicado!");
-            layout.show(painelPrincipal, "JogoDireita"); // Alterna para o painel JogoDireita
+            layout.show(painelPrincipal, "JogoEsquerda"); // Alterna para o painel JogoDireita
         });
 
         criarBotaoVisivel(painelBotoes, 40, 500, 290, 250, Color.RED, e -> {
             System.out.println("Botão seta esquerda clicado!");
-            layout.show(painelPrincipal, "JogoEsquerda"); // Alterna para o painel JogoEsquerda
+            layout.show(painelPrincipal, "JogoDireita"); // Alterna para o painel JogoEsquerda
         });
 
         painelPrincipal.add(new JogoDDU(layout, painelPrincipal), "JogoDDU");
