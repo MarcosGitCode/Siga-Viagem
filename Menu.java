@@ -1,4 +1,4 @@
-// Menu.java
+
 import java.awt.*;
 import javax.swing.*;
 
@@ -11,23 +11,23 @@ public class Menu extends JFrame {
     public Menu() {
         setTitle("Siga Viagem");
         setSize(1280, 853);
-        setResizable(false); // Impede que a janela seja redimensionável
+        setResizable(false); // nao deixa a janela redimensionavel
         setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
         setLocationRelativeTo(null);
 
         layout = new CardLayout();
         painelPrincipal = new JPanel(layout);
-        painelPrincipal.setOpaque(false); // Permite transparência no painel principal
+        painelPrincipal.setOpaque(false); 
 
         painelPrincipal.add(new MenuPrincipal(layout, painelPrincipal), "Menu");
         painelPrincipal.add(new MenuLogin(layout, painelPrincipal), "Login");
         painelPrincipal.add(new MenuOpcoes(layout, painelPrincipal), "Opções");
         painelPrincipal.add(new Parte1(layout, painelPrincipal), "Jogo");
 
-        // Adiciona o painel de administração
+        // painel admin
         painelPrincipal.add(new MenuAdmin(layout, painelPrincipal), "Admin");
 
-        // Adiciona os painéis adicionais
+        
         painelPrincipal.add(new TremPortaAberta(layout, painelPrincipal), "PortaAberta");
         painelPrincipal.add(new TremPesOlhando(layout, painelPrincipal), "PesOlhando");
         painelPrincipal.add(new TremEmergencia(layout, painelPrincipal), "TremEmergencia");

@@ -7,15 +7,16 @@ public class MenuAdmin extends JPanel {
     private final JTextField txtNome, txtEmail, txtRegistro;
     private final JPasswordField txtSenha;
     private final JCheckBox chkMostrarSenha;
-    private final JButton btnAdicionar, btnRemover, btnAlterar, btnVoltar, btnJogar; // Adicione este atributo
+    private final JButton btnAdicionar, btnRemover, btnAlterar, btnVoltar, btnJogar;
     private final JTextArea txtAreaUsuarios;
     private final MetroviarioDAO dao;
     private final Image imagemFundo;
+    private boolean mostrandoAdministradores = false;
+    private final JComboBox<String> comboLista;
 
     public MenuAdmin(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
 
-        // Troque o caminho abaixo pela sua imagem (ex: "imagens/fundo.jpg")
         imagemFundo = new ImageIcon("imagens/imagem admin.png").getImage();
 
         dao = new MetroviarioDAO();
@@ -23,7 +24,7 @@ public class MenuAdmin extends JPanel {
         lblTitulo = new JLabel("Administração de Usuários", SwingConstants.CENTER);
         lblTitulo.setFont(new Font("Arial", Font.BOLD, 24));
         lblTitulo.setBounds(390, 20, 500, 40);
-        lblTitulo.setForeground(new Color(0, 0, 0, 0)); // Deixa invisível para desenhar manualmente
+        lblTitulo.setForeground(new Color(0, 0, 0, 0));
         add(lblTitulo);
 
         lblNome = new JLabel("Nome:");
@@ -94,7 +95,47 @@ public class MenuAdmin extends JPanel {
 
         btnAdicionar = new JButton("Adicionar");
         btnAdicionar.setBounds(390, 210, 130, 40);
-        btnAdicionar.addActionListener(e -> adicionarUsuario());
+        btnAdicionar.addActionListener(e -> {
+            String nome = txtNome.getText().trim();
+            String email = txtEmail.getText().trim();
+            String registro = txtRegistro.getText().trim();
+            String senha = new String(txtSenha.getPassword()).trim();
+
+            if (nome.isEmpty() || email.isEmpty() || registro.isEmpty() || senha.isEmpty()) {
+                JOptionPane.showMessageDialog(this, "Preencha todos os campos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                return;
+            }
+
+            int resposta = JOptionPane.showConfirmDialog(
+                this,
+                "O usuário cadastrado é um administrador?",
+                "Tipo de usuário",
+                JOptionPane.YES_NO_OPTION
+            );
+
+            if (resposta == JOptionPane.YES_OPTION) {
+                try (java.sql.Connection conn = Conexao.conectar();
+                     java.sql.PreparedStatement stmt = conn.prepareStatement(
+                         "INSERT INTO administradores (nome, email, registro, senha) VALUES (?, ?, ?, ?)")) {
+                    stmt.setString(1, nome);
+                    stmt.setString(2, email);
+                    stmt.setString(3, registro);
+                    stmt.setString(4, senha);
+                    stmt.executeUpdate();
+                    JOptionPane.showMessageDialog(this, "Administrador cadastrado com sucesso!");
+                } catch (Exception ex) {
+                    ex.printStackTrace();
+                    JOptionPane.showMessageDialog(this, "Erro ao cadastrar administrador.", "Erro", JOptionPane.ERROR_MESSAGE);
+                }
+            } else {
+                Metroviario novo = new Metroviario(nome, email, registro, senha, 0);
+                MetroviarioDAO dao = new MetroviarioDAO();
+                dao.inserir(novo);
+                JOptionPane.showMessageDialog(this, "Metroviário cadastrado com sucesso!");
+            }
+
+            atualizarListaUsuarios();
+        });
         add(btnAdicionar);
 
         btnRemover = new JButton("Remover");
@@ -121,9 +162,18 @@ public class MenuAdmin extends JPanel {
 
         btnJogar = new JButton("Jogar");
         btnJogar.setFont(new Font("Arial", Font.PLAIN, 18));
-        btnJogar.setBounds(610, 490, 200, 50); // Ao lado do botão Voltar
+        btnJogar.setBounds(610, 490, 200, 50);
         btnJogar.addActionListener(e -> layout.show(painelPrincipal, "Jogo"));
         add(btnJogar);
+
+        comboLista = new JComboBox<>(new String[]{"Metroviários", "Administradores"});
+        comboLista.setFont(new Font("Arial", Font.PLAIN, 16));
+        comboLista.setBounds(180, 300, 200, 40);
+        comboLista.addActionListener(e -> {
+            mostrandoAdministradores = comboLista.getSelectedIndex() == 1;
+            atualizarListaUsuarios();
+        });
+        add(comboLista);
 
         atualizarListaUsuarios();
     }
@@ -138,7 +188,6 @@ public class MenuAdmin extends JPanel {
             g2d.dispose();
         }
 
-        // Desenha contorno preto mais grosso nos textos dos labels
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setFont(lblTitulo.getFont());
         drawOutlinedText(g2, lblTitulo.getText(), lblTitulo.getX(), lblTitulo.getY() + lblTitulo.getHeight() - 10, Color.WHITE, Color.BLACK, 3);
@@ -151,7 +200,6 @@ public class MenuAdmin extends JPanel {
         g2.dispose();
     }
 
-    // Método utilitário para desenhar texto com contorno mais grosso
     private void drawOutlinedText(Graphics2D g2, String text, int x, int y, Color fill, Color outline, int thickness) {
         g2.setColor(outline);
         for (int dx = -thickness; dx <= thickness; dx++) {
@@ -176,19 +224,16 @@ public class MenuAdmin extends JPanel {
             return;
         }
 
-        // Validação do e-mail
         if (!email.endsWith("@metrosp.com.br")) {
             JOptionPane.showMessageDialog(this, "O e-mail deve ser do domínio @metrosp.com.br", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Validação do registro (R12345-6)
         if (!registro.matches("^R\\d{5}-\\d$")) {
             JOptionPane.showMessageDialog(this, "O registro deve estar no formato R12345-6.", "Erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
 
-        // Verifica se já existe
         List<Metroviario> lista = dao.listarTodos();
         for (Metroviario m : lista) {
             if (m.getNome().equals(nome)) {
@@ -273,14 +318,32 @@ public class MenuAdmin extends JPanel {
     }
 
     private void atualizarListaUsuarios() {
-        List<Metroviario> lista = dao.listarTodos();
-        StringBuilder sb = new StringBuilder("Usuários cadastrados:\n");
-        for (Metroviario m : lista) {
-            sb.append("- ").append(m.getNome())
-              .append(" | ").append(m.getEmail())
-              .append(" | ").append(m.getRegistro())
-              .append("\n");
+        if (mostrandoAdministradores) {
+            StringBuilder sb = new StringBuilder("Administradores cadastrados:\n");
+            try (java.sql.Connection conn = Conexao.conectar();
+                 java.sql.PreparedStatement stmt = conn.prepareStatement("SELECT nome, email, registro FROM administradores");
+                 java.sql.ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    sb.append("- ")
+                      .append(rs.getString("nome"))
+                      .append(" | ").append(rs.getString("email"))
+                      .append(" | ").append(rs.getString("registro"))
+                      .append("\n");
+                }
+            } catch (Exception ex) {
+                sb.append("Erro ao buscar administradores.");
+            }
+            txtAreaUsuarios.setText(sb.toString());
+        } else {
+            List<Metroviario> lista = dao.listarTodos();
+            StringBuilder sb = new StringBuilder("Usuários cadastrados:\n");
+            for (Metroviario m : lista) {
+                sb.append("- ").append(m.getNome())
+                  .append(" | ").append(m.getEmail())
+                  .append(" | ").append(m.getRegistro())
+                  .append("\n");
+            }
+            txtAreaUsuarios.setText(sb.toString());
         }
-        txtAreaUsuarios.setText(sb.toString());
     }
 }

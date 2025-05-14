@@ -14,7 +14,7 @@ public class MenuLogin extends PainelComImagem {
         super("imagens/metro_blur.jpg");
         setLayout(null);
 
-        lblNome = new JLabel("Email:", SwingConstants.CENTER);
+        lblNome = new JLabel("Registro:", SwingConstants.CENTER); // Troca para Registro
         lblNome.setFont(new Font("Arial", Font.BOLD, 24));
         lblNome.setForeground(Color.WHITE);
         add(lblNome);
@@ -53,22 +53,22 @@ public class MenuLogin extends PainelComImagem {
         add(btnVoltar);
 
         btnEntrar.addActionListener(e -> {
-            String email = txtNome.getText().trim(); // txtNome agora recebe o email
+            String registro = txtNome.getText().trim(); // Agora recebe o registro
             String senha = new String(txtSenha.getPassword()).trim();
 
             // Login temporário para testes
-            if (email.equals("a") && senha.equals("a")) {
+            if (registro.equals("a") && senha.equals("a")) {
                 layout.show(painelPrincipal, "Jogo");
                 return;
             }
 
-            if (!email.isEmpty() && !senha.isEmpty()) {
+            if (!registro.isEmpty() && !senha.isEmpty()) {
                 // Verifica se é administrador no banco de dados
                 boolean adminEncontrado = false;
                 try (java.sql.Connection conn = Conexao.conectar();
                      java.sql.PreparedStatement stmt = conn.prepareStatement(
-                         "SELECT * FROM administradores WHERE email = ? AND senha = ?")) {
-                    stmt.setString(1, email);
+                         "SELECT * FROM administradores WHERE registro = ? AND senha = ?")) {
+                    stmt.setString(1, registro);
                     stmt.setString(2, senha);
                     try (java.sql.ResultSet rs = stmt.executeQuery()) {
                         if (rs.next()) {
@@ -90,7 +90,7 @@ public class MenuLogin extends PainelComImagem {
                 boolean encontrado = false;
                 List<Metroviario> lista = dao.listarTodos();
                 for (Metroviario m : lista) {
-                    if (m.getEmail().equals(email) && m.getSenha().equals(senha)) {
+                    if (m.getRegistro().equals(registro) && m.getSenha().equals(senha)) {
                         encontrado = true;
                         break;
                     }
@@ -98,10 +98,10 @@ public class MenuLogin extends PainelComImagem {
                 if (encontrado) {
                     layout.show(painelPrincipal, "Jogo");
                 } else {
-                    JOptionPane.showMessageDialog(this, "E-mail ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Registro ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                JOptionPane.showMessageDialog(this, "E-mail ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this, "Registro ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
             }
         });
 

@@ -29,13 +29,15 @@ public class TremPortaAberta extends JPanel {
         botaoInferior.addActionListener(e -> layout.show(painelPrincipal, "PesOlhando"));
         add(botaoInferior);
 
-        // Botão "Emergência" visível no canto superior esquerdo
+        // Botão "Emergência" invisível no canto superior esquerdo
         JButton botaoEmergencia = new JButton("Emergência");
         botaoEmergencia.setFont(new Font("Arial", Font.PLAIN, 18));
         botaoEmergencia.setForeground(Color.WHITE);
         botaoEmergencia.setBackground(new Color(220, 53, 69)); // vermelho suave
         botaoEmergencia.setFocusPainted(false);
-        botaoEmergencia.setBounds(300, 400, 180, 200); // canto superior esquerdo, fora da área do botão transparente
+        botaoEmergencia.setBounds(300, 400, 180, 200);
+        // Torna o botão invisível:
+        botaoEmergencia.setVisible(false);
         botaoEmergencia.addActionListener(e -> {
             System.out.println("Cliquei em Emergência!"); // Para depuração
             layout.show(painelPrincipal, "TremEmergencia");
