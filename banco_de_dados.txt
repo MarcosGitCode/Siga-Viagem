@@ -1,0 +1,73 @@
+-- Cria banco de dados
+CREATE DATABASE IF NOT EXISTS metro;
+USE metro;
+
+-- Tabela de metroviários
+CREATE TABLE metroviarios (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    senha CHAR(15) NOT NULL,
+    registro VARCHAR(8) UNIQUE NOT NULL,
+    pontuacao_total INT DEFAULT 0,
+    CHECK (registro REGEXP '^R[0-9]{5}-[0-9]$'),
+    CHECK (email LIKE '%@metrosp.com.br')
+);
+
+-- Tabela de administradores
+CREATE TABLE administradores (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nome VARCHAR(100) NOT NULL,
+    email VARCHAR(255) UNIQUE NOT NULL,
+    senha CHAR(15) NOT NULL,
+    CHECK (email LIKE '%@metrosp.com.br')
+);
+
+-- Tabela de tarefas avaliativas
+CREATE TABLE tarefas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    titulo VARCHAR(255) NOT NULL,
+    descricao TEXT,
+    valor_pontuacao INT NOT NULL
+);
+
+-- Relaciona metroviários com tarefas realizadas
+CREATE TABLE tarefas_realizadas (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    id_metroviario INT NOT NULL,
+    id_tarefa INT NOT NULL,
+    data_realizacao DATETIME DEFAULT CURRENT_TIMESTAMP,
+    pontuacao_obtida INT NOT NULL,
+    FOREIGN KEY (id_metroviario) REFERENCES metroviarios(id),
+    FOREIGN KEY (id_tarefa) REFERENCES tarefas(id)
+);
+
+-- View para ranking
+CREATE VIEW ranking_metroviarios AS
+SELECT 
+    m.id,
+    m.nome,
+    m.email,
+    SUM(tr.pontuacao_obtida) AS pontuacao_total
+FROM 
+    metroviarios m
+JOIN 
+    tarefas_realizadas tr ON m.id = tr.id_metroviario
+GROUP BY 
+    m.id, m.nome, m.email
+ORDER BY 
+    pontuacao_total DESC;
+    
+INSERT INTO metroviarios (nome, email, senha, registro) VALUES
+("Guilherme43", "guilherme43@metrosp.com.br", "R43434-3", "R43434-3"),
+("Nikolas", "nikolas@metrosp.com.br", "R12345-6", "R12345-6"),
+("Guilherme Calderan", "guilherme15@metrosp.com.br", "R01758-2", "R01758-2"),
+("Marcos", "marcos@metrosp.com.br", "R22222-2", "R22222-2"),
+("Guilherme Nunes", "guilhermeswing@metrosp.com.br", "R33333-3", "R33333-3")
+;
+
+INSERT INTO administradores (nome, email, senha) VALUES
+("Demetrius", "demetrius@metrosp.com.br", "R99999-9");
+
+SELECT * from metroviarios;
+SELECT * FROM administradores;
