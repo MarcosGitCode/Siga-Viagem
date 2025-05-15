@@ -13,7 +13,7 @@ public class TremPortaAberta extends JPanel {
         setLayout(null);
 
         // Carrega a imagem inicial
-        ImageIcon imagem = carregarImagem("imagens/Fotos editadas/14 - Porta aberta - externo.jpg");
+        ImageIcon imagem = carregarImagem("imagens/Fotos editadas/14 - Porta aberta - externo (2).jpg");
 
         // Adiciona a imagem inicial ao painel
         labelImagem = new JLabel(imagem);
@@ -45,14 +45,22 @@ public class TremPortaAberta extends JPanel {
         add(botaoEmergencia);
 
         // Botão Voltar
-        JButton botaoVoltar = new JButton("<");
-        botaoVoltar.setBounds(10, 10, 60, 60);
-        botaoVoltar.setContentAreaFilled(true);
-        botaoVoltar.setBackground(Color.RED);
-         botaoVoltar.setFocusPainted(false);
-        botaoVoltar.setBorderPainted(true);
+        JButton botaoVoltar = new JButton("Voltar");
+        botaoVoltar.setBounds(220, 20, 100, 50);
         botaoVoltar.addActionListener(e -> layout.show(painelPrincipal, "Trem1"));
         add(botaoVoltar);
+
+        // Botão representando a seta apontando para cima
+        JButton botaoSetaCima = new JButton("↑");
+        botaoSetaCima.setBounds(610, 575, 80, 50); // Ajuste a posição e tamanho conforme necessário
+        botaoSetaCima.addActionListener(e -> layout.show(painelPrincipal, "TremEmergencia"));
+
+        // Torna o botão invisível visualmente, mas funcional
+        botaoSetaCima.setOpaque(false);
+        botaoSetaCima.setContentAreaFilled(false);
+        botaoSetaCima.setBorderPainted(false);
+
+        add(botaoSetaCima);
     }
 
     private void trocarImagem(String caminhoImagem) {
