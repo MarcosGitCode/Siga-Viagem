@@ -45,8 +45,12 @@ public class TremPortaAberta extends JPanel {
         add(botaoEmergencia);
 
         // Botão Voltar
-        JButton botaoVoltar = new JButton("Voltar");
-        botaoVoltar.setBounds(220, 20, 100, 50);
+        JButton botaoVoltar = new JButton("<");
+        botaoVoltar.setBounds(10, 10, 60, 60);
+        botaoVoltar.setContentAreaFilled(true);
+        botaoVoltar.setBackground(Color.RED);
+         botaoVoltar.setFocusPainted(false);
+        botaoVoltar.setBorderPainted(true);
         botaoVoltar.addActionListener(e -> layout.show(painelPrincipal, "Trem1"));
         add(botaoVoltar);
     }

@@ -32,5 +32,6 @@ public class Trem1 extends BasePainelComBotao {
         botao.setBorderPainted(false); // Remove as bordas do botão
         botao.addActionListener(action);
         painel.add(botao);
+        
     }
 }
