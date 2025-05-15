@@ -13,7 +13,7 @@ public class TremPortaAberta extends JPanel {
         setLayout(null);
 
         // Carrega a imagem inicial
-        ImageIcon imagem = carregarImagem("imagens/Fotos editadas/14 - Porta aberta - externo.jpg");
+        ImageIcon imagem = carregarImagem("imagens/Fotos editadas/14 - Porta aberta - externo (2).jpg");
 
         // Adiciona a imagem inicial ao painel
         labelImagem = new JLabel(imagem);
@@ -44,7 +44,6 @@ public class TremPortaAberta extends JPanel {
         });
         add(botaoEmergencia);
 
-        // Botão Voltar
         JButton botaoVoltar = new JButton("<");
         botaoVoltar.setBounds(10, 10, 60, 60);
         botaoVoltar.setContentAreaFilled(true);
@@ -53,6 +52,9 @@ public class TremPortaAberta extends JPanel {
         botaoVoltar.setBorderPainted(true);
         botaoVoltar.addActionListener(e -> layout.show(painelPrincipal, "Trem1"));
         add(botaoVoltar);
+    
+
+
     }
 
     private void trocarImagem(String caminhoImagem) {

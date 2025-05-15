@@ -8,8 +8,11 @@ public class TremEmergencia extends JPanel {
 
         // Teste de carregamento da imagem
         String caminho = "imagens/Fotos editadas/16 - Dispositivos de emergência.jpg";
-        ImageIcon imagem = new ImageIcon(caminho);
-        System.out.println("Largura da imagem: " + imagem.getIconWidth()); // Deve ser >0
+        ImageIcon imagemOriginal = new ImageIcon(caminho);
+
+        // Redimensionar a imagem ao tamanho da janela
+        Image imagemRedimensionada = imagemOriginal.getImage().getScaledInstance(1280, 856, Image.SCALE_SMOOTH);
+        ImageIcon imagem = new ImageIcon(imagemRedimensionada);
 
         JLabel labelImagem = new JLabel(imagem);
         labelImagem.setBounds(0, 0, 1280, 856);
