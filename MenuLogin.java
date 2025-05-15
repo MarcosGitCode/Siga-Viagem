@@ -149,7 +149,7 @@ public class MenuLogin extends PainelComImagem {
         tempoDecorrido = 0; // Reseta o tempo ao iniciar o timer
         Timer timer = new Timer(1000, e -> {
             tempoDecorrido++; // Incrementa o tempo a cada segundo
-            System.out.println("Tempo decorrido: " + tempoDecorrido + " segundos.");
+            //System.out.println("Tempo decorrido: " + tempoDecorrido + " segundos.");
             // Adicione aqui a lógica que deseja executar periodicamente
         });
         timer.start();
