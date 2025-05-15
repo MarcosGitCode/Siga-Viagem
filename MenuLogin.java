@@ -61,6 +61,13 @@ public class MenuLogin extends PainelComImagem {
             if (registro.equals("a") && senha.equals("a")) {
                 iniciarTimer(); // Inicia o timer após login bem-sucedido
                 layout.show(painelPrincipal, "Jogo");
+                Component[] components = painelPrincipal.getComponents();
+                for (Component comp : components) {
+                    if (comp instanceof Parte1) {
+                        ((Parte1) comp).tocarSomAlarme();
+                        break;
+                    }
+                }
                 return;
             }
 

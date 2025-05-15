@@ -22,9 +22,10 @@ public class JogoItens extends JPanel {
         JButton botaoVoltar = new JButton("<");
         botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
         botaoVoltar.setFont(new Font("Arial", Font.BOLD, 20)); // Define a fonte do texto
-        botaoVoltar.setForeground(Color.WHITE); // Define a cor do texto
-        botaoVoltar.setContentAreaFilled(false); // Remove o fundo visível
-        botaoVoltar.setOpaque(false); // Garante que o botão seja transparente
+        botaoVoltar.setForeground(Color.BLACK);
+        botaoVoltar.setBackground(Color.RED); // Define a cor do texto
+        botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
+        botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
         botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");

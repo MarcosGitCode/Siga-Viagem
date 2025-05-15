@@ -18,7 +18,10 @@ public class MenuPrincipal extends PainelComImagem {
         btnPlacar.setBounds(430, 360, 400, 60);
         btnSair.setBounds(430, 440, 400, 60);
 
-        btnJogar.addActionListener(e -> layout.show(painelPrincipal, "Login"));
+        btnJogar.addActionListener(e -> {
+            layout.show(painelPrincipal, "Login");
+        });
+
         btnOpcoes.addActionListener(e -> layout.show(painelPrincipal, "Opções"));
         btnSair.addActionListener(e -> System.exit(0));
 

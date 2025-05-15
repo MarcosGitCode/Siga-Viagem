@@ -1,12 +1,18 @@
 import java.awt.*;
 import java.awt.event.ActionListener;
 import javax.swing.*;
+import javax.sound.sampled.*;
+import java.io.File;
+import java.io.IOException;
 
 public class Parte1 extends PainelComImagem {
     private JPanel painelBotoes;
 
     public Parte1(CardLayout layout, JPanel painelPrincipal) {
-        super("imagens/Fotos editadas/01 - Painel.jpg"); // Define a imagem de fundo
+        super("imagens/Fotos editadas/01 - Painel.jpg");
+        
+        // Tocar o som de alarme
+        
 
         // Layout geral com BorderLayout
         var bl = new BorderLayout();
@@ -61,6 +67,19 @@ public class Parte1 extends PainelComImagem {
         painelPrincipal.add(new JogoDireita(layout, painelPrincipal), "JogoDireita");
         painelPrincipal.add(new JogoEsquerda(layout, painelPrincipal), "JogoEsquerda");
         painelPrincipal.add(new JogoAlavanca(layout, painelPrincipal), "JogoAlavanca");
+    }
+
+     public void tocarSomAlarme() {
+        try {
+            File arquivoSom = new File("sons/alarme.wav"); // Certifique-se de criar uma pasta 'sons' e adicionar um arquivo de alarme
+            AudioInputStream audioStream = AudioSystem.getAudioInputStream(arquivoSom);
+            Clip clip = AudioSystem.getClip();
+            clip.open(audioStream);
+            MenuOpcoes.setAudioClip(clip);
+            clip.start();
+        } catch (UnsupportedAudioFileException | IOException | LineUnavailableException e) {
+            System.err.println("Erro ao tocar som: " + e.getMessage());
+        }
     }
 
     // Método para criar botões visíveis

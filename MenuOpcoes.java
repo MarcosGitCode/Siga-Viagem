@@ -1,4 +1,7 @@
 import java.awt.*;
+
+import javax.sound.sampled.Clip;
+import javax.sound.sampled.FloatControl;
 import javax.swing.*;
 
 public class MenuOpcoes extends JPanel {
@@ -7,6 +10,8 @@ public class MenuOpcoes extends JPanel {
     private final JLabel lblTela;
     private final JButton btnVoltar;
     private Image backgroundImage;
+    private static float volume = 50.0f; // Volume inicial (0-100)
+    private static Clip audioClip;
 
     public MenuOpcoes(CardLayout layout, JPanel painelPrincipal) {
         // Load the background image
@@ -19,9 +24,13 @@ public class MenuOpcoes extends JPanel {
         lblVolume.setBounds(390, 100, 500, 40);
         add(lblVolume);
 
-        sliderVolume = new JSlider(0, 100, 50);
+        sliderVolume = new JSlider(0, 100, (int)volume);
         sliderVolume.setBounds(390, 160, 500, 40);
         sliderVolume.setOpaque(false);
+        sliderVolume.addChangeListener(e -> {
+            volume = sliderVolume.getValue();
+            atualizarVolume();
+        });
         add(sliderVolume);
 
         lblTela = new JLabel("Tela:", SwingConstants.CENTER);
@@ -38,6 +47,7 @@ public class MenuOpcoes extends JPanel {
         });
         add(btnVoltar);
     }
+    
 
     // Define the RoundedBorder class
     class RoundedBorder implements javax.swing.border.Border {
@@ -80,5 +90,23 @@ public class MenuOpcoes extends JPanel {
         botao.setOpaque(false);
         botao.setBorder(new RoundedBorder(20));
         return botao;
+    }
+    // Método para definir o clip de áudio atual
+    public static void setAudioClip(Clip clip) {
+        audioClip = clip;
+        atualizarVolume();
+    }
+    // Método para atualizar o volume
+    private static void atualizarVolume() {
+        if (audioClip != null) {
+            try {
+                FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
+                // Converter o valor do slider (0-100) para decibéis (-80.0f até 6.0f)
+                float gain = (volume / 100.0f) * (gainControl.getMaximum() - gainControl.getMinimum()) + gainControl.getMinimum();
+                gainControl.setValue(gain);
+            } catch (Exception e) {
+                System.err.println("Erro ao ajustar volume: " + e.getMessage());
+            }
+        }
     }
 }
