@@ -21,7 +21,7 @@ public class JogoItens extends JPanel {
         // Botão de voltar
         JButton botaoVoltar = new JButton("<");
         botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
-        botaoVoltar.setFont(new Font("Arial", Font.BOLD, 20)); // Define a fonte do texto
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
         botaoVoltar.setForeground(Color.BLACK);
         botaoVoltar.setBackground(Color.RED); // Define a cor do texto
         botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível

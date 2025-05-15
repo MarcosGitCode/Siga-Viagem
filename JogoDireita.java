@@ -7,23 +7,36 @@ public class JogoDireita extends BasePainelComBotao {
         super("imagens/Fotos editadas/direita2.png", layout, painelPrincipal);
         setLayout(null); // Layout absoluto para posicionar componentes, se necessário
 
-        // Adiciona o painel JogoItens ao painel principal
-        painelPrincipal.add(new JogoItens(layout, painelPrincipal), "JogoItens");
+        // Remova/adicione painéis apenas no Menu.java para evitar loops!
 
         // Botão visível no painel
         JButton botaoSetaDireita = new JButton("");
-        botaoSetaDireita.setBounds(900, 300, 290, 300); // Define a posição e o tamanho do botão
-        botaoSetaDireita.setContentAreaFilled(false); // Remove o fundo do botão
-        botaoSetaDireita.setBorderPainted(false); // Remove as bordas do botão
-        botaoSetaDireita.setFocusPainted(false); // Remove o destaque ao focar
-        botaoSetaDireita.setOpaque(false); // Garante que o botão seja transparente
-        botaoSetaDireita.setForeground(Color.WHITE); // Define a cor do texto
-        botaoSetaDireita.setFont(new Font("Arial", Font.BOLD, 20)); // Define a fonte do texto
+        botaoSetaDireita.setBounds(900, 300, 290, 300);
+        botaoSetaDireita.setContentAreaFilled(false);
+        botaoSetaDireita.setBorderPainted(false);
+        botaoSetaDireita.setFocusPainted(false);
+        botaoSetaDireita.setOpaque(false);
+        botaoSetaDireita.setForeground(Color.WHITE);
+        botaoSetaDireita.setFont(new Font("Arial", Font.BOLD, 20));
         botaoSetaDireita.addActionListener(e -> {
             System.out.println("Botão seta direita clicado!");
-            layout.show(painelPrincipal, "JogoItens"); // Alterna para o painel JogoItens
+            layout.show(painelPrincipal, "JogoItens");
         });
+        add(botaoSetaDireita);
 
-        add(botaoSetaDireita); // Adiciona o botão ao painel
+        // Botão Voltar para Parte1
+       JButton botaoVoltar = new JButton("<");
+        botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
+        botaoVoltar.setForeground(Color.BLACK);
+        botaoVoltar.setBackground(Color.RED); // Define a cor do texto
+        botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
+        botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
+        botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
+        botaoVoltar.addActionListener(e -> {
+            System.out.println("Botão voltar clicado!");
+            layout.show(painelPrincipal, "Jogo"); // Volta para o painel anterior
+        });
+        add(botaoVoltar); // Adiciona o botão ao painel
     }
 }

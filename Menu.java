@@ -1,4 +1,3 @@
-
 import java.awt.*;
 import javax.swing.*;
 
@@ -31,6 +30,8 @@ public class Menu extends JFrame {
         painelPrincipal.add(new TremPortaAberta(layout, painelPrincipal), "PortaAberta");
         painelPrincipal.add(new TremPesOlhando(layout, painelPrincipal), "PesOlhando");
         painelPrincipal.add(new TremEmergencia(layout, painelPrincipal), "TremEmergencia");
+        painelPrincipal.add(new Trem1(layout, painelPrincipal), "Trem1");
+        painelPrincipal.add(new TremPortaAberta(layout, painelPrincipal), "TremPortaAberta");
 
         add(painelPrincipal);
         setVisible(true);

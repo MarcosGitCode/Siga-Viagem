@@ -44,11 +44,19 @@ public class TremPortaAberta extends JPanel {
         });
         add(botaoEmergencia);
 
-        // Botão Voltar
-        JButton botaoVoltar = new JButton("Voltar");
-        botaoVoltar.setBounds(220, 20, 100, 50);
-        botaoVoltar.addActionListener(e -> layout.show(painelPrincipal, "Trem1"));
-        add(botaoVoltar);
+        JButton botaoVoltar = new JButton("<");
+        botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
+        botaoVoltar.setForeground(Color.BLACK);
+        botaoVoltar.setBackground(Color.RED); // Define a cor do texto
+        botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
+        botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
+        botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
+        botaoVoltar.addActionListener(e -> {
+            System.out.println("Botão voltar clicado!");
+            layout.show(painelPrincipal, "Trem1"); // Volta para o painel anterior
+        });
+        add(botaoVoltar); // Adiciona o botão ao painel
 
         // Botão representando a seta apontando para cima
         JButton botaoSetaCima = new JButton("↑");
