@@ -11,6 +11,23 @@ public class JogoDDU extends BasePainelComBotao {
     public JogoDDU(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/03 - DDU com fachada aberta.jpg", layout, painelPrincipal);
         setLayout(null); // Layout absoluto
+        
+        // Botão Voltar para Parte1
+      JButton botaoVoltar = new JButton("<");
+       botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
+       botaoVoltar.setFont(new Font("Arial", Font.BOLD, 20)); // Define a fonte do texto
+       botaoVoltar.setForeground(Color.BLACK);
+       botaoVoltar.setBackground(Color.RED); // Define a cor do texto
+       botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
+       botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
+       botaoVoltar.setBorderPainted(true);
+       botaoVoltar.setFocusPainted(false); // Remove as bordas do botão
+       botaoVoltar.addActionListener(e -> {
+           System.out.println("Botão voltar clicado!");
+           layout.show(painelPrincipal, "Jogo"); // Volta para o painel anterior
+        });
+        add(botaoVoltar); // Adiciona o botão ao painel
+        
 
         // Criação do JLabel para exibir a imagem
         imagemLabel = new JLabel();
@@ -39,20 +56,6 @@ public class JogoDDU extends BasePainelComBotao {
         btnFe.addActionListener(e -> alterarImagem("imagens/Fotos editadas/DDU - tela FE- lista de emergência.jpg"));
         btnInfopass.addActionListener(e -> alterarImagem("imagens/Fotos editadas/DDU - tela INFOPASS.jpg"));
 
-         // Botão Voltar para Parte1
-       JButton botaoVoltar = new JButton("<");
-        botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
-        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
-        botaoVoltar.setForeground(Color.BLACK);
-        botaoVoltar.setBackground(Color.RED); // Define a cor do texto
-        botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
-        botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
-        botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
-        botaoVoltar.addActionListener(e -> {
-            System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "Jogo"); // Volta para o painel anterior
-        });
-        add(botaoVoltar); // Adiciona o botão ao painel
 
         // Listener para redimensionamento: atualiza os limites e re-renderiza a imagem
         addComponentListener(new ComponentAdapter() {

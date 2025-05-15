@@ -11,15 +11,28 @@ public class TremPortaAberta extends JPanel {
 
     public TremPortaAberta(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
-
+        
+        JButton botaoVoltar = new JButton("<");
+        botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
+        botaoVoltar.setForeground(Color.BLACK);
+        botaoVoltar.setBackground(Color.RED); // Define a cor do texto
+        botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
+        botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
+        botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
+        botaoVoltar.addActionListener(e -> {
+            System.out.println("Botão voltar clicado!");
+            layout.show(painelPrincipal, "Trem1"); // Volta para o painel anterior
+        });
+        add(botaoVoltar); // Adiciona o botão ao painel
         // Carrega a imagem inicial
         ImageIcon imagem = carregarImagem("imagens/Fotos editadas/14 - Porta aberta - externo (2).jpg");
-
+        
         // Adiciona a imagem inicial ao painel
         labelImagem = new JLabel(imagem);
         labelImagem.setBounds(0, 0, 1280, 856);
         add(labelImagem);
-
+        
         // Botão metade inferior (troca para TremPesOlhando)
         JButton botaoInferior = new JButton();
         botaoInferior.setBounds(500, 650, 300, 300);
@@ -44,19 +57,6 @@ public class TremPortaAberta extends JPanel {
         });
         add(botaoEmergencia);
 
-        JButton botaoVoltar = new JButton("<");
-        botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
-        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
-        botaoVoltar.setForeground(Color.BLACK);
-        botaoVoltar.setBackground(Color.RED); // Define a cor do texto
-        botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
-        botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
-        botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
-        botaoVoltar.addActionListener(e -> {
-            System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "Trem1"); // Volta para o painel anterior
-        });
-        add(botaoVoltar); // Adiciona o botão ao painel
 
         // Botão representando a seta apontando para cima
         JButton botaoSetaCima = new JButton("↑");
