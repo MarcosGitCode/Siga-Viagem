@@ -1,6 +1,6 @@
 import java.awt.*;
-import javax.swing.JPanel;
 import javax.swing.JButton;
+import javax.swing.JPanel;
 
 public class JogoADU extends BasePainelComBotao {
 

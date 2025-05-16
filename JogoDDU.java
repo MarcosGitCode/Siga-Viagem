@@ -52,7 +52,7 @@ public class JogoDDU extends BasePainelComBotao {
         add(btnInfopass);
 
         // Ações dos botões com caminhos de imagem
-        btnPrepara.addActionListener(e -> alterarImagem("imagens/Fotos editadas/03 - DDU com fachada aberta.jpg"));
+        btnPrepara.addActionListener(e -> alterarImagem("imagens/Fotos editadas/Uma porta não fecha.jpg"));
         btnFe.addActionListener(e -> alterarImagem("imagens/Fotos editadas/DDU - tela FE- lista de emergência.jpg"));
         btnInfopass.addActionListener(e -> alterarImagem("imagens/Fotos editadas/DDU - tela INFOPASS.jpg"));
 
