@@ -15,10 +15,7 @@ public class JogoEsquerdaOficial extends BasePainelComBotao {
         painelBotoes.setOpaque(false); // Torna o painel transparente
         add(painelBotoes);
 
-        criarBotaoVisivel(painelBotoes, 0, 200, 500, 500, Color.GREEN, e -> {
-            System.out.println("Botão Trem1 clicado!");
-            layout.show(painelPrincipal, "Trem1"); // Alterna para o painel Trem1
-        });
+        
 
         // Botão Voltar para Parte1
         JButton botaoVoltar = new JButton("<");
