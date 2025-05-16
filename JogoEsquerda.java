@@ -31,7 +31,7 @@ public class JogoEsquerda extends BasePainelComBotao {
         botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "Jogo"); // Volta para o painel anterior
+            layout.show(painelPrincipal, "JogoDireita"); // Volta para o painel anterior
         });
         add(botaoVoltar); // Adiciona o botão ao painel
     }

@@ -1,15 +1,15 @@
 import java.awt.*;
 import java.awt.event.*;
-import javax.swing.*;
 import java.io.File;
+import javax.swing.*;
 
 public class JogoDDU extends BasePainelComBotao {
 
     private JLabel imagemLabel;
-    private String caminhoImagemAtual = "imagens/Fotos editadas/03 - DDU com fachada aberta.jpg";
+    private String caminhoImagemAtual = "imagens/Fotos editadas/Uma porta não fecha.jpg";
 
     public JogoDDU(CardLayout layout, JPanel painelPrincipal) {
-        super("imagens/Fotos editadas/03 - DDU com fachada aberta.jpg", layout, painelPrincipal);
+        super("imagens/Fotos editadas/Uma porta não fecha.jpg", layout, painelPrincipal);
         setLayout(null); // Layout absoluto
         
         // Botão Voltar para Parte1

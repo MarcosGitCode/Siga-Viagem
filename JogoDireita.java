@@ -20,7 +20,7 @@ public class JogoDireita extends BasePainelComBotao {
         botaoSetaDireita.setFont(new Font("Arial", Font.BOLD, 20));
         botaoSetaDireita.addActionListener(e -> {
             System.out.println("Botão seta direita clicado!");
-            layout.show(painelPrincipal, "JogoItens");
+            layout.show(painelPrincipal, "JogoEsquerda");
         });
         add(botaoSetaDireita);
 
