@@ -69,6 +69,18 @@ public class TremPortaAberta extends JPanel {
         botaoSetaCima.setBorderPainted(false);
 
         add(botaoSetaCima);
+
+        // Botão da seta da direita
+        JButton botaoSetaDireita = new JButton();
+        botaoSetaDireita.setBounds(1150, 680, 80, 40); // Ajuste a posição e tamanho conforme necessário
+        botaoSetaDireita.setOpaque(false);
+        botaoSetaDireita.setContentAreaFilled(false);
+        botaoSetaDireita.setBorderPainted(false); // Remove as bordas visíveis
+        botaoSetaDireita.addActionListener(e -> {
+            System.out.println("Botão seta direita clicado!");
+            layout.show(painelPrincipal, "TremPainelExterno"); // Troca para a tela TremPainelExterno
+        });
+        add(botaoSetaDireita);
     }
 
     private void trocarImagem(String caminhoImagem) {
