@@ -35,7 +35,7 @@ public class MenuAdmin extends JPanel {
 
         txtNome = new JTextField();
         txtNome.setFont(new Font("Arial", Font.PLAIN, 18));
-        txtNome.setBounds(500, 80, 300, 30);
+        txtNome.setBounds(490, 80, 400, 30);
         txtNome.setForeground(Color.BLACK);
         txtNome.setBackground(Color.WHITE);
         add(txtNome);
@@ -48,7 +48,7 @@ public class MenuAdmin extends JPanel {
 
         txtEmail = new JTextField();
         txtEmail.setFont(new Font("Arial", Font.PLAIN, 18));
-        txtEmail.setBounds(500, 110, 300, 30);
+        txtEmail.setBounds(490, 110, 400, 30);
         txtEmail.setForeground(Color.BLACK);
         txtEmail.setBackground(Color.WHITE);
         add(txtEmail);
@@ -61,7 +61,7 @@ public class MenuAdmin extends JPanel {
 
         txtRegistro = new JTextField();
         txtRegistro.setFont(new Font("Arial", Font.PLAIN, 18));
-        txtRegistro.setBounds(500, 140, 300, 30);
+        txtRegistro.setBounds(490, 140, 400, 30);
         txtRegistro.setForeground(Color.BLACK);
         txtRegistro.setBackground(Color.WHITE);
         add(txtRegistro);
@@ -74,14 +74,14 @@ public class MenuAdmin extends JPanel {
 
         txtSenha = new JPasswordField();
         txtSenha.setFont(new Font("Arial", Font.PLAIN, 18));
-        txtSenha.setBounds(500, 170, 300, 30);
+        txtSenha.setBounds(490, 170, 400, 30);
         txtSenha.setForeground(Color.BLACK);
         txtSenha.setBackground(Color.WHITE);
         add(txtSenha);
 
         chkMostrarSenha = new JCheckBox("Mostrar senha");
         chkMostrarSenha.setFont(new Font("Arial", Font.PLAIN, 14));
-        chkMostrarSenha.setBounds(810, 170, 130, 30);
+        chkMostrarSenha.setBounds(900, 170, 150, 30); // Volta para posição original (exemplo: ao lado do campo senha)
         chkMostrarSenha.setForeground(Color.WHITE);
         chkMostrarSenha.setOpaque(false);
         chkMostrarSenha.addActionListener(e -> {
@@ -94,7 +94,7 @@ public class MenuAdmin extends JPanel {
         add(chkMostrarSenha);
 
         btnAdicionar = new JButton("Adicionar");
-        btnAdicionar.setBounds(390, 210, 130, 40);
+        btnAdicionar.setBounds(390, 210, 160, 40);
         btnAdicionar.addActionListener(e -> {
             String nome = txtNome.getText().trim();
             String email = txtEmail.getText().trim();
@@ -139,12 +139,12 @@ public class MenuAdmin extends JPanel {
         add(btnAdicionar);
 
         btnRemover = new JButton("Remover");
-        btnRemover.setBounds(530, 210, 130, 40);
+        btnRemover.setBounds(560, 210, 160, 40);
         btnRemover.addActionListener(e -> removerUsuario());
         add(btnRemover);
 
         btnAlterar = new JButton("Alterar Senha");
-        btnAlterar.setBounds(670, 210, 130, 40);
+        btnAlterar.setBounds(730, 210, 160, 40);
         btnAlterar.addActionListener(e -> alterarSenha());
         add(btnAlterar);
 
@@ -156,19 +156,20 @@ public class MenuAdmin extends JPanel {
         add(scrollPane);
 
         btnVoltar = new JButton("Voltar");
-        btnVoltar.setBounds(390, 490, 200, 50);
+        btnVoltar.setFont(new Font("Arial", Font.PLAIN, 18));
+        btnVoltar.setBounds(390, 490, 245, 50);
         btnVoltar.addActionListener(e -> layout.show(painelPrincipal, "Menu"));
         add(btnVoltar);
 
         btnJogar = new JButton("Jogar");
         btnJogar.setFont(new Font("Arial", Font.PLAIN, 18));
-        btnJogar.setBounds(610, 490, 200, 50);
+        btnJogar.setBounds(645, 490, 245, 50);
         btnJogar.addActionListener(e -> layout.show(painelPrincipal, "Jogo"));
         add(btnJogar);
 
         comboLista = new JComboBox<>(new String[]{"Metroviários", "Administradores"});
         comboLista.setFont(new Font("Arial", Font.PLAIN, 16));
-        comboLista.setBounds(180, 300, 200, 40);
+        comboLista.setBounds(900, 270, 200, 40); // Volta para largura menor e posição original
         comboLista.addActionListener(e -> {
             mostrandoAdministradores = comboLista.getSelectedIndex() == 1;
             atualizarListaUsuarios();
@@ -190,7 +191,12 @@ public class MenuAdmin extends JPanel {
 
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setFont(lblTitulo.getFont());
-        drawOutlinedText(g2, lblTitulo.getText(), lblTitulo.getX(), lblTitulo.getY() + lblTitulo.getHeight() - 10, Color.WHITE, Color.BLACK, 3);
+        // Centraliza o título
+        FontMetrics fm = g2.getFontMetrics(lblTitulo.getFont());
+        int tituloWidth = fm.stringWidth(lblTitulo.getText());
+        int xTitulo = (getWidth() - tituloWidth) / 2;
+        int yTitulo = lblTitulo.getY() + lblTitulo.getHeight() - 10;
+        drawOutlinedText(g2, lblTitulo.getText(), xTitulo, yTitulo, Color.WHITE, Color.BLACK, 3);
 
         g2.setFont(lblNome.getFont());
         drawOutlinedText(g2, lblNome.getText(), lblNome.getX(), lblNome.getY() + lblNome.getHeight() - 8, Color.WHITE, Color.BLACK, 2);

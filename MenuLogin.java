@@ -15,8 +15,9 @@ public class MenuLogin extends PainelComImagem {
         super("imagens/metro_blur.jpg");
         setLayout(null);
 
-        lblNome = new JLabel("Registro:", SwingConstants.CENTER); // Troca para Registro
+        lblNome = new JLabel("Registro:"); // Troca para Registro
         lblNome.setFont(new Font("Arial", Font.BOLD, 24));
+        lblNome.setBounds(390, 140, 100, 30);
         lblNome.setForeground(Color.WHITE);
         add(lblNome);
 
@@ -24,8 +25,9 @@ public class MenuLogin extends PainelComImagem {
         txtNome.setFont(new Font("Arial", Font.PLAIN, 18));
         add(txtNome);
 
-        lblSenha = new JLabel("Senha:", SwingConstants.CENTER);
+        lblSenha = new JLabel("Senha:");
         lblSenha.setFont(new Font("Arial", Font.BOLD, 24));
+        lblSenha.setBounds(390, 140, 100, 30);
         lblSenha.setForeground(Color.WHITE);
         add(lblSenha);
 
