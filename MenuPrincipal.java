@@ -46,10 +46,10 @@ public class MenuPrincipal extends PainelComImagem {
     }
 
     private void adicionarAnimacoesBotoes(JButton[] botoes) {
-        // Cor de fundo padrão com transparência
-        Color buttonBackground = new Color(128, 128, 128, 128); // Cinza com 50% de transparência
-        // Cor de fundo ao passar o mouse com transparência
-        Color buttonHoverBackground = new Color(100, 100, 100, 180); // Cinza escuro com 70% de transparência
+        // Cor de fundo padrão: azul escuro com 60% de transparência
+        Color buttonBackground = new Color(10, 30, 80, 200); // Azul escuro, 153/255 ≈ 60%
+        // Cor de fundo ao passar o mouse: azul ainda mais escuro, 80% de transparência
+        Color buttonHoverBackground = new Color(5, 15, 40, 255); // Mais escuro, 204/255 ≈ 80%
 
         MouseAdapter mouseAdapter = new MouseAdapter() {
             @Override
