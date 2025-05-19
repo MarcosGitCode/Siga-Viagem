@@ -17,7 +17,7 @@ public class MenuAdmin extends JPanel {
     public MenuAdmin(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
 
-        imagemFundo = new ImageIcon("imagens/imagem admin.png").getImage();
+        imagemFundo = new ImageIcon("imagens\\metro_blur.jpg").getImage();
 
         dao = new MetroviarioDAO();
 
@@ -169,7 +169,7 @@ public class MenuAdmin extends JPanel {
 
         comboLista = new JComboBox<>(new String[]{"Metroviários", "Administradores"});
         comboLista.setFont(new Font("Arial", Font.PLAIN, 16));
-        comboLista.setBounds(900, 270, 200, 40); // Volta para largura menor e posição original
+        comboLista.setBounds(900, 270, 130, 40); // Volta para largura menor e posição original
         comboLista.addActionListener(e -> {
             mostrandoAdministradores = comboLista.getSelectedIndex() == 1;
             atualizarListaUsuarios();
@@ -191,32 +191,22 @@ public class MenuAdmin extends JPanel {
 
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setFont(lblTitulo.getFont());
+        g2.setColor(Color.WHITE); // Ou outra cor desejada
+
         // Centraliza o título
         FontMetrics fm = g2.getFontMetrics(lblTitulo.getFont());
         int tituloWidth = fm.stringWidth(lblTitulo.getText());
         int xTitulo = (getWidth() - tituloWidth) / 2;
         int yTitulo = lblTitulo.getY() + lblTitulo.getHeight() - 10;
-        drawOutlinedText(g2, lblTitulo.getText(), xTitulo, yTitulo, Color.WHITE, Color.BLACK, 3);
+        g2.drawString(lblTitulo.getText(), xTitulo, yTitulo);
 
         g2.setFont(lblNome.getFont());
-        drawOutlinedText(g2, lblNome.getText(), lblNome.getX(), lblNome.getY() + lblNome.getHeight() - 8, Color.WHITE, Color.BLACK, 2);
-        drawOutlinedText(g2, lblEmail.getText(), lblEmail.getX(), lblEmail.getY() + lblEmail.getHeight() - 8, Color.WHITE, Color.BLACK, 2);
-        drawOutlinedText(g2, lblRegistro.getText(), lblRegistro.getX(), lblRegistro.getY() + lblRegistro.getHeight() - 8, Color.WHITE, Color.BLACK, 2);
-        drawOutlinedText(g2, lblSenha.getText(), lblSenha.getX(), lblSenha.getY() + lblSenha.getHeight() - 8, Color.WHITE, Color.BLACK, 2);
-        g2.dispose();
-    }
+        g2.drawString(lblNome.getText(), lblNome.getX(), lblNome.getY() + lblNome.getHeight() - 8);
+        g2.drawString(lblEmail.getText(), lblEmail.getX(), lblEmail.getY() + lblEmail.getHeight() - 8);
+        g2.drawString(lblRegistro.getText(), lblRegistro.getX(), lblRegistro.getY() + lblRegistro.getHeight() - 8);
+        g2.drawString(lblSenha.getText(), lblSenha.getX(), lblSenha.getY() + lblSenha.getHeight() - 8);
 
-    private void drawOutlinedText(Graphics2D g2, String text, int x, int y, Color fill, Color outline, int thickness) {
-        g2.setColor(outline);
-        for (int dx = -thickness; dx <= thickness; dx++) {
-            for (int dy = -thickness; dy <= thickness; dy++) {
-                if (dx != 0 || dy != 0) {
-                    g2.drawString(text, x + dx, y + dy);
-                }
-            }
-        }
-        g2.setColor(fill);
-        g2.drawString(text, x, y);
+        g2.dispose();
     }
 
     private void adicionarUsuario() {
