@@ -140,4 +140,11 @@ public class JogoDDU extends BasePainelComBotao {
             atualizarImagemAtual();
         }
     }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // Desenha o inventário no canto superior direito
+        InventarioUI.desenhar((Graphics2D) g, getWidth());
+    }
 }

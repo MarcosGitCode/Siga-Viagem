@@ -60,4 +60,10 @@ public class JogoDireitaChave extends BasePainelComBotao {
         });
         add(botaoVoltar); // Adiciona o botão ao painel
     }
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // Desenha o inventário no canto superior direito
+        InventarioUI.desenhar((Graphics2D) g, getWidth());
+    }
 }

@@ -60,5 +60,13 @@ public class JogoDireita extends BasePainelComBotao {
             layout.show(painelPrincipal, "Jogo"); // Volta para o painel anterior
         });
         add(botaoVoltar); // Adiciona o botão ao painel
+        
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // Desenha o inventário no canto superior direito
+        InventarioUI.desenhar((Graphics2D) g, getWidth());
     }
 }

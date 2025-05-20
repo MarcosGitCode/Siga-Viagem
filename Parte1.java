@@ -95,4 +95,10 @@ public class Parte1 extends PainelComImagem {
         botao.addActionListener(acao); // Define a ação para o botão
         painel.add(botao); // Adiciona o botão ao painel
     }
+    @Override
+protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    // Desenha o inventário no canto superior direito
+    InventarioUI.desenhar((Graphics2D) g, getWidth());
+}
 }

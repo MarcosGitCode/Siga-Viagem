@@ -45,4 +45,10 @@ public class Trem1 extends BasePainelComBotao {
         botao.addActionListener(action);
         painel.add(botao);
     }
+    @Override
+protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    // Desenha o inventário no canto superior direito
+    InventarioUI.desenhar((Graphics2D) g, getWidth());
+}
 }

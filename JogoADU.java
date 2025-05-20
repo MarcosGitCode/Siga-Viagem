@@ -8,21 +8,28 @@ public class JogoADU extends BasePainelComBotao {
         super("imagens/Fotos editadas/02 - ADU e sinaleiras.jpg", layout, painelPrincipal);
         setLayout(null);
 
-         // Botão Voltar para Parte1
-       JButton botaoVoltar = new JButton("<");
-        botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
-        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
+        // Botão Voltar para Parte1
+        JButton botaoVoltar = new JButton("<");
+        botaoVoltar.setBounds(10, 10, 60, 60);
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
         botaoVoltar.setForeground(Color.BLACK);
-        botaoVoltar.setBackground(Color.RED); // Define a cor do texto
-        botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
-        botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
-        botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
+        botaoVoltar.setBackground(Color.RED);
+        botaoVoltar.setContentAreaFilled(true);
+        botaoVoltar.setOpaque(true);
+        botaoVoltar.setBorderPainted(false);
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "Jogo"); // Volta para o painel anterior
+            layout.show(painelPrincipal, "Jogo");
         });
-        add(botaoVoltar); // Adiciona o botão ao painel
+        add(botaoVoltar);
 
         // Adicione outros componentes específicos do JogoADU aqui
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // Desenha o inventário no canto superior direito
+        InventarioUI.desenhar((Graphics2D) g, getWidth());
     }
 }

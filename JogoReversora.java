@@ -65,5 +65,7 @@ public class JogoReversora extends BasePainelComBotao {
         if (imagemAtual != null) {
             g.drawImage(imagemAtual, 0, 0, getWidth(), getHeight(), this);
         }
+        // Desenha o inventário no canto superior direito
+        InventarioUI.desenhar((Graphics2D) g, getWidth());
     }
 }

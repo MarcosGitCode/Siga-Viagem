@@ -19,6 +19,7 @@ public class MenuPrincipal extends PainelComImagem {
         btnSair.setBounds(430, 440, 400, 60);
 
         btnJogar.addActionListener(e -> {
+            Inventario.limpar();
             layout.show(painelPrincipal, "Login");
         });
 

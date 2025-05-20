@@ -103,4 +103,10 @@ public class TremPortaAberta extends JPanel {
             return null;
         }
     }
+    @Override
+protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    // Desenha o inventário no canto superior direito
+    InventarioUI.desenhar((Graphics2D) g, getWidth());
+}
 }

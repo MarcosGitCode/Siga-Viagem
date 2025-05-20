@@ -26,4 +26,10 @@ public class JogoVDU extends BasePainelComBotao {
 
         // Outros componentes específicos do JogoVDU podem ser adicionados aqui
     }
+    @Override
+protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    // Desenha o inventário no canto superior direito
+    InventarioUI.desenhar((Graphics2D) g, getWidth());
+}
 }

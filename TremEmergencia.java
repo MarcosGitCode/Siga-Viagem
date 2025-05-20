@@ -34,5 +34,11 @@ public class TremEmergencia extends JPanel {
         add(labelImagem);
 
     }
+    @Override
+protected void paintComponent(Graphics g) {
+    super.paintComponent(g);
+    // Desenha o inventário no canto superior direito
+    InventarioUI.desenhar((Graphics2D) g, getWidth());
+}
     }
 
