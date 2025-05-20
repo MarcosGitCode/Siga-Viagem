@@ -43,9 +43,9 @@ public class JogoDDU extends BasePainelComBotao {
         JButton btnInfopass = criarBotao("Infopass");
 
         // Configuração das posições dos botões
-        btnPrepara.setBounds(340, 590, 100, 40);
-        btnFe.setBounds(497, 595, 100, 40);
-        btnInfopass.setBounds(645, 595, 100, 40); // Ajustado para evitar sobreposição
+        btnPrepara.setBounds(342,597, 50, 50);
+        btnFe.setBounds(498,603, 50, 50);
+        btnInfopass.setBounds(551,600, 50, 50); // Ajustado para evitar sobreposição
         
         add(btnPrepara);
         add(btnFe);
