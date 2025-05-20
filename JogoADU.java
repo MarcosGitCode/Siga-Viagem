@@ -8,7 +8,7 @@ public class JogoADU extends BasePainelComBotao {
         super("imagens/Fotos editadas/02 - ADU e sinaleiras.jpg", layout, painelPrincipal);
         setLayout(null);
 
-        // Botão Voltar para Parte1
+        // Botão Voltar
         JButton botaoVoltar = new JButton("<");
         botaoVoltar.setBounds(10, 10, 60, 60);
         botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -18,12 +18,13 @@ public class JogoADU extends BasePainelComBotao {
         botaoVoltar.setOpaque(true);
         botaoVoltar.setBorderPainted(false);
         botaoVoltar.addActionListener(e -> {
+            SomUtils.tocarSom("/sons/click.wav"); // Caminho relativo ao classpath
             System.out.println("Botão voltar clicado!");
             layout.show(painelPrincipal, "Jogo");
         });
         add(botaoVoltar);
 
-        // Adicione outros componentes específicos do JogoADU aqui
+        // Outros componentes do jogo aqui...
     }
 
     @Override

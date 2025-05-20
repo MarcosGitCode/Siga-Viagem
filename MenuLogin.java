@@ -54,11 +54,13 @@ public class MenuLogin extends PainelComImagem {
         btnVoltar = criarBotao("Voltar");
         btnVoltar.addActionListener(e -> layout.show(painelPrincipal, "Menu"));
         add(btnVoltar);
-
+        btnVoltar.addActionListener(e -> {
+            SomUtils.tocarSom("/sons/click.wav");
+        });
         btnEntrar.addActionListener(e -> {
             String registro = txtNome.getText().trim(); // Agora recebe o registro
             String senha = new String(txtSenha.getPassword()).trim();
-
+            SomUtils.tocarSom("/sons/click.wav");
             // Login temporário para testes
             if (registro.equals("a") && senha.equals("a")) {
                 iniciarTimer(); // Inicia o timer após login bem-sucedido

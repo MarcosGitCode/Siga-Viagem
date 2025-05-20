@@ -44,6 +44,7 @@ public class MenuOpcoes extends JPanel {
         btnVoltar.addActionListener(e -> {
             System.out.println("Botão Voltar clicado!");
             layout.show(painelPrincipal, "Menu");
+            SomUtils.tocarSom("/sons/click.wav");
         });
         add(btnVoltar);
     }
