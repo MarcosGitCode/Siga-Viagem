@@ -29,7 +29,7 @@ public class JogoItens extends JPanel {
         botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "JogoDireita"); // Volta para o painel anterior
+            layout.show(painelPrincipal, "JogoEsquerdaOficial"); // Volta para o painel anterior
         });
         add(botaoVoltar); // Adiciona o botão ao painel
 

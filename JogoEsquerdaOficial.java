@@ -31,6 +31,17 @@ public class JogoEsquerdaOficial extends BasePainelComBotao {
             layout.show(painelPrincipal, "Jogo"); // Volta para o painel anterior
         });
         add(botaoVoltar); // Adiciona o botão ao painel
+
+        // Botão transparente de 500x500px na metade esquerda da tela
+        JButton botaoEsquerda = new JButton();
+        botaoEsquerda.setBounds(0, 150, 500, 500); // Posição: do topo (150px) até 500px de altura
+        botaoEsquerda.setOpaque(false);
+        botaoEsquerda.setContentAreaFilled(false);
+        botaoEsquerda.setBorderPainted(false);
+        botaoEsquerda.addActionListener(e -> {
+            layout.show(painelPrincipal, "JogoItens");
+        });
+        add(botaoEsquerda);
     }
 
     private void criarBotaoVisivel(JPanel painel, int x, int y, int width, int height, Color color, java.awt.event.ActionListener action) {
