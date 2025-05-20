@@ -1,10 +1,10 @@
 import java.awt.*;
 import javax.swing.*;
 
-public class JogoDireita extends BasePainelComBotao {
+public class JogoDireitaChave extends BasePainelComBotao {
 
-    public JogoDireita(CardLayout layout, JPanel painelPrincipal) {
-        super("imagens/Fotos editadas/direita2.png", layout, painelPrincipal);
+    public JogoDireitaChave(CardLayout layout, JPanel painelPrincipal) {
+        super("imagens/Fotos editadas/direita3.png", layout, painelPrincipal);
         setLayout(null); // Layout absoluto para posicionar componentes, se necessário
 
         // Remova/adicione painéis apenas no Menu.java para evitar loops!
@@ -34,15 +34,14 @@ public class JogoDireita extends BasePainelComBotao {
         // Botão visível de 100x100px na posição (546, 403)
         JButton botaoVisivel = new JButton();
         botaoVisivel.setBounds(546, 390, 100, 100);
-        // Torna o botão totalmente transparente/invisível
+        // Torna o botão totalmente transparente
         botaoVisivel.setContentAreaFilled(false);
         botaoVisivel.setOpaque(false);
         botaoVisivel.setBorderPainted(false);
-        botaoVisivel.setFocusPainted(false);
-        botaoVisivel.setText(""); // Sem texto
         botaoVisivel.addActionListener(e -> {
             System.out.println("Botão visível clicado!");
-            layout.show(painelPrincipal, "JogoDireitaChave");
+            chaveLabel.setIcon(new ImageIcon("imagens/Fotos editadas/chave.png"));
+            chaveLabel.setVisible(true);
         });
         add(botaoVisivel);
 
