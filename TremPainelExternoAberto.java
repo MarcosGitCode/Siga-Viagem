@@ -1,9 +1,9 @@
 import java.awt.*;
-import javax.swing.*;
 import java.awt.image.BufferedImage;
 import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
+import javax.swing.*;
 
 public class TremPainelExternoAberto extends JPanel {
 
@@ -27,15 +27,22 @@ public class TremPainelExternoAberto extends JPanel {
         botaoVoltar.setBorderPainted(false);
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "TremPainelExterno"); // Volta para a tela anterior
+            layout.show(painelPrincipal, "TremPainelExternoFechado"); // Volta para a tela anterior
         });
         add(botaoVoltar);
 
-        // Adiciona um rótulo para identificar a nova tela
-        JLabel label = new JLabel("Bem-vindo à Nova Tela!");
-        label.setFont(new Font("Arial", Font.BOLD, 24));
-        label.setBounds(500, 400, 300, 50); // Centraliza o texto
-        add(label);
+        JButton botaoCentral = new JButton();
+        int tamanho = 100; // Define o tamanho do botão como um quadrado (100x100)
+        botaoCentral.setBounds(590 - (tamanho / 2), 560 - (tamanho / 2), tamanho, tamanho); // Centraliza o botão
+        botaoCentral.setContentAreaFilled(false); // Remove o preenchimento do botão
+        botaoCentral.setBorderPainted(false); // Remove a borda do botão
+        botaoCentral.setFocusPainted(false); // Remove o destaque ao focar no botão
+        botaoCentral.setOpaque(false); // Torna o botão completamente invisível
+        botaoCentral.addActionListener(e -> {
+            System.out.println("Botão central clicado!");
+            layout.show(painelPrincipal, "TremPainelExternoPortaIsolada"); // Navega para a tela TremPainelExternoPortaIsolada
+        });
+        add(botaoCentral);
 
         // Garante que a imagem de fundo fique no fundo
         setComponentZOrder(labelImagemFundo, getComponentCount() - 1);
