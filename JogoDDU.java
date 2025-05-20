@@ -44,8 +44,8 @@ public class JogoDDU extends BasePainelComBotao {
 
         // Configuração das posições dos botões
         btnPrepara.setBounds(342,597, 50, 50);
-        btnFe.setBounds(498,603, 50, 50);
-        btnInfopass.setBounds(551,600, 50, 50); // Ajustado para evitar sobreposição
+        btnFe.setBounds(510,603, 50, 50);
+        btnInfopass.setBounds(562,612, 50, 50); // Ajustado para evitar sobreposição
         
         add(btnPrepara);
         add(btnFe);
@@ -56,6 +56,18 @@ public class JogoDDU extends BasePainelComBotao {
         btnFe.addActionListener(e -> alterarImagem("imagens/Fotos editadas/DDU - tela FE- lista de emergência.jpg"));
         btnInfopass.addActionListener(e -> alterarImagem("imagens/Fotos editadas/DDU - tela INFOPASS.jpg"));
 
+        // Remover fundo e bordas dos botões
+        btnPrepara.setContentAreaFilled(false);
+        btnPrepara.setOpaque(false);
+        btnPrepara.setBorderPainted(false);
+
+        btnFe.setContentAreaFilled(false);
+        btnFe.setOpaque(false);
+        btnFe.setBorderPainted(false);
+
+        btnInfopass.setContentAreaFilled(false);
+        btnInfopass.setOpaque(false);
+        btnInfopass.setBorderPainted(false);
 
         // Listener para redimensionamento: atualiza os limites e re-renderiza a imagem
         addComponentListener(new ComponentAdapter() {
