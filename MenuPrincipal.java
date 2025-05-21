@@ -21,8 +21,18 @@ public class MenuPrincipal extends PainelComImagem {
         btnJogar.addActionListener(e -> {
             Inventario.limpar();
             layout.show(painelPrincipal, "Login");
+            SomUtils.tocarSom("/sons/click.wav");
         });
-
+        btnOpcoes.addActionListener(e -> {
+            SomUtils.tocarSom("/sons/click.wav");
+        });
+        btnPlacar.addActionListener(e -> {
+            SomUtils.tocarSom("/sons/click.wav");
+        });
+        btnSair.addActionListener(e -> {
+            SomUtils.tocarSom("/sons/click.wav");
+        });
+        
         btnOpcoes.addActionListener(e -> layout.show(painelPrincipal, "Opções"));
         btnPlacar.addActionListener(e -> layout.show(painelPrincipal, "Placar"));
         btnSair.addActionListener(e -> System.exit(0));

@@ -41,21 +41,23 @@ public class JogoDDU extends BasePainelComBotao {
         JButton btnPrepara = criarBotao("Prepara");
         JButton btnFe = criarBotao("Fe");
         JButton btnInfopass = criarBotao("Infopass");
+        JButton btnManut = criarBotao("Infopass");
 
         // Configuração das posições dos botões
         btnPrepara.setBounds(342,597, 50, 50);
         btnFe.setBounds(510,603, 50, 50);
         btnInfopass.setBounds(562,612, 50, 50); // Ajustado para evitar sobreposição
-        
+        btnManut.setBounds(740,603, 70, 70);
         add(btnPrepara);
         add(btnFe);
         add(btnInfopass);
+        add(btnManut);
 
         // Ações dos botões com caminhos de imagem
         btnPrepara.addActionListener(e -> alterarImagem("imagens/Fotos editadas/Uma porta não fecha.jpg"));
         btnFe.addActionListener(e -> alterarImagem("imagens/Fotos editadas/DDU - tela FE- lista de emergência.jpg"));
         btnInfopass.addActionListener(e -> alterarImagem("imagens/Fotos editadas/DDU - tela INFOPASS.jpg"));
-
+        btnManut.addActionListener(e -> alterarImagem("imagens/Fotos editadas/DDU - tela Manut.png"));
         // Remover fundo e bordas dos botões
         btnPrepara.setContentAreaFilled(false);
         btnPrepara.setOpaque(false);
@@ -68,6 +70,10 @@ public class JogoDDU extends BasePainelComBotao {
         btnInfopass.setContentAreaFilled(false);
         btnInfopass.setOpaque(false);
         btnInfopass.setBorderPainted(false);
+
+        btnManut.setContentAreaFilled(false);
+        btnManut.setOpaque(false);
+        btnManut.setBorderPainted(false);
 
         // Listener para redimensionamento: atualiza os limites e re-renderiza a imagem
         addComponentListener(new ComponentAdapter() {
@@ -147,4 +153,5 @@ public class JogoDDU extends BasePainelComBotao {
         // Desenha o inventário no canto superior direito
         InventarioUI.desenhar((Graphics2D) g, getWidth());
     }
+
 }
