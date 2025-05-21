@@ -34,6 +34,4 @@ Simulação de falha nas portas do metrô de São Paulo
 - Guilherme Calderan  
 
 ---
-
-## 🖼️ Captura de Tela  
 ![Screenshot](https://github.com/user-attachments/assets/76746a49-089c-465c-b0d5-47b7786bb607)
