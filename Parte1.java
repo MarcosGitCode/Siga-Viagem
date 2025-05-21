@@ -60,6 +60,11 @@ public class Parte1 extends PainelComImagem {
             layout.show(painelPrincipal, "JogoEsquerdaOficial"); // Alterna para o painel JogoEsquerda
         });
 
+        criarBotaoVisivel(painelBotoes, 322,331, 80, 80, Color.ORANGE, e -> {
+            System.out.println("Botão PA clicado!");
+            layout.show(painelPrincipal, "JogoPA"); // Alterna para o painel JogoPA
+        });
+
         painelPrincipal.add(new JogoDDU(layout, painelPrincipal), "JogoDDU");
         painelPrincipal.add(new JogoADU(layout, painelPrincipal), "JogoADU");
         painelPrincipal.add(new JogoReversora(layout, painelPrincipal), "JogoReversora");
@@ -69,6 +74,7 @@ public class Parte1 extends PainelComImagem {
         painelPrincipal.add(new JogoAlavanca(layout, painelPrincipal), "JogoAlavanca");
         painelPrincipal.add(new JogoEsquerdaOficial(layout, painelPrincipal), "JogoEsquerdaOficial");
         painelPrincipal.add(new JogoDireitaChave(layout, painelPrincipal), "JogoDireitaChave"); // Adicionado conforme sugestão
+        painelPrincipal.add(new JogoPA(), "JogoPA");
     }
     
 
