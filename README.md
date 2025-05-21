@@ -8,7 +8,7 @@
     6 - Instalar Java e o Extension Pack For Java
     7 - Executar o arquivo "Menu.java"
     8 - Quando for logar, usar registro "a" e senha "a" para testes (Solução temporária)
-    9 - Se quiser testar o painel de admin, basta logar com "teste@metrosp.com.br" e senha "admin"
+    9 - Se quiser testar o painel de admin, basta logar com "R00000-0" e senha "Admin!"
     
 Projeto Integrador 2025
     Jogo em java que simula falha de portas do metrô de São Paulo
