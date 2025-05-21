@@ -24,6 +24,7 @@ public class MenuPrincipal extends PainelComImagem {
         });
 
         btnOpcoes.addActionListener(e -> layout.show(painelPrincipal, "Opções"));
+        btnPlacar.addActionListener(e -> layout.show(painelPrincipal, "Placar"));
         btnSair.addActionListener(e -> System.exit(0));
 
         add(btnJogar);
@@ -32,7 +33,7 @@ public class MenuPrincipal extends PainelComImagem {
         add(btnSair);
 
         // Adiciona animações aos botões
-        adicionarAnimacoesBotoes(new JButton[]{btnJogar, btnOpcoes, btnPlacar, btnSair});
+        adicionarAnimacoesBotoes(new JButton[] { btnJogar, btnOpcoes, btnPlacar, btnSair });
     }
 
     private JButton criarBotao(String texto) {

@@ -1,11 +1,9 @@
 import java.awt.*;
 import javax.swing.*;
 
-
 public class Menu extends JFrame {
     private final CardLayout layout;
     private JPanel painelPrincipal;
-    
 
     public Menu() {
         setTitle("Siga Viagem");
@@ -16,17 +14,17 @@ public class Menu extends JFrame {
 
         layout = new CardLayout();
         painelPrincipal = new JPanel(layout);
-        painelPrincipal.setOpaque(false); 
+        painelPrincipal.setOpaque(false);
 
         painelPrincipal.add(new MenuPrincipal(layout, painelPrincipal), "Menu");
         painelPrincipal.add(new MenuLogin(layout, painelPrincipal), "Login");
         painelPrincipal.add(new MenuOpcoes(layout, painelPrincipal), "Opções");
+        painelPrincipal.add(new MenuPlacar(layout, painelPrincipal), "Placar"); // Adicionar esta linha
         painelPrincipal.add(new Parte1(layout, painelPrincipal), "Jogo");
 
         // painel admin
         painelPrincipal.add(new MenuAdmin(layout, painelPrincipal), "Admin");
 
-        
         painelPrincipal.add(new TremPortaAberta(layout, painelPrincipal), "PortaAberta");
         painelPrincipal.add(new TremPesOlhando(layout, painelPrincipal), "PesOlhando");
         painelPrincipal.add(new TremEmergencia(layout, painelPrincipal), "TremEmergencia");
@@ -35,7 +33,8 @@ public class Menu extends JFrame {
         painelPrincipal.add(new JogoItens(layout, painelPrincipal), "JogoItens");
         painelPrincipal.add(new TremPainelExternoFechado(layout, painelPrincipal), "TremPainelExternoFechado");
         painelPrincipal.add(new TremPainelExternoAberto(layout, painelPrincipal), "TremPainelExternoAberto");
-        painelPrincipal.add(new TremPainelExternoPortaIsolada(layout, painelPrincipal), "TremPainelExternoPortaIsolada");
+        painelPrincipal.add(new TremPainelExternoPortaIsolada(layout, painelPrincipal),
+                "TremPainelExternoPortaIsolada");
         add(painelPrincipal);
         setVisible(true);
     }

@@ -24,13 +24,12 @@ public class MetroviarioDAO {
             ResultSet rs = stmt.executeQuery();
             if (rs.next()) {
                 return new Metroviario(
-                    rs.getInt("id"),
-                    rs.getString("nome"),
-                    rs.getString("email"),
-                    rs.getString("senha"),
-                    rs.getString("registro"),
-                    rs.getInt("pontuacao_total")
-                );
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("email"),
+                        rs.getString("senha"),
+                        rs.getString("registro"),
+                        rs.getInt("pontuacao_total"));
             }
         } catch (SQLException e) {
             System.out.println("Erro ao buscar: " + e.getMessage());
@@ -45,13 +44,12 @@ public class MetroviarioDAO {
             ResultSet rs = stmt.executeQuery(sql);
             while (rs.next()) {
                 Metroviario m = new Metroviario(
-                    rs.getInt("id"),
-                    rs.getString("nome"),
-                    rs.getString("email"),
-                    rs.getString("senha"),
-                    rs.getString("registro"),
-                    rs.getInt("pontuacao_total")
-                );
+                        rs.getInt("id"),
+                        rs.getString("nome"),
+                        rs.getString("email"),
+                        rs.getString("senha"),
+                        rs.getString("registro"),
+                        rs.getInt("pontuacao_total"));
                 lista.add(m);
             }
         } catch (SQLException e) {
@@ -82,6 +80,207 @@ public class MetroviarioDAO {
             stmt.executeUpdate();
         } catch (SQLException e) {
             System.out.println("Erro ao deletar: " + e.getMessage());
+        }
+    }
+
+    public List<Metroviario> listarRanking() {
+        List<Metroviario> ranking = new ArrayList<>();
+        // Modified query to show all records for debugging
+        String sql = "SELECT * FROM metroviarios ORDER BY pontuacao_total DESC";
+
+        try (Connection conn = Conexao.conectar()) {
+            if (conn == null) {
+                System.err.println("Conexão retornou null em listarRanking()");
+                return ranking;
+            }
+
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                System.out.println("Executando query: " + sql);
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    while (rs.next()) {
+                        // Log each record for debugging
+                        System.out.println(String.format(
+                                "ID: %d, Nome: %s, Registro: %s, Pontuação: %d",
+                                rs.getInt("id"),
+                                rs.getString("nome"),
+                                rs.getString("registro"),
+                                rs.getInt("pontuacao_total")));
+
+                        Metroviario m = new Metroviario(
+                                rs.getInt("id"),
+                                rs.getString("nome"),
+                                rs.getString("email"),
+                                rs.getString("senha"),
+                                rs.getString("registro"),
+                                rs.getInt("pontuacao_total"));
+                        ranking.add(m);
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao listar ranking: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return ranking;
+    }
+
+    public boolean verificarAdmin(String registro, String senha) {
+        System.out.println("\n=== Verificando Admin ===");
+        System.out.println("Registro informado: [" + registro + "]");
+        System.out.println("Senha informada: [" + senha + "]");
+
+        String sql = "SELECT * FROM administradores WHERE registro = ? AND senha = ?";
+        try (Connection conn = Conexao.conectar()) {
+            if (conn == null) {
+                System.err.println("Conexão retornou null em verificarAdmin()");
+                return false;
+            }
+
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setString(1, registro);
+                stmt.setString(2, senha);
+
+                try (ResultSet rs = stmt.executeQuery()) {
+                    boolean isAdmin = rs.next();
+                    System.out.println("É admin? " + isAdmin);
+                    return isAdmin;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao verificar admin: " + e.getMessage());
+            e.printStackTrace();
+            return false;
+        }
+    }
+
+    public boolean verificarMetroviario(String registro, String senha) {
+        String sql = "SELECT * FROM metroviarios WHERE registro = ? AND senha = ?";
+        try (Connection conn = Conexao.conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, registro);
+            stmt.setString(2, senha);
+
+            ResultSet rs = stmt.executeQuery();
+            return rs.next();
+        } catch (SQLException e) {
+            System.err.println("Erro ao verificar metroviário: " + e.getMessage());
+            return false;
+        }
+    }
+
+    public List<Metroviario> listarPontuacoesJogador(String registro) {
+        List<Metroviario> pontuacoes = new ArrayList<>();
+        String sql = "SELECT * FROM metroviarios WHERE registro = ?";
+
+        try (Connection conn = Conexao.conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, registro);
+            System.out.println("Buscando pontuações para registro: " + registro);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                while (rs.next()) {
+                    System.out.println("Encontrado: " + rs.getString("nome") +
+                            " - " + rs.getInt("pontuacao_total") + " pontos");
+
+                    Metroviario m = new Metroviario(
+                            rs.getInt("id"),
+                            rs.getString("nome"),
+                            rs.getString("email"),
+                            rs.getString("senha"),
+                            rs.getString("registro"),
+                            rs.getInt("pontuacao_total"));
+                    pontuacoes.add(m);
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao buscar pontuações: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return pontuacoes;
+    }
+
+    public void registrarTarefaRealizada(String registro, int idTarefa, int pontuacaoObtida) {
+        String sql = "INSERT INTO tarefas_realizadas (id_metroviario, id_tarefa, pontuacao_obtida) " +
+                "SELECT m.id, ?, ? FROM metroviarios m WHERE m.registro = ?";
+
+        try (Connection conn = Conexao.conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, idTarefa);
+            stmt.setInt(2, pontuacaoObtida);
+            stmt.setString(3, registro);
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Pontuação registrada com sucesso!");
+            } else {
+                System.err.println("Erro: Metroviário não encontrado");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao registrar pontuação: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void testarConexao() {
+        try (Connection conn = Conexao.conectar()) {
+            if (conn != null) {
+                System.out.println("Conexão com banco de dados estabelecida com sucesso!");
+                // Testar uma consulta simples
+                try (Statement stmt = conn.createStatement();
+                        ResultSet rs = stmt.executeQuery("SELECT registro, senha FROM metroviarios")) {
+
+                    System.out.println("Registros encontrados:");
+                    while (rs.next()) {
+                        System.out.println("Registro: " + rs.getString("registro") +
+                                ", Senha: " + rs.getString("senha"));
+                    }
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao testar conexão: " + e.getMessage());
+            e.printStackTrace();
+        }
+    }
+
+    public void debugListarTodos() {
+        String sql = "SELECT registro, nome, pontuacao_total FROM metroviarios";
+
+        try (Connection conn = Conexao.conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                System.out.println("\n=== Registros no banco ===");
+                while (rs.next()) {
+                    System.out.println("Registro: " + rs.getString("registro") +
+                            ", Nome: " + rs.getString("nome") +
+                            ", Pontuação: " + rs.getInt("pontuacao_total"));
+                }
+                System.out.println("========================");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao listar registros: " + e.getMessage());
+        }
+    }
+
+    public void adicionarPontuacao(String registro, int pontos) {
+        String sql = "UPDATE metroviarios SET pontuacao_total = pontuacao_total + ? WHERE registro = ?";
+
+        try (Connection conn = Conexao.conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setInt(1, pontos);
+            stmt.setString(2, registro);
+
+            int rowsAffected = stmt.executeUpdate();
+            if (rowsAffected > 0) {
+                System.out.println("Pontuação atualizada com sucesso!");
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao atualizar pontuação: " + e.getMessage());
         }
     }
 }

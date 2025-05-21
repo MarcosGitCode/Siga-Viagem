@@ -1,6 +1,8 @@
 import java.awt.*;
 import java.util.List;
 import javax.swing.*;
+import java.sql.Connection;
+import java.sql.SQLException;
 
 public class MenuLogin extends PainelComImagem {
     private JLabel lblUsuario, lblSenha, lblNome;
@@ -13,6 +15,20 @@ public class MenuLogin extends PainelComImagem {
 
     public MenuLogin(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/metro_blur.jpg");
+
+        // Teste de conexão
+        Connection conn = Conexao.conectar();
+        if (conn != null) {
+            System.out.println("Conexão bem sucedida!");
+            try {
+                conn.close();
+            } catch (SQLException e) {
+                e.printStackTrace();
+            }
+        } else {
+            System.out.println("Falha na conexão!");
+        }
+
         setLayout(null);
 
         lblNome = new JLabel("Registro:"); // Troca para Registro
@@ -76,9 +92,9 @@ public class MenuLogin extends PainelComImagem {
             if (!registro.isEmpty() && !senha.isEmpty()) {
                 // Verifica se é administrador no banco de dados
                 boolean adminEncontrado = false;
-                try (java.sql.Connection conn = Conexao.conectar();
-                     java.sql.PreparedStatement stmt = conn.prepareStatement(
-                         "SELECT * FROM administradores WHERE registro = ? AND senha = ?")) {
+                try (java.sql.Connection conn1 = Conexao.conectar();
+                        java.sql.PreparedStatement stmt = conn1.prepareStatement(
+                                "SELECT * FROM administradores WHERE registro = ? AND senha = ?")) {
                     stmt.setString(1, registro);
                     stmt.setString(2, senha);
                     try (java.sql.ResultSet rs = stmt.executeQuery()) {
@@ -88,7 +104,8 @@ public class MenuLogin extends PainelComImagem {
                     }
                 } catch (Exception ex) {
                     ex.printStackTrace();
-                    JOptionPane.showMessageDialog(this, "Erro ao acessar o banco de dados.", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Erro ao acessar o banco de dados.", "Erro",
+                            JOptionPane.ERROR_MESSAGE);
                     return;
                 }
 
@@ -111,7 +128,8 @@ public class MenuLogin extends PainelComImagem {
                     iniciarTimer(); // Inicia o timer após login bem-sucedido
                     layout.show(painelPrincipal, "Jogo");
                 } else {
-                    JOptionPane.showMessageDialog(this, "Registro ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                    JOptionPane.showMessageDialog(this, "Registro ou senha inválidos!", "Erro",
+                            JOptionPane.ERROR_MESSAGE);
                 }
             } else {
                 JOptionPane.showMessageDialog(this, "Registro ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
@@ -158,7 +176,7 @@ public class MenuLogin extends PainelComImagem {
         tempoDecorrido = 0; // Reseta o tempo ao iniciar o timer
         Timer timer = new Timer(1000, e -> {
             tempoDecorrido++; // Incrementa o tempo a cada segundo
-            //System.out.println("Tempo decorrido: " + tempoDecorrido + " segundos.");
+            // System.out.println("Tempo decorrido: " + tempoDecorrido + " segundos.");
             // Adicione aqui a lógica que deseja executar periodicamente
         });
         timer.start();
