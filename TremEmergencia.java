@@ -3,42 +3,41 @@ import java.awt.*;
 
 public class TremEmergencia extends JPanel {
 
+    private Image imagemFundo;
+
     public TremEmergencia(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
-        
+
         // Botão Voltar para JogoEsquerda
-    JButton botaoVoltar = new JButton("<");
-    botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
-    botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
-    botaoVoltar.setForeground(Color.BLACK);
-    botaoVoltar.setBackground(Color.RED); // Define a cor do texto
-    botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
-    botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
-    botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
-    botaoVoltar.addActionListener(e -> {
-    System.out.println("Botão voltar clicado!");
-    layout.show(painelPrincipal, "TremPortaAberta"); // Volta para o painel anterior
-    });
-    add(botaoVoltar); // Adiciona o botão ao painel
-    
-        // Teste de carregamento da imagem
+        JButton botaoVoltar = new JButton("<");
+        botaoVoltar.setBounds(10, 10, 60, 60);
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
+        botaoVoltar.setForeground(Color.BLACK);
+        botaoVoltar.setBackground(Color.RED);
+        botaoVoltar.setContentAreaFilled(true);
+        botaoVoltar.setOpaque(true);
+        botaoVoltar.setBorderPainted(false);
+        botaoVoltar.addActionListener(e -> {
+            System.out.println("Botão voltar clicado!");
+            layout.show(painelPrincipal, "TremPortaAberta");
+        });
+        add(botaoVoltar);
+
+        // Carrega a imagem de fundo
         String caminho = "imagens/Fotos editadas/16 - Dispositivos de emergência.jpg";
         ImageIcon imagemOriginal = new ImageIcon(caminho);
-
-        // Redimensionar a imagem ao tamanho da janela
-        Image imagemRedimensionada = imagemOriginal.getImage().getScaledInstance(1280, 856, Image.SCALE_SMOOTH);
-        ImageIcon imagem = new ImageIcon(imagemRedimensionada);
-
-        JLabel labelImagem = new JLabel(imagem);
-        labelImagem.setBounds(0, 0, 1280, 856);
-        add(labelImagem);
-
+        imagemFundo = imagemOriginal.getImage().getScaledInstance(1280, 856, Image.SCALE_SMOOTH);
     }
+
     @Override
-protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    // Desenha o inventário no canto superior direito
-    InventarioUI.desenhar((Graphics2D) g, getWidth());
-}
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // Desenha a imagem de fundo
+        if (imagemFundo != null) {
+            g.drawImage(imagemFundo, 0, 0, 1280, 856, this);
+        }
+        // Desenha o inventário no canto superior direito
+        InventarioUI.desenhar((Graphics2D) g, getWidth());
     }
+}
 

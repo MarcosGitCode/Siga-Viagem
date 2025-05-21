@@ -7,40 +7,44 @@ import javax.swing.*;
 
 public class TremPainelExternoPortaIsolada extends JPanel {
 
+    private Image imagemFundo;
+
     public TremPainelExternoPortaIsolada(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
 
         // Botão para voltar
         JButton botaoVoltar = new JButton("<");
-        botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
-        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
+        botaoVoltar.setBounds(10, 10, 60, 60);
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
         botaoVoltar.setForeground(Color.BLACK);
-        botaoVoltar.setBackground(Color.RED); // Define a cor do botão
+        botaoVoltar.setBackground(Color.RED);
         botaoVoltar.setContentAreaFilled(true);
         botaoVoltar.setOpaque(true);
         botaoVoltar.setBorderPainted(false);
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "TremPainelExternoFechado"); // Substitua "TelaAnterior" pelo nome do painel anterior
+            layout.show(painelPrincipal, "TremPainelExternoFechado");
         });
         add(botaoVoltar);
-        
-        // Carrega a imagem de fundo
-        JLabel labelImagemFundo = new JLabel();
-        labelImagemFundo.setBounds(0, 0, 1280, 856); // Define o tamanho da imagem
+
+        // Carrega a imagem de fundo uma vez
         try {
-            BufferedImage imagemFundo = ImageIO.read(new File("imagens/Fotos editadas/19 - Painel externo porta 3 isolada.jpg"));
-            ImageIcon imagemIcon = new ImageIcon(imagemFundo.getScaledInstance(1280, 856, Image.SCALE_SMOOTH));
-            labelImagemFundo.setIcon(imagemIcon);
+            BufferedImage img = ImageIO.read(new File("imagens/Fotos editadas/19 - Painel externo porta 3 isolada.jpg"));
+            imagemFundo = img.getScaledInstance(1280, 856, Image.SCALE_SMOOTH);
         } catch (IOException e) {
             e.printStackTrace();
+            imagemFundo = null;
         }
-        add(labelImagemFundo);
     }
+
     @Override
-protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    // Desenha o inventário no canto superior direito
-    InventarioUI.desenhar((Graphics2D) g, getWidth());
-}
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // Desenha a imagem de fundo
+        if (imagemFundo != null) {
+            g.drawImage(imagemFundo, 0, 0, 1280, 856, this);
+        }
+        // Desenha o inventário no canto superior direito
+        InventarioUI.desenhar((Graphics2D) g, getWidth());
+    }
 }

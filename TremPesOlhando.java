@@ -7,18 +7,19 @@ import javax.swing.*;
 
 public class TremPesOlhando extends JPanel {
 
-    private JLabel labelImagem;
+    private Image imagemFundo;
 
     public TremPesOlhando(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
 
-        // Carrega a imagem inicial
-        ImageIcon imagem = carregarImagem("imagens/Fotos editadas/pes_olhando.jpg");
-
-        // Adiciona a imagem inicial ao painel
-        labelImagem = new JLabel(imagem);
-        labelImagem.setBounds(0, 0, 1280, 856);
-        add(labelImagem);
+        // Carrega a imagem de fundo uma vez
+        try {
+            BufferedImage img = ImageIO.read(new File("imagens/Fotos editadas/pes_olhando.jpg"));
+            imagemFundo = img.getScaledInstance(1280, 856, Image.SCALE_SMOOTH);
+        } catch (IOException e) {
+            e.printStackTrace();
+            imagemFundo = null;
+        }
 
         // Botão metade superior (volta para TremPortaAberta)
         JButton botaoSuperior = new JButton();
@@ -29,46 +30,39 @@ public class TremPesOlhando extends JPanel {
         botaoSuperior.addActionListener(e -> layout.show(painelPrincipal, "PortaAberta"));
         add(botaoSuperior);
 
-        // Botão metade inferior (recarrega a imagem atual, opcional)
+        // Botão metade inferior (ação opcional)
         JButton botaoInferior = new JButton();
         botaoInferior.setBounds(500, 650, 300, 300);
         botaoInferior.setOpaque(false);
         botaoInferior.setContentAreaFilled(false);
         botaoInferior.setBorderPainted(false);
-        botaoInferior.addActionListener(e -> trocarImagem("imagens/Fotos editadas/pes_olhando.jpg"));
+        // Se quiser trocar a imagem, implemente aqui
         add(botaoInferior);
 
         // Botão Voltar
-        JButton botaoVoltar = new JButton("Voltar");
-        botaoVoltar.setBounds(20, 20, 100, 50);
-        botaoVoltar.addActionListener(e -> layout.show(painelPrincipal, "Menu"));
+         JButton botaoVoltar = new JButton("<");
+        botaoVoltar.setBounds(10, 10, 60, 60);
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
+        botaoVoltar.setForeground(Color.BLACK);
+        botaoVoltar.setBackground(Color.RED);
+        botaoVoltar.setContentAreaFilled(true);
+        botaoVoltar.setOpaque(true);
+        botaoVoltar.setBorderPainted(false);
+        botaoVoltar.addActionListener(e -> {
+            System.out.println("Botão voltar clicado!");
+            layout.show(painelPrincipal, "TremPortaAberta"); // Volta para o painel anterior
+        });
         add(botaoVoltar);
     }
 
-    private void trocarImagem(String caminhoImagem) {
-        ImageIcon novaImagem = carregarImagem(caminhoImagem);
-        labelImagem.setIcon(novaImagem);
-        revalidate();
-        repaint();
-    }
-
-    private ImageIcon carregarImagem(String caminhoImagem) {
-        try {
-            BufferedImage imagemOriginal = ImageIO.read(new File(caminhoImagem));
-            BufferedImage imagemRedimensionada = new BufferedImage(1280, 856, BufferedImage.TYPE_INT_ARGB);
-            Graphics2D g2d = imagemRedimensionada.createGraphics();
-            g2d.drawImage(imagemOriginal, 0, 0, 1280, 856, null);
-            g2d.dispose();
-            return new ImageIcon(imagemRedimensionada);
-        } catch (IOException e) {
-            e.printStackTrace();
-            return null;
-        }
-    }
     @Override
-protected void paintComponent(Graphics g) {
-    super.paintComponent(g);
-    // Desenha o inventário no canto superior direito
-    InventarioUI.desenhar((Graphics2D) g, getWidth());
-}
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+        // Desenha a imagem de fundo
+        if (imagemFundo != null) {
+            g.drawImage(imagemFundo, 0, 0, 1280, 856, this);
+        }
+        // Desenha o inventário no canto superior direito
+        InventarioUI.desenhar((Graphics2D) g, getWidth());
+    }
 }
