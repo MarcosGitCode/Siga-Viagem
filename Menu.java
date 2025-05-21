@@ -19,7 +19,7 @@ public class Menu extends JFrame {
         painelPrincipal.add(new MenuPrincipal(layout, painelPrincipal), "Menu");
         painelPrincipal.add(new MenuLogin(layout, painelPrincipal), "Login");
         painelPrincipal.add(new MenuOpcoes(layout, painelPrincipal), "Opções");
-        painelPrincipal.add(new MenuPlacar(layout, painelPrincipal), "Placar"); // Adicionar esta linha
+        painelPrincipal.add(new MenuPlacar(layout, painelPrincipal), "Placar");
         painelPrincipal.add(new Parte1(layout, painelPrincipal), "Jogo");
 
         // painel admin
@@ -33,8 +33,9 @@ public class Menu extends JFrame {
         painelPrincipal.add(new JogoItens(layout, painelPrincipal), "JogoItens");
         painelPrincipal.add(new TremPainelExternoFechado(layout, painelPrincipal), "TremPainelExternoFechado");
         painelPrincipal.add(new TremPainelExternoAberto(layout, painelPrincipal), "TremPainelExternoAberto");
-        painelPrincipal.add(new TremPainelExternoPortaIsolada(layout, painelPrincipal),
-                "TremPainelExternoPortaIsolada");
+        painelPrincipal.add(new TremPainelExternoPortaIsolada(layout, painelPrincipal), "TremPainelExternoPortaIsolada");
+        painelPrincipal.add(new JogoPA(layout, painelPrincipal), "JogoPA");
+
         add(painelPrincipal);
         setVisible(true);
     }
