@@ -1,5 +1,5 @@
-import javax.swing.*;
 import java.awt.*;
+import javax.swing.*;
 
 public class JogoPA extends JPanel {
 
@@ -21,11 +21,14 @@ public class JogoPA extends JPanel {
         add(botaoVoltar);
 
         
-        ImageIcon imagem = new ImageIcon("imagens/Fotos editadas/05 - Módulo de Comunicação - tela de início.jpg");
+        // Adiciona a imagem de fundo redimensionada
+        ImageIcon imagemOriginal = new ImageIcon("imagens/Fotos editadas/05 - Módulo de Comunicação - tela de início.jpg");
+        Image imagemRedimensionada = imagemOriginal.getImage().getScaledInstance(1280, 720, Image.SCALE_SMOOTH); // Ajuste o tamanho conforme necessário
+        ImageIcon imagem = new ImageIcon(imagemRedimensionada);
+
         JLabel labelImagem = new JLabel(imagem);
-        labelImagem.setBounds(0, 0, imagem.getIconWidth(), imagem.getIconHeight());
+        labelImagem.setBounds(0, 0, 1280, 720); // Ajuste o tamanho conforme necessário
         add(labelImagem);
-        setComponentZOrder(labelImagem, getComponentCount() - 1); // Garante que a imagem fique no fundo
     }
 }
 
