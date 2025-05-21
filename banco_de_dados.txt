@@ -81,7 +81,8 @@ INSERT INTO metroviarios (nome, email, senha, registro) VALUES
 ("Guilherme 43", "guiherme43@metrosp.com.br", "4343!", "R43434-3");
 
 INSERT INTO administradores (nome, email, senha, registro) VALUES
-("Demetrius", "demetrius@metrosp.com.br", "Adm!9999", "R99999-9");
+("Demetrius", "demetrius@metrosp.com.br", "Adm!9999", "R99999-9"),
+("Admin", "admin@metrosp.com.br", "Admin!", "R00000-0");
 
 -- Inserir tarefas do jogo
 INSERT INTO tarefas (titulo, valor_pontuacao) VALUES
