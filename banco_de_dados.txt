@@ -2,6 +2,12 @@
 CREATE DATABASE IF NOT EXISTS metro;
 USE metro;
 
+-- Remove tabelas existentes na ordem correta
+DROP TABLE IF EXISTS tarefas_realizadas;
+DROP TABLE IF EXISTS tarefas;
+DROP TABLE IF EXISTS metroviarios;
+DROP TABLE IF EXISTS administradores;
+
 -- Tabela de metroviários
 CREATE TABLE metroviarios (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -10,6 +16,7 @@ CREATE TABLE metroviarios (
     senha VARCHAR(30) NOT NULL,
     registro VARCHAR(8) UNIQUE NOT NULL,
     pontuacao_total INT DEFAULT 0,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     CHECK (registro REGEXP '^R[0-9]{5}-[0-9]$'),
     CHECK (email LIKE '%@metrosp.com.br'),
     CHECK (senha REGEXP '.*[!@#$%^&*(),.?":{}|<>].*')
@@ -22,58 +29,62 @@ CREATE TABLE administradores (
     email VARCHAR(255) UNIQUE NOT NULL,
     senha VARCHAR(30) NOT NULL,
     registro VARCHAR(8) UNIQUE NOT NULL,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP,
     CHECK (email LIKE '%@metrosp.com.br'),
     CHECK (senha REGEXP '.*[!@#$%^&*(),.?":{}|<>].*'),
     CHECK (registro REGEXP '^R[0-9]{5}-[0-9]$')
 );
 
--- Tabela de tarefas avaliativas
+-- Tabela de tarefas com pontuações
 CREATE TABLE tarefas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     titulo VARCHAR(255) NOT NULL,
     descricao TEXT,
-    valor_pontuacao INT NOT NULL
+    valor_pontuacao INT NOT NULL DEFAULT 0,
+    data_criacao DATETIME DEFAULT CURRENT_TIMESTAMP
 );
 
--- Relaciona metroviários com tarefas realizadas
+-- Tabela de registro de tarefas realizadas
 CREATE TABLE tarefas_realizadas (
     id INT AUTO_INCREMENT PRIMARY KEY,
     id_metroviario INT NOT NULL,
     id_tarefa INT NOT NULL,
+    pontuacao_obtida INT NOT NULL DEFAULT 0,
     data_realizacao DATETIME DEFAULT CURRENT_TIMESTAMP,
-    pontuacao_obtida INT NOT NULL,
     FOREIGN KEY (id_metroviario) REFERENCES metroviarios(id),
     FOREIGN KEY (id_tarefa) REFERENCES tarefas(id)
 );
 
--- View para ranking
-CREATE VIEW ranking_metroviarios AS
-SELECT 
-    m.id,
-    m.nome,
-    m.email,
-    SUM(tr.pontuacao_obtida) AS pontuacao_total
-FROM 
-    metroviarios m
-JOIN 
-    tarefas_realizadas tr ON m.id = tr.id_metroviario
-GROUP BY 
-    m.id, m.nome, m.email
-ORDER BY 
-    pontuacao_total DESC;
+-- Trigger para atualizar pontuação total do metroviário
+DELIMITER //
+CREATE TRIGGER atualizar_pontuacao_total
+AFTER INSERT ON tarefas_realizadas
+FOR EACH ROW
+BEGIN
+    UPDATE metroviarios
+    SET pontuacao_total = (
+        SELECT SUM(pontuacao_obtida)
+        FROM tarefas_realizadas
+        WHERE id_metroviario = NEW.id_metroviario
+    )
+    WHERE id = NEW.id_metroviario;
+END;
+//
+DELIMITER ;
 
--- Inserção de metroviários
+-- Dados iniciais
 INSERT INTO metroviarios (nome, email, senha, registro) VALUES
-("Guilherme43", "guilherme43@metrosp.com.br", "Senh@123", "R43434-3"),
 ("Nikolas", "nikolas@metrosp.com.br", "Segur@99", "R12345-6"),
 ("Guilherme Calderan", "guilherme15@metrosp.com.br", "Metrô#2024", "R01758-2"),
 ("Marcos", "marcos@metrosp.com.br", "Test#Senha", "R22222-2"),
 ("Guilherme Nunes", "guilhermeswing@metrosp.com.br", "G@mes456", "R33333-3");
 
--- Inserção de administrador
 INSERT INTO administradores (nome, email, senha, registro) VALUES
 ("Demetrius", "demetrius@metrosp.com.br", "Adm!9999", "R99999-9");
 
--- Consultas de verificação
-SELECT * FROM metroviarios;
-SELECT * FROM administradores;
+-- Inserir tarefas do jogo
+INSERT INTO tarefas (titulo, valor_pontuacao) VALUES
+('Verificar porta com problema', 20),
+('Isolar porta com defeito', 30),
+('Acionar emergência corretamente', 25),
+('Seguir procedimento padrão', 25);
