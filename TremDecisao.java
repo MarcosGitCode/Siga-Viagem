@@ -45,6 +45,15 @@ public class TremDecisao extends JPanel {
                         public void run() {
                             imgAdesivo = new ImageIcon("imagens/Fotos editadas/22 - Adesivo de porta isolada - 2 terços instalado.jpg").getImage();
                             repaint(); // Atualiza o painel para desenhar a segunda imagem
+
+                            // Aguarda mais 0,5 segundos e exibe a terceira imagem no topo
+                            new Timer().schedule(new TimerTask() {
+                                @Override
+                                public void run() {
+                                    imgAdesivo = new ImageIcon("imagens/Fotos editadas/Adesivo de porta isolada instalado.jpg").getImage();
+                                    repaint(); // Atualiza o painel para desenhar a terceira imagem
+                                }
+                            }, 500); // 500ms = 0,5 segundos
                         }
                     }, 500); // 500ms = 0,5 segundos
                 }
