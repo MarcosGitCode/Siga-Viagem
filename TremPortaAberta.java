@@ -94,7 +94,7 @@ public class TremPortaAberta extends JPanel {
         });
         add(botaoFecharPorta);
 
-        painelPrincipal.add(new TremDecisao(), "TremDecisao");
+        painelPrincipal.add(new TremDecisao(layout, painelPrincipal), "TremDecisao");
     }
 
     @Override
