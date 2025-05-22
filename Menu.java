@@ -35,7 +35,7 @@ public class Menu extends JFrame {
         painelPrincipal.add(new TremPainelExternoAberto(layout, painelPrincipal), "TremPainelExternoAberto");
         painelPrincipal.add(new TremPainelExternoPortaIsolada(layout, painelPrincipal), "TremPainelExternoPortaIsolada");
         painelPrincipal.add(new JogoPA(layout, painelPrincipal), "JogoPA");
-
+        painelPrincipal.add(new JogoDireitaChaveCBTC(layout, painelPrincipal), "JogoDireitaChaveCBTC");
         add(painelPrincipal);
         setVisible(true);
     }
