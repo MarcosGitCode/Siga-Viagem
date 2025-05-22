@@ -61,6 +61,18 @@ public class JogoDireita extends BasePainelComBotao {
         });
         add(botaoVoltar); // Adiciona o botão ao painel
         
+        JButton chaveCBTC = new JButton();
+        chaveCBTC.setBounds(550, 650, 75, 75); // Posição e tamanho do botão
+        chaveCBTC.setContentAreaFilled(false); // Remove a área de preenchimento
+        chaveCBTC.setOpaque(false); // Torna o botão transparente
+        chaveCBTC.setBorderPainted(false); // Remove as bordas
+        chaveCBTC.setFocusPainted(false); // Remove o foco visual
+        chaveCBTC.setText(""); // Remove o texto do botão
+        chaveCBTC.addActionListener(e -> {
+            System.out.println("Novo botão clicado!");
+            layout.show(painelPrincipal, "JogoDireitaChaveCBTC"); // Navega para a tela JogoDireitaChaveCBTC
+        });
+        add(chaveCBTC); // Adiciona o botão ao painel
     }
 
     @Override
