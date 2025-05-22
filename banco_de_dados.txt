@@ -78,7 +78,7 @@ INSERT INTO metroviarios (nome, email, senha, registro) VALUES
 ("Guilherme Calderan", "guilherme15@metrosp.com.br", "Metrô#2024", "R01758-2"),
 ("Marcos", "marcos@metrosp.com.br", "Test#Senha", "R22222-2"),
 ("Guilherme Nunes", "guilhermeswing@metrosp.com.br", "G@mes456", "R33333-3"),
-("Guilherme 43", "guiherme43@metrosp.com.br", "4343!", "R43434-3");
+("Guilherme 43", "guiherme43@metrosp.com.br", "4343!", "R43434-3"),
 ("Metroviario", "metroviario@metrosp.com.br", "Metro!", "R00000-1");
 
 INSERT INTO administradores (nome, email, senha, registro) VALUES
