@@ -88,7 +88,7 @@ public class TremDecisao extends JPanel {
         }
 
         // Verifica se o jogador pegou a fita e desenha a imagem ocupando a tela inteira
-        if (imgFita != null) {
+        if (InventarioUI.isPegouFita() && imgFita != null) {
             g.drawImage(imgFita, 0, 0, getWidth(), getHeight(), this);
         }
 
