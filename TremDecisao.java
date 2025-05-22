@@ -7,6 +7,9 @@ public class TremDecisao extends JPanel {
     private Image imgCinturao;
     private Image imgFita;
 
+    private JButton botao1;
+    private JButton botao2;
+
     public TremDecisao() {
         // Carrega a imagem de fundo
         imagemFundo = new ImageIcon("imagens/Fotos editadas/decisao.jpg").getImage();
@@ -14,17 +17,27 @@ public class TremDecisao extends JPanel {
         imgFita = new ImageIcon("imagens/Fotos editadas/ItensFita.png").getImage();
         setLayout(null); // Define layout absoluto
 
-        // Botão 1
-        JButton botao1 = new JButton("Opção 1");
+        // Botão 1 (aparece apenas se o jogador tiver a fita)
+        botao1 = new JButton("Opção 1");
         botao1.setBounds(100, 300, 200, 300); // Posição e tamanho
         botao1.addActionListener(e -> System.out.println("Botão 1 clicado!"));
         add(botao1);
 
-        // Botão 2
-        JButton botao2 = new JButton("Opção 2");
+        // Botão 2 (aparece apenas se o jogador tiver o cinturão)
+        botao2 = new JButton("Opção 2");
         botao2.setBounds(400, 300, 720, 300); // Posição e tamanho
         botao2.addActionListener(e -> System.out.println("Botão 2 clicado!"));
         add(botao2);
+    }
+
+    @Override
+    public void setVisible(boolean aFlag) {
+        super.setVisible(aFlag);
+        if (aFlag) {
+            // Atualiza a visibilidade dos botões com base no estado atual
+            botao1.setVisible(InventarioUI.isPegouFita()); // Botão 1 aparece se tiver a fita
+            botao2.setVisible(InventarioUI.isPegouCinturao()); // Botão 2 aparece se tiver o cinturão
+        }
     }
 
     @Override
