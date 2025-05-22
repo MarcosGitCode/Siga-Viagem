@@ -6,6 +6,10 @@ public class InventarioUI {
     private static final Image imgCinturao = new ImageIcon("imagens\\Fotos editadas\\ItensCinturao2.png").getImage();
     private static final Image imgFita = new ImageIcon("imagens\\Fotos editadas\\ItensFita2.png").getImage();
 
+    // Variáveis para rastrear se o jogador pegou os itens
+    private static boolean pegouCinturao = false;
+    private static boolean pegouFita = false;
+
     public static void desenhar(Graphics2D g2d, int larguraPainel) {
         Set<String> itens = Inventario.getItens();
         int larguraBox = 180 + (itens.size() * 60);
@@ -24,10 +28,12 @@ public class InventarioUI {
 
         for (String item : itens) {
             if (item.equalsIgnoreCase("Cinturão")) {
+                pegouCinturao = true; // Marca que o cinturão foi pego
                 int larguraCinturao = 50; // Aumenta a largura do ícone do cinturão
                 g2d.drawImage(imgCinturao, itemX, itemY, larguraCinturao, iconSize, null);
                 itemX += larguraCinturao; // Ajusta o espaçamento para o próximo item
             } else if (item.equalsIgnoreCase("Fita")) {
+                pegouFita = true; // Marca que a fita foi pega
                 int larguraFita = 120; // Aumenta a largura do ícone da fita
                 g2d.drawImage(imgFita, itemX, itemY, larguraFita, iconSize, null);
                 itemX += larguraFita; // Ajusta o espaçamento para o próximo item
@@ -36,5 +42,14 @@ public class InventarioUI {
                 itemX += 60;
             }
         }
+    }
+
+    // Métodos para verificar se os itens foram pegos
+    public static boolean isPegouCinturao() {
+        return pegouCinturao;
+    }
+
+    public static boolean isPegouFita() {
+        return pegouFita;
     }
 }

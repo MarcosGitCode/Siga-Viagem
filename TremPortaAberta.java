@@ -78,6 +78,23 @@ public class TremPortaAberta extends JPanel {
             layout.show(painelPrincipal, "TremPainelExternoFechado");
         });
         add(botaoSetaDireita);
+
+        // Botão no meio da tela, na parte superior
+        JButton botaoFecharPorta = new JButton("Fechar porta");
+        botaoFecharPorta.setBounds(540, 50, 200, 50); // Centralizado na largura (1280/2 - 100) e na parte superior
+        botaoFecharPorta.setFont(new Font("Arial", Font.BOLD, 18));
+        botaoFecharPorta.setForeground(Color.WHITE);
+        botaoFecharPorta.setBackground(new Color(255, 0, 0)); // Vermelho
+        botaoFecharPorta.setFocusPainted(false);
+        botaoFecharPorta.setBorderPainted(false);
+        botaoFecharPorta.setOpaque(true);
+        botaoFecharPorta.addActionListener(e -> {
+            System.out.println("Botão 'Fechar porta' clicado!");
+            layout.show(painelPrincipal, "TremDecisao"); // Altere para o painel TremDecisao
+        });
+        add(botaoFecharPorta);
+
+        painelPrincipal.add(new TremDecisao(), "TremDecisao");
     }
 
     @Override
