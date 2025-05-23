@@ -75,7 +75,7 @@ public class TremPortaAberta extends JPanel {
         botaoSetaDireita.setBorderPainted(false);
         botaoSetaDireita.addActionListener(e -> {
             System.out.println("Botão seta direita clicado!");
-            layout.show(painelPrincipal, "TremPainelExternoFechado");
+            layout.show(painelPrincipal, "TremPainelExterno");
         });
         add(botaoSetaDireita);
 
