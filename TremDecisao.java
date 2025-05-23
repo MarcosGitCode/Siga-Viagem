@@ -26,7 +26,7 @@ public class TremDecisao extends JPanel {
         setLayout(null); // Define layout absoluto
 
         // Botão 1 (aparece apenas se o jogador tiver a fita)
-        botao1 = new JButton("Opção 1");
+        botao1 = new JButton("");
         botao1.setBounds(400, 300, 800, 300); // Posição e tamanho
         botao1.setOpaque(false); // Torna o botão transparente
         botao1.setContentAreaFilled(false); // Remove a área de fundo
@@ -56,6 +56,15 @@ public class TremDecisao extends JPanel {
                                 public void run() {
                                     imgAdesivo = new ImageIcon("imagens/Fotos editadas/Adesivo de porta isolada instalado.jpg").getImage();
                                     repaint(); // Atualiza o painel para desenhar a terceira imagem
+
+                                    // Aguarda mais 0,5 segundos e leva o jogador ao painel Parte1
+                                    new Timer().schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            System.out.println("Levando o jogador ao painel Parte1...");
+                                            layout.show(painelPrincipal, "Parte1"); // Leva o jogador ao painel Parte1
+                                        }
+                                    }, 500); // 500ms = 0,5 segundos
                                 }
                             }, 500); // 500ms = 0,5 segundos
                         }
@@ -67,7 +76,7 @@ public class TremDecisao extends JPanel {
         add(botao1);
 
         // Botão 2 (aparece apenas se o jogador tiver o cinturão)
-        botao2 = new JButton("Opção 2");
+        botao2 = new JButton("");
         botao2.setBounds(100, 300, 300, 300); // Posição e tamanho
         botao2.addActionListener(e -> System.out.println("Botão 2 clicado!"));
         botao2.setOpaque(false); // Torna o botão transparente
@@ -89,6 +98,8 @@ public class TremDecisao extends JPanel {
             layout.show(painelPrincipal, "TremPortaAberta"); // Volta para o painel anterior
         });
         add(botaoVoltar); // Adiciona o botão ao painel
+
+        painelPrincipal.add(new Parte1(layout, painelPrincipal), "Parte1");
     }
 
     @Override
