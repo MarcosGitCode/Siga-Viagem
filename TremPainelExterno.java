@@ -5,11 +5,11 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 import javax.swing.*;
 
-public class TremPainelExternoFechado extends JPanel {
+public class TremPainelExterno extends JPanel {
 
     private Image imagemFundo;
 
-    public TremPainelExternoFechado(CardLayout layout, JPanel painelPrincipal) {
+    public TremPainelExterno(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
 
         // Botão para voltar
@@ -35,7 +35,47 @@ public class TremPainelExternoFechado extends JPanel {
         botaoPainelExterno.setBorderPainted(false);
         botaoPainelExterno.addActionListener(e -> {
             System.out.println("Botão do painel externo clicado!");
-            layout.show(painelPrincipal, "TremPainelExternoAberto");
+            
+            // Atualiza a imagem de fundo
+            try {
+                imagemFundo = ImageIO.read(new File("imagens/Fotos editadas/18 - Painel externo aberto.jpg"));
+                repaint(); // Redesenha o painel para refletir a nova imagem
+            } catch (IOException ex) {
+                ex.printStackTrace();
+            }
+            
+            // Remove o botão da tela
+            remove(botaoPainelExterno);
+            revalidate(); // Atualiza o layout
+            repaint();    // Redesenha o painel
+
+            // Adiciona o botão central
+            JButton botaoCentral = new JButton();
+            int tamanho = 100;
+            botaoCentral.setBounds(590 - (tamanho / 2), 560 - (tamanho / 2), tamanho, tamanho);
+            botaoCentral.setContentAreaFilled(false);
+            botaoCentral.setBorderPainted(false);
+            botaoCentral.setFocusPainted(false);
+            botaoCentral.setOpaque(false);
+            botaoCentral.addActionListener(event -> {
+                System.out.println("Botão central clicado!");
+
+                // Atualiza a imagem de fundo
+                try {
+                    imagemFundo = ImageIO.read(new File("imagens/Fotos editadas/19 - Painel externo porta 3 isolada.jpg"));
+                    repaint(); // Redesenha o painel para refletir a nova imagem
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+
+                // Remove o botão da tela
+                remove(botaoCentral);
+                revalidate(); // Atualiza o layout
+                repaint();    // Redesenha o painel
+            });
+            add(botaoCentral);
+            revalidate(); // Atualiza o layout novamente
+            repaint();    // Redesenha o painel
         });
         add(botaoPainelExterno);
 

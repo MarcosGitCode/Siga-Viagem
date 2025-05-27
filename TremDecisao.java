@@ -15,6 +15,8 @@ public class TremDecisao extends JPanel {
     private JButton botao1;
     private JButton botao2;
 
+    private boolean portafechada = false; // Inicialmente, a porta está aberta
+
     public TremDecisao(CardLayout layout, JPanel painelPrincipal) {
         this.layout = layout;
         this.painelPrincipal = painelPrincipal;
@@ -56,6 +58,24 @@ public class TremDecisao extends JPanel {
                                 public void run() {
                                     imgAdesivo = new ImageIcon("imagens/Fotos editadas/Adesivo de porta isolada instalado.jpg").getImage();
                                     repaint(); // Atualiza o painel para desenhar a terceira imagem
+<<<<<<< HEAD
+=======
+
+                                    // Aguarda mais 0,5 segundos, apaga os botões e leva o jogador ao painel Parte1
+                                    new Timer().schedule(new TimerTask() {
+                                        @Override
+                                        public void run() {
+                                            System.out.println("Apagando os botões...");
+                                            botao1.setVisible(false); // Torna o botão 1 invisível
+                                            botao1.setEnabled(false); // Desativa o botão 1
+                                            botao2.setVisible(false); // Torna o botão 2 invisível
+                                            botao2.setEnabled(false); // Desativa o botão 2
+                                            portafechada = true; // Marca que a porta foi fechada
+                                            System.out.println("Levando o jogador ao painel Parte1...");
+                                            layout.show(painelPrincipal, "Parte1"); // Leva o jogador ao painel Parte1
+                                        }
+                                    }, 500); // 500ms = 0,5 segundos
+>>>>>>> 38362c263aa020f0a62f0112f5467d6cf05925f3
                                 }
                             }, 500); // 500ms = 0,5 segundos
                         }

@@ -8,18 +8,14 @@ import javax.swing.*;
 public class TremPortaAberta extends JPanel {
 
     private Image imagemFundo;
+    private JButton botaoFecharPorta; // Reference to the "Fechar porta" button
+    private boolean portafechada = false; // Initially false
 
     public TremPortaAberta(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
 
-        // Carrega a imagem de fundo uma vez
-        try {
-            BufferedImage img = ImageIO.read(new File("imagens/Fotos editadas/14 - Porta aberta - externo (2).jpg"));
-            imagemFundo = img.getScaledInstance(1280, 856, Image.SCALE_SMOOTH);
-        } catch (IOException e) {
-            e.printStackTrace();
-            imagemFundo = null;
-        }
+        // Load the initial background image
+        atualizarImagemFundo();
 
         JButton botaoVoltar = new JButton("<");
         botaoVoltar.setBounds(10, 10, 60, 60);
@@ -75,36 +71,63 @@ public class TremPortaAberta extends JPanel {
         botaoSetaDireita.setBorderPainted(false);
         botaoSetaDireita.addActionListener(e -> {
             System.out.println("Botão seta direita clicado!");
-            layout.show(painelPrincipal, "TremPainelExternoFechado");
+            layout.show(painelPrincipal, "TremPainelExterno");
         });
         add(botaoSetaDireita);
 
-        // Botão no meio da tela, na parte superior
-        JButton botaoFecharPorta = new JButton("Fechar porta");
-        botaoFecharPorta.setBounds(540, 50, 200, 50); // Centralizado na largura (1280/2 - 100) e na parte superior
+        // "Fechar porta" button
+        botaoFecharPorta = new JButton("Fechar porta");
+        botaoFecharPorta.setBounds(540, 50, 200, 50); // Centralized
         botaoFecharPorta.setFont(new Font("Arial", Font.BOLD, 18));
         botaoFecharPorta.setForeground(Color.WHITE);
-        botaoFecharPorta.setBackground(new Color(255, 0, 0)); // Vermelho
+        botaoFecharPorta.setBackground(new Color(255, 0, 0)); // Red
         botaoFecharPorta.setFocusPainted(false);
         botaoFecharPorta.setBorderPainted(false);
         botaoFecharPorta.setOpaque(true);
         botaoFecharPorta.addActionListener(e -> {
             System.out.println("Botão 'Fechar porta' clicado!");
-            layout.show(painelPrincipal, "TremDecisao"); // Altere para o painel TremDecisao
+            portafechada = true; // Set portafechada to true
+            atualizarImagemFundo(); // Update the background image
+            removerBotaoFecharPorta(); // Remove the "Fechar porta" button
+            layout.show(painelPrincipal, "TremDecisao"); // Switch to TremDecisao panel
         });
         add(botaoFecharPorta);
 
         painelPrincipal.add(new TremDecisao(layout, painelPrincipal), "TremDecisao");
     }
 
+    // Method to update the background image based on portafechada
+    private void atualizarImagemFundo() {
+        String caminhoImagem = portafechada
+                ? "imagens/Fotos editadas/Adesivo de porta isolada instalado.jpg"
+                : "imagens/Fotos editadas/14 - Porta aberta - externo (2).jpg";
+        try {
+            BufferedImage img = ImageIO.read(new File(caminhoImagem));
+            imagemFundo = img.getScaledInstance(1280, 856, Image.SCALE_SMOOTH);
+            repaint(); // Redraw the panel with the new image
+        } catch (IOException e) {
+            e.printStackTrace();
+            imagemFundo = null;
+        }
+    }
+
+    // Method to remove only the "Fechar porta" button
+    private void removerBotaoFecharPorta() {
+        if (botaoFecharPorta != null) {
+            remove(botaoFecharPorta); // Remove the button from the panel
+            botaoFecharPorta = null; // Clear the reference
+            repaint(); // Redraw the panel
+        }
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Desenha a imagem de fundo
+        // Draw the background image
         if (imagemFundo != null) {
             g.drawImage(imagemFundo, 0, 0, 1280, 856, this);
         }
-        // Desenha o inventário no canto superior direito
+        // Draw the inventory in the top-right corner
         InventarioUI.desenhar((Graphics2D) g, getWidth());
     }
 }
