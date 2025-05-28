@@ -7,9 +7,32 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
 
     private JLabel imagemChaveCBTCRM;
     private JLabel imagemChaveCBTCAM;
+    private String registroUsuario;
+    private int pontosAcumulados = 0;
+    private SequenciaDecisoes sequencia;
+    private static final String TAREFA_CBCT_RM = "CBCT_RM";
+    private static final String TAREFA_CBCT_AM_FINAL = "CBCT_AM_FINAL";
 
     public JogoDireitaChaveCBTC(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/09 - Chave do CBTC - MCS.jpg", layout, painelPrincipal);
+
+        // Verifica se há um usuário logado
+        if (!UsuarioLogado.isLogado()) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro: Usuário não está logado!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            layout.show(painelPrincipal, "Menu");
+            return;
+        }
+
+        registroUsuario = UsuarioLogado.getRegistro();
+        sequencia = SequenciaDecisoes.getInstance();
+        sequencia.setRegistroUsuario(registroUsuario);
+
+        System.out.println("=== Debug JogoDireitaChaveCBTC ===");
+        System.out.println("Construtor - Registro do usuário: " + registroUsuario);
+        System.out.println("========================");
 
         // Botão Voltar para Parte1
         JButton botaoVoltar = new JButton("<");
@@ -22,6 +45,7 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
         botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
+            mostrarPontuacaoFinal(); // Mostra o resultado final
             layout.show(painelPrincipal, "JogoDireita"); // Volta para o painel anterior
         });
         add(botaoVoltar); // Adiciona o botão ao painel
@@ -35,7 +59,30 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
         chaveCBTCRM.setFocusPainted(false); // Remove o foco visual
         chaveCBTCRM.addActionListener(e -> {
             System.out.println("Botão chaveCBTCRM clicado!");
-            mostrarImagemChaveCBTCRM(); // Exibe a imagem sobreposta
+            mostrarImagemChaveCBTCRM();
+
+            // Verifica se a tarefa já foi completada
+            if (!sequencia.isTarefaCompletada(TAREFA_CBCT_RM)) {
+                // Verifica se a reversora está em frente antes
+                if (!sequencia.isTarefaCompletada("REVERSORA_INICIO")) {
+                    adicionarPontuacao(-1); // Penalidade por sequência incorreta
+                    JOptionPane.showMessageDialog(this,
+                            "Sequência incorreta! A reversora deve ser posicionada primeiro.",
+                            "Penalidade",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    adicionarPontuacao(1); // Pontuação normal
+                    JOptionPane.showMessageDialog(this,
+                            "Chave CBCT posicionada corretamente em RM!",
+                            "Sucesso",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Você já completou esta tarefa!",
+                        "Aviso",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
         });
         add(chaveCBTCRM); // Adiciona o botão ao painel
 
@@ -48,7 +95,11 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
         chaveCBTCAM.setFocusPainted(false); // Remove o foco visual
         chaveCBTCAM.addActionListener(e -> {
             System.out.println("Botão chaveCBTCAM clicado!");
-            mostrarImagemChaveCBTCAM(); // Exibe a nova imagem
+            mostrarImagemChaveCBTCAM();
+            // Verifica se é a chave AM final
+            if (sequencia.isTarefaCompletada("INSERIR_CHAVE")) {
+                adicionarPontuacao(1); // Pontos para AM final
+            }
         });
         add(chaveCBTCAM); // Adiciona o botão ao painel
 
@@ -62,6 +113,7 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
         chaveCBTCMCS.addActionListener(e -> {
             System.out.println("Botão chaveCBTCMCS clicado!");
             mostrarImagemPrincipal(); // Retorna para a imagem principal
+            adicionarPontuacao(-1); // Remove 1 ponto
         });
         add(chaveCBTCMCS); // Adiciona o botão ao painel
 
@@ -84,8 +136,10 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
 
         if (largura > 0 && altura > 0) {
             ImageIcon imagemOriginal = new ImageIcon("imagens/Fotos editadas/Chave do CBTC - RM.jpg");
-            Image imagemRedimensionada = imagemOriginal.getImage().getScaledInstance(largura, altura, Image.SCALE_SMOOTH);
-            imagemChaveCBTCRM.setIcon(new ImageIcon(imagemRedimensionada)); // Atualiza o ícone com a imagem redimensionada
+            Image imagemRedimensionada = imagemOriginal.getImage().getScaledInstance(largura, altura,
+                    Image.SCALE_SMOOTH);
+            imagemChaveCBTCRM.setIcon(new ImageIcon(imagemRedimensionada)); // Atualiza o ícone com a imagem
+                                                                            // redimensionada
             imagemChaveCBTCRM.setBounds(0, 0, largura, altura); // Ajusta para preencher a tela inteira
         }
 
@@ -100,8 +154,10 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
 
         if (largura > 0 && altura > 0) {
             ImageIcon imagemOriginal = new ImageIcon("imagens/Fotos editadas/Chave do CBTC - AM.jpg");
-            Image imagemRedimensionada = imagemOriginal.getImage().getScaledInstance(largura, altura, Image.SCALE_SMOOTH);
-            imagemChaveCBTCAM.setIcon(new ImageIcon(imagemRedimensionada)); // Atualiza o ícone com a imagem redimensionada
+            Image imagemRedimensionada = imagemOriginal.getImage().getScaledInstance(largura, altura,
+                    Image.SCALE_SMOOTH);
+            imagemChaveCBTCAM.setIcon(new ImageIcon(imagemRedimensionada)); // Atualiza o ícone com a imagem
+                                                                            // redimensionada
             imagemChaveCBTCAM.setBounds(0, 0, largura, altura); // Ajusta para preencher a tela inteira
         }
 
@@ -116,7 +172,8 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
 
         if (largura > 0 && altura > 0) {
             ImageIcon imagemOriginal = new ImageIcon("imagens/Fotos editadas/09 - Chave do CBTC - MCS.jpg");
-            Image imagemRedimensionada = imagemOriginal.getImage().getScaledInstance(largura, altura, Image.SCALE_SMOOTH);
+            Image imagemRedimensionada = imagemOriginal.getImage().getScaledInstance(largura, altura,
+                    Image.SCALE_SMOOTH);
             JLabel imagemPrincipal = new JLabel(new ImageIcon(imagemRedimensionada));
             imagemPrincipal.setBounds(0, 0, largura, altura); // Ajusta para preencher a tela inteira
             add(imagemPrincipal); // Adiciona a imagem ao painel
@@ -124,9 +181,55 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
         }
 
         // Oculta outras imagens
-        if (imagemChaveCBTCRM != null) imagemChaveCBTCRM.setVisible(false);
-        if (imagemChaveCBTCAM != null) imagemChaveCBTCAM.setVisible(false);
+        if (imagemChaveCBTCRM != null)
+            imagemChaveCBTCRM.setVisible(false);
+        if (imagemChaveCBTCAM != null)
+            imagemChaveCBTCAM.setVisible(false);
 
         repaint(); // Atualiza o painel para exibir a imagem
+    }
+
+    private void adicionarPontuacao(int pontos) {
+        System.out.println("=== Debug adicionarPontuacao ===");
+        System.out.println("registroUsuario: " + registroUsuario);
+        System.out.println("Pontos a adicionar: " + pontos);
+        System.out.println("========================");
+
+        if (registroUsuario != null && !registroUsuario.isEmpty()) {
+            // Determina qual tarefa está sendo realizada
+            String tarefa = sequencia.isTarefaCompletada("INSERIR_CHAVE") ? TAREFA_CBCT_AM_FINAL : TAREFA_CBCT_RM;
+
+            // Registra a pontuação apenas se for positiva ou se for a primeira tentativa
+            if (pontos > 0 || !sequencia.isTarefaCompletada(tarefa)) {
+                sequencia.registrarPontuacao(tarefa, pontos);
+                pontosAcumulados += pontos;
+            }
+        }
+    }
+
+    private void mostrarPontuacaoFinal() {
+        if (pontosAcumulados != 0) {
+            String mensagem;
+            String titulo;
+            int tipoMensagem;
+
+            if (pontosAcumulados > 0) {
+                mensagem = "Parabéns! Você ganhou um total de " + pontosAcumulados + " ponto(s)!";
+                titulo = "Pontos Ganhos";
+                tipoMensagem = JOptionPane.INFORMATION_MESSAGE;
+            } else {
+                mensagem = "Atenção! Você perdeu um total de " + Math.abs(pontosAcumulados) + " ponto(s)!";
+                titulo = "Pontos Perdidos";
+                tipoMensagem = JOptionPane.WARNING_MESSAGE;
+            }
+
+            JOptionPane.showMessageDialog(this, mensagem, titulo, tipoMensagem);
+        } else if (sequencia.isTarefaCompletada(TAREFA_CBCT_RM) ||
+                sequencia.isTarefaCompletada(TAREFA_CBCT_AM_FINAL)) {
+            JOptionPane.showMessageDialog(this,
+                    "Você já completou esta tarefa anteriormente!",
+                    "Tarefa Já Realizada",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 }
