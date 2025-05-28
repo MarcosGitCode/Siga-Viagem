@@ -73,7 +73,7 @@ public class Parte1 extends PainelComImagem {
         painelPrincipal.add(new JogoEsquerda(layout, painelPrincipal), "JogoEsquerda");
         painelPrincipal.add(new JogoAlavanca(layout, painelPrincipal), "JogoAlavanca");
         painelPrincipal.add(new JogoEsquerdaOficial(layout, painelPrincipal), "JogoEsquerdaOficial");
-        painelPrincipal.add(new JogoDireitaChave(layout, painelPrincipal), "JogoDireitaChave"); // Adicionado conforme sugestão
+        painelPrincipal.add(new JogoDireita(layout, painelPrincipal), "JogoDireita"); // Adicionado conforme sugestão
         painelPrincipal.add(new JogoPA(layout, painelPrincipal), "JogoPA");
     }
     
