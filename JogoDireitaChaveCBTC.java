@@ -16,6 +16,16 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
     public JogoDireitaChaveCBTC(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/09 - Chave do CBTC - MCS.jpg", layout, painelPrincipal);
 
+        // Verifica se há um usuário logado
+        if (!UsuarioLogado.isLogado()) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro: Usuário não está logado!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            layout.show(painelPrincipal, "Menu");
+            return;
+        }
+
         registroUsuario = UsuarioLogado.getRegistro();
         sequencia = SequenciaDecisoes.getInstance();
         sequencia.setRegistroUsuario(registroUsuario);
@@ -50,11 +60,28 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
         chaveCBTCRM.addActionListener(e -> {
             System.out.println("Botão chaveCBTCRM clicado!");
             mostrarImagemChaveCBTCRM();
-            // Verifica se a reversora está em frente antes
-            if (!sequencia.isTarefaCompletada("REVERSORA_INICIO")) {
-                adicionarPontuacao(-1); // Penalidade por sequência incorreta
+
+            // Verifica se a tarefa já foi completada
+            if (!sequencia.isTarefaCompletada(TAREFA_CBCT_RM)) {
+                // Verifica se a reversora está em frente antes
+                if (!sequencia.isTarefaCompletada("REVERSORA_INICIO")) {
+                    adicionarPontuacao(-1); // Penalidade por sequência incorreta
+                    JOptionPane.showMessageDialog(this,
+                            "Sequência incorreta! A reversora deve ser posicionada primeiro.",
+                            "Penalidade",
+                            JOptionPane.WARNING_MESSAGE);
+                } else {
+                    adicionarPontuacao(1); // Pontuação normal
+                    JOptionPane.showMessageDialog(this,
+                            "Chave CBCT posicionada corretamente em RM!",
+                            "Sucesso",
+                            JOptionPane.INFORMATION_MESSAGE);
+                }
             } else {
-                adicionarPontuacao(1);
+                JOptionPane.showMessageDialog(this,
+                        "Você já completou esta tarefa!",
+                        "Aviso",
+                        JOptionPane.INFORMATION_MESSAGE);
             }
         });
         add(chaveCBTCRM); // Adiciona o botão ao painel
@@ -169,11 +196,11 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
         System.out.println("========================");
 
         if (registroUsuario != null && !registroUsuario.isEmpty()) {
-            String tarefa = pontos > 0
-                    ? (sequencia.isTarefaCompletada("INSERIR_CHAVE") ? TAREFA_CBCT_AM_FINAL : TAREFA_CBCT_RM)
-                    : null;
+            // Determina qual tarefa está sendo realizada
+            String tarefa = sequencia.isTarefaCompletada("INSERIR_CHAVE") ? TAREFA_CBCT_AM_FINAL : TAREFA_CBCT_RM;
 
-            if (tarefa != null) {
+            // Registra a pontuação apenas se for positiva ou se for a primeira tentativa
+            if (pontos > 0 || !sequencia.isTarefaCompletada(tarefa)) {
                 sequencia.registrarPontuacao(tarefa, pontos);
                 pontosAcumulados += pontos;
             }

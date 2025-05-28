@@ -84,12 +84,14 @@ public class MenuLogin extends PainelComImagem {
             // Login de teste para facilitar o desenvolvimento
             if (registro.equals("a") && senha.equals("a")) {
                 UsuarioLogado.setRegistro("R12345-6"); // Registro fictício para testes
+                Menu.inicializarTelasJogo(layout, painelPrincipal); // Inicializa as telas do jogo
                 layout.show(painelPrincipal, "Jogo"); // Redireciona para o jogo
                 return;
             }
 
             if (isAdmin || isMetroviario) {
                 UsuarioLogado.setRegistro(registro); // Armazena o registro do usuário logado
+                Menu.inicializarTelasJogo(layout, painelPrincipal); // Inicializa as telas do jogo
                 layout.show(painelPrincipal, "Jogo"); // Redireciona para o jogo
             } else {
                 JOptionPane.showMessageDialog(this,

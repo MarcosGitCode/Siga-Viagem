@@ -55,21 +55,38 @@ CREATE TABLE tarefas_realizadas (
     FOREIGN KEY (id_tarefa) REFERENCES tarefas(id)
 );
 
--- Trigger para atualizar pontuação total do metroviário
+-- Função para calcular pontuação total
 DELIMITER //
-CREATE TRIGGER atualizar_pontuacao_total
+CREATE FUNCTION calcular_pontuacao_total(p_id_metroviario INT) 
+RETURNS INT
+READS SQL DATA
+BEGIN
+    DECLARE total INT;
+    SELECT COALESCE(SUM(pontuacao_obtida), 0) INTO total
+    FROM tarefas_realizadas
+    WHERE id_metroviario = p_id_metroviario;
+    RETURN total;
+END //
+DELIMITER ;
+
+-- Procedure para atualizar pontuação
+DELIMITER //
+CREATE PROCEDURE atualizar_pontuacao_metroviario(IN p_id_metroviario INT)
+BEGIN
+    UPDATE metroviarios
+    SET pontuacao_total = calcular_pontuacao_total(p_id_metroviario)
+    WHERE id = p_id_metroviario;
+END //
+DELIMITER ;
+
+-- Trigger para chamar a procedure após inserção
+DELIMITER //
+CREATE TRIGGER after_tarefa_realizada
 AFTER INSERT ON tarefas_realizadas
 FOR EACH ROW
 BEGIN
-    UPDATE metroviarios
-    SET pontuacao_total = (
-        SELECT SUM(pontuacao_obtida)
-        FROM tarefas_realizadas
-        WHERE id_metroviario = NEW.id_metroviario
-    )
-    WHERE id = NEW.id_metroviario;
-END;
-//
+    CALL atualizar_pontuacao_metroviario(NEW.id_metroviario);
+END //
 DELIMITER ;
 
 -- Dados iniciais

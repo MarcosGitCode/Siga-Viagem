@@ -22,6 +22,16 @@ public class JogoReversora extends BasePainelComBotao {
     public JogoReversora(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/Reversora em neutro.jpg", layout, painelPrincipal);
 
+        // Verifica se há um usuário logado
+        if (!UsuarioLogado.isLogado()) {
+            JOptionPane.showMessageDialog(this,
+                    "Erro: Usuário não está logado!",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+            layout.show(painelPrincipal, "Menu");
+            return;
+        }
+
         registroUsuario = UsuarioLogado.getRegistro();
         sequencia = SequenciaDecisoes.getInstance();
         sequencia.setRegistroUsuario(registroUsuario);
@@ -69,6 +79,7 @@ public class JogoReversora extends BasePainelComBotao {
                     imagemAtual = imagemNeutro;
                 }
                 repaint(); // Re-renderiza o painel para exibir a nova imagem
+                mostrarPontuacaoFinal(); // Mostra pontuação ao alternar
             }
         });
     }
@@ -79,7 +90,7 @@ public class JogoReversora extends BasePainelComBotao {
         System.out.println("Pontos a adicionar: " + pontos);
         System.out.println("========================");
 
-        if (pontos > 0) {
+        if (pontos > 0 && registroUsuario != null && !registroUsuario.isEmpty()) {
             // Verifica se é a reversora inicial ou final
             String tarefa = sequencia.isTarefaCompletada("CBCT_RM") ? TAREFA_REVERSORA_FINAL : TAREFA_REVERSORA_INICIO;
 
@@ -87,11 +98,37 @@ public class JogoReversora extends BasePainelComBotao {
             if (tarefa.equals(TAREFA_REVERSORA_FINAL)) {
                 if (!sequencia.verificarSequencia(TAREFA_REVERSORA_FINAL, "CBCT_AM_FINAL")) {
                     System.out.println("Sequência incorreta para reversora final");
+                    JOptionPane.showMessageDialog(this,
+                            "Sequência incorreta para reversora final!",
+                            "Erro",
+                            JOptionPane.WARNING_MESSAGE);
                     return;
                 }
             }
 
-            sequencia.registrarPontuacao(tarefa, pontos);
+            // Verifica se a tarefa já foi completada
+            if (!sequencia.isTarefaCompletada(tarefa)) {
+                sequencia.registrarPontuacao(tarefa, pontos);
+                pontosAcumulados += pontos;
+
+                // Mostra mensagem de sucesso
+                String mensagem = tarefa.equals(TAREFA_REVERSORA_INICIO)
+                        ? "Reversora posicionada corretamente em frente!"
+                        : "Reversora final posicionada corretamente!";
+                JOptionPane.showMessageDialog(this,
+                        mensagem,
+                        "Sucesso",
+                        JOptionPane.INFORMATION_MESSAGE);
+
+                // Debug para verificar se a tarefa foi registrada
+                System.out.println("Tarefa " + tarefa + " registrada com sucesso!");
+                System.out.println("Verificação: tarefa completada = " + sequencia.isTarefaCompletada(tarefa));
+            } else {
+                JOptionPane.showMessageDialog(this,
+                        "Você já completou esta tarefa!",
+                        "Aviso",
+                        JOptionPane.INFORMATION_MESSAGE);
+            }
         }
     }
 

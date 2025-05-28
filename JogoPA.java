@@ -1,14 +1,45 @@
 import java.awt.*;
 import javax.swing.*;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import java.io.File;
+import java.io.IOException;
+import javax.imageio.ImageIO;
+import java.awt.image.BufferedImage;
+import javax.swing.JOptionPane;
 
-public class JogoPA extends JPanel {
-
-    private Image imagemFundo;
+public class JogoPA extends BasePainelComBotao {
+    private boolean imagemAlternada = false;
+    private BufferedImage imagemNeutro;
+    private BufferedImage imagemAtivado;
+    private BufferedImage imagemAtual;
+    private String registroUsuario;
+    private int pontosAcumulados = 0;
+    private SequenciaDecisoes sequencia;
+    private static final String TAREFA_PA_INICIAL = "PA_INICIAL";
+    private static final String TAREFA_PA_MEIO = "PA_MEIO";
+    private static final String TAREFA_PA_FINAL = "PA_FINAL";
 
     public JogoPA(CardLayout layout, JPanel painelPrincipal) {
-        // Carrega a imagem de fundo
-        imagemFundo = new ImageIcon("imagens/Fotos editadas/05 - Módulo de Comunicação - tela de início.jpg").getImage();
-        setLayout(null);
+        super("imagens/Fotos editadas/05 - Módulo de Comunicação - tela de início.jpg", layout, painelPrincipal);
+
+        registroUsuario = UsuarioLogado.getRegistro();
+        sequencia = SequenciaDecisoes.getInstance();
+        sequencia.setRegistroUsuario(registroUsuario);
+
+        try {
+            imagemNeutro = ImageIO
+                    .read(new File("imagens/Fotos editadas/05 - Módulo de Comunicação - tela de início.jpg"));
+            imagemAtivado = ImageIO.read(
+                    new File("imagens/Fotos editadas/05B Módulo de Comunicação - Microfone aberto PA ao vivo.jpg"));
+            imagemAtual = imagemNeutro;
+        } catch (IOException e) {
+            e.printStackTrace();
+            JOptionPane.showMessageDialog(this,
+                    "Erro ao carregar imagens do PA. Verifique se os arquivos existem no diretório correto.",
+                    "Erro",
+                    JOptionPane.ERROR_MESSAGE);
+        }
 
         // Botão Voltar
         JButton botaoVoltar = new JButton("<");
@@ -20,55 +51,67 @@ public class JogoPA extends JPanel {
         botaoVoltar.setOpaque(true);
         botaoVoltar.setBorderPainted(false);
         botaoVoltar.addActionListener(e -> {
+            System.out.println("Botão voltar clicado!");
+            mostrarPontuacaoFinal();
             layout.show(painelPrincipal, "Jogo");
         });
         add(botaoVoltar);
 
-        // Botão Emitir PA
-        JButton botaoEmitirPA = new JButton();
-        botaoEmitirPA.setBounds(195, 180, 75, 75); // Define a posição e o tamanho do botão
-        botaoEmitirPA.setFont(new Font("Arial", Font.BOLD, 16));
-        botaoEmitirPA.setText(""); // Remove o texto do botão
-        botaoEmitirPA.setContentAreaFilled(false); // Remove o preenchimento do botão
-        botaoEmitirPA.setOpaque(false); // Torna o botão transparente
-        botaoEmitirPA.setBorderPainted(false); // Remove a borda do botão
-        botaoEmitirPA.addActionListener(e -> {
-            System.out.println("Botão Emitir PA clicado!");
-
-            // Cria um SwingWorker para gerenciar a troca de imagens
-            new SwingWorker<Void, Void>() {
-                @Override
-                protected Void doInBackground() throws Exception {
-                    // Exibe a imagem "Módulo de Comunicação - Gongo" por 2 segundos
-                    imagemFundo = new ImageIcon("imagens/Fotos editadas/Módulo de Comunicação - Gongo.jpg").getImage();
-                    repaint(); // Atualiza a tela
-                    Thread.sleep(2000); // Aguarda 2 segundos
-
-                    // Exibe a imagem "05B Módulo de Comunicação - Microfone aberto PA ao vivo" por 5 segundos
-                    imagemFundo = new ImageIcon("imagens/Fotos editadas/05B Módulo de Comunicação - Microfone aberto PA ao vivo.jpg").getImage();
-                    repaint(); // Atualiza a tela
-                    Thread.sleep(5000); // Aguarda 5 segundos
-
-                    return null;
+        // Área clicável para PA
+        addMouseListener(new MouseAdapter() {
+            @Override
+            public void mouseClicked(MouseEvent e) {
+                imagemAlternada = !imagemAlternada;
+                if (imagemAlternada) {
+                    imagemAtual = imagemAtivado;
+                    verificarEAdicionarPontuacao();
+                } else {
+                    imagemAtual = imagemNeutro;
                 }
-
-                @Override
-                protected void done() {
-                    // Retorna para a imagem inicial
-                    imagemFundo = new ImageIcon("imagens/Fotos editadas/05 - Módulo de Comunicação - tela de início.jpg").getImage();
-                    repaint(); // Atualiza a tela para exibir a imagem inicial
-                }
-            }.execute();
+                repaint();
+            }
         });
-        add(botaoEmitirPA);
+    }
+
+    private void verificarEAdicionarPontuacao() {
+        // Determina qual PA está sendo acionado baseado na sequência
+        if (!sequencia.isTarefaCompletada(TAREFA_PA_INICIAL) &&
+                sequencia.verificarSequencia(TAREFA_PA_INICIAL, "REVERSORA_INICIO", "CBCT_RM")) {
+            // PA inicial
+            adicionarPontuacao(1, TAREFA_PA_INICIAL);
+        } else if (!sequencia.isTarefaCompletada(TAREFA_PA_MEIO) &&
+                sequencia.verificarSequencia(TAREFA_PA_MEIO, "INFORMAR_CCO_INICIAL")) {
+            // PA do meio
+            adicionarPontuacao(1, TAREFA_PA_MEIO);
+        } else if (!sequencia.isTarefaCompletada(TAREFA_PA_FINAL) &&
+                sequencia.verificarSequencia(TAREFA_PA_FINAL, "INFORMAR_CCO_FINAL", "INSERIR_CHAVE")) {
+            // PA final
+            adicionarPontuacao(1, TAREFA_PA_FINAL);
+        }
+    }
+
+    private void adicionarPontuacao(int pontos, String tarefa) {
+        if (registroUsuario != null && !registroUsuario.isEmpty()) {
+            sequencia.registrarPontuacao(tarefa, pontos);
+            pontosAcumulados += pontos;
+        }
+    }
+
+    private void mostrarPontuacaoFinal() {
+        if (pontosAcumulados > 0) {
+            JOptionPane.showMessageDialog(this,
+                    "Parabéns! Você ganhou " + pontosAcumulados + " ponto(s)!",
+                    "Pontos Ganhos",
+                    JOptionPane.INFORMATION_MESSAGE);
+        }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Desenha a imagem de fundo cobrindo toda a tela
-        if (imagemFundo != null) {
-            g.drawImage(imagemFundo, 0, 0, getWidth(), getHeight(), this);
+        if (imagemAtual != null) {
+            g.drawImage(imagemAtual, 0, 0, getWidth(), getHeight(), this);
         }
+        InventarioUI.desenhar((Graphics2D) g, getWidth());
     }
 }
