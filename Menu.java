@@ -34,6 +34,7 @@ public class Menu extends JFrame {
         painelPrincipal.add(new JogoPA(layout, painelPrincipal), "JogoPA");
         painelPrincipal.add(new JogoDireitaChaveCBTC(layout, painelPrincipal), "JogoDireitaChaveCBTC");
         painelPrincipal.add(new TremPainelExterno(layout, painelPrincipal), "TremPainelExterno");
+        painelPrincipal.add(new JogoReversora(layout, painelPrincipal), "Reversora");
         add(painelPrincipal);
         setVisible(true);
     }

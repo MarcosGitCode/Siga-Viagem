@@ -283,4 +283,26 @@ public class MetroviarioDAO {
             System.err.println("Erro ao atualizar pontuação: " + e.getMessage());
         }
     }
+
+    public boolean verificarTarefaCompletada(String registro, int idTarefa) {
+        String sql = "SELECT COUNT(*) FROM tarefas_realizadas tr " +
+                "JOIN metroviarios m ON tr.id_metroviario = m.id " +
+                "WHERE m.registro = ? AND tr.id_tarefa = ?";
+
+        try (Connection conn = Conexao.conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, registro);
+            stmt.setInt(2, idTarefa);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt(1) > 0;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao verificar tarefa completada: " + e.getMessage());
+        }
+        return false;
+    }
 }

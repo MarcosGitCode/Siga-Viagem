@@ -87,7 +87,22 @@ INSERT INTO administradores (nome, email, senha, registro) VALUES
 
 -- Inserir tarefas do jogo
 INSERT INTO tarefas (titulo, valor_pontuacao) VALUES
-('Verificar porta com problema', 20),
-('Isolar porta com defeito', 30),
-('Acionar emergência corretamente', 25),
-('Seguir procedimento padrão', 25);
+('Posicionar reversora em frente - início', 1),
+('Posicionar chave CBCT em RM', 1),
+('Acionar PA inicial', 1),
+('Fechar portas pela botoeira lateral', 1),
+('Informar CCO sobre porta não fechada', 2),
+('Acionar PA após identificar problema', 1),
+('Pegar equipamentos (cinturão, adesivo, chave)', 3),
+('Verificar soleira da porta', 1),
+('Verificar dispositivo de emergência', 1),
+('Informar CCO sobre verificações', 2),
+('Isolar porta no painel externo', 3),
+('Fechar e travar porta manualmente', 2),
+('Colocar adesivo na porta', 2),
+('Verificar luz de portas externas', 2),
+('Informar CCO após isolamento', 2),
+('Acionar PA final', 1),
+('Inserir chave de serviço', 1),
+('Posicionar chave CBCT em AM - final', 1),
+('Posicionar reversora em frente - final', 1);
