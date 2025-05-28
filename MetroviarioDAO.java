@@ -203,26 +203,112 @@ public class MetroviarioDAO {
     }
 
     public void registrarTarefaRealizada(String registro, int idTarefa, int pontuacaoObtida) {
-        String sql = "INSERT INTO tarefas_realizadas (id_metroviario, id_tarefa, pontuacao_obtida) " +
-                "SELECT m.id, ?, ? FROM metroviarios m WHERE m.registro = ?";
+        Connection conn = null;
+        try {
+            conn = Conexao.conectar();
+            if (conn == null) {
+                System.err.println("Erro: Não foi possível conectar ao banco de dados");
+                return;
+            }
 
-        try (Connection conn = Conexao.conectar();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+            // Desativa o autocommit para usar transação
+            conn.setAutoCommit(false);
 
-            stmt.setInt(1, idTarefa);
-            stmt.setInt(2, pontuacaoObtida);
-            stmt.setString(3, registro);
+            // Primeiro verifica se a tarefa já foi completada
+            if (verificarTarefaCompletada(registro, idTarefa)) {
+                System.out.println("Tarefa já foi completada anteriormente.");
+                return;
+            }
 
-            int rowsAffected = stmt.executeUpdate();
-            if (rowsAffected > 0) {
-                System.out.println("Pontuação registrada com sucesso!");
-            } else {
-                System.err.println("Erro: Metroviário não encontrado");
+            // Registra a tarefa realizada
+            String sql = "INSERT INTO tarefas_realizadas (id_metroviario, id_tarefa, pontuacao_obtida) " +
+                    "SELECT m.id, ?, ? FROM metroviarios m WHERE m.registro = ?";
+
+            try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+                stmt.setInt(1, idTarefa);
+                stmt.setInt(2, pontuacaoObtida);
+                stmt.setString(3, registro);
+
+                int rowsAffected = stmt.executeUpdate();
+                if (rowsAffected > 0) {
+                    // Atualiza a pontuação total chamando a procedure
+                    try (CallableStatement cstmt = conn.prepareCall("{CALL atualizar_pontuacao_metroviario(?)}")) {
+                        // Primeiro obtém o ID do metroviário
+                        int idMetroviario = obterIdMetroviario(conn, registro);
+                        if (idMetroviario > 0) {
+                            cstmt.setInt(1, idMetroviario);
+                            cstmt.execute();
+
+                            // Se tudo deu certo, commit na transação
+                            conn.commit();
+                            System.out.println("Pontuação registrada e atualizada com sucesso!");
+                        }
+                    }
+                } else {
+                    System.err.println("Erro: Metroviário não encontrado");
+                    conn.rollback();
+                }
             }
         } catch (SQLException e) {
             System.err.println("Erro ao registrar pontuação: " + e.getMessage());
             e.printStackTrace();
+            if (conn != null) {
+                try {
+                    conn.rollback();
+                } catch (SQLException ex) {
+                    System.err.println("Erro ao fazer rollback: " + ex.getMessage());
+                }
+            }
+        } finally {
+            if (conn != null) {
+                try {
+                    conn.setAutoCommit(true);
+                    conn.close();
+                } catch (SQLException e) {
+                    System.err.println("Erro ao fechar conexão: " + e.getMessage());
+                }
+            }
         }
+    }
+
+    private int obterIdMetroviario(Connection conn, String registro) throws SQLException {
+        String sql = "SELECT id FROM metroviarios WHERE registro = ?";
+        try (PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, registro);
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    return rs.getInt("id");
+                }
+            }
+        }
+        return -1;
+    }
+
+    public boolean verificarTarefaCompletada(String registro, int idTarefa) {
+        String sql = "SELECT COUNT(*) FROM tarefas_realizadas tr " +
+                "JOIN metroviarios m ON tr.id_metroviario = m.id " +
+                "WHERE m.registro = ? AND tr.id_tarefa = ?";
+
+        try (Connection conn = Conexao.conectar();
+                PreparedStatement stmt = conn.prepareStatement(sql)) {
+
+            stmt.setString(1, registro);
+            stmt.setInt(2, idTarefa);
+
+            try (ResultSet rs = stmt.executeQuery()) {
+                if (rs.next()) {
+                    boolean completada = rs.getInt(1) > 0;
+                    System.out.println("Verificação de tarefa " + idTarefa +
+                            " para registro " + registro + ": " +
+                            (completada ? "já completada" : "não completada"));
+                    return completada;
+                }
+            }
+        } catch (SQLException e) {
+            System.err.println("Erro ao verificar tarefa completada: " + e.getMessage());
+            e.printStackTrace();
+        }
+        return false;
     }
 
     public void testarConexao() {

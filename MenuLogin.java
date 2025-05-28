@@ -74,67 +74,33 @@ public class MenuLogin extends PainelComImagem {
             SomUtils.tocarSom("/sons/click.wav");
         });
         btnEntrar.addActionListener(e -> {
-            String registro = txtNome.getText().trim(); // Agora recebe o registro
+            String registro = txtNome.getText().trim();
             String senha = new String(txtSenha.getPassword()).trim();
-            SomUtils.tocarSom("/sons/click.wav");
-            // Login temporário para testes
+
+            MetroviarioDAO dao = new MetroviarioDAO();
+            boolean isAdmin = dao.verificarAdmin(registro, senha);
+            boolean isMetroviario = dao.verificarMetroviario(registro, senha);
+
+            // Login de teste para facilitar o desenvolvimento
             if (registro.equals("a") && senha.equals("a")) {
-                iniciarTimer(); // Inicia o timer após login bem-sucedido
-                layout.show(painelPrincipal, "Jogo");
-                Component[] components = painelPrincipal.getComponents();
-                for (Component comp : components) {
-                    if (comp instanceof Parte1) {
-                        ((Parte1) comp).tocarSomAlarme();
-                        break;
-                    }
-                }
+                UsuarioLogado.setRegistro("R12345-6"); // Registro fictício para testes
+                Menu.inicializarTelasJogo(layout, painelPrincipal); // Inicializa as telas do jogo
+                layout.show(painelPrincipal, "Jogo"); // Redireciona para o jogo
                 return;
             }
 
-            if (!registro.isEmpty() && !senha.isEmpty()) {
-                // Verifica se é administrador no banco de dados
-                boolean adminEncontrado = false;
-                try (java.sql.Connection conn1 = Conexao.conectar();
-                        java.sql.PreparedStatement stmt = conn1.prepareStatement(
-                                "SELECT * FROM administradores WHERE registro = ? AND senha = ?")) {
-                    stmt.setString(1, registro);
-                    stmt.setString(2, senha);
-                    try (java.sql.ResultSet rs = stmt.executeQuery()) {
-                        if (rs.next()) {
-                            adminEncontrado = true;
-                        }
-                    }
-                } catch (Exception ex) {
-                    ex.printStackTrace();
-                    JOptionPane.showMessageDialog(this, "Erro ao acessar o banco de dados.", "Erro",
-                            JOptionPane.ERROR_MESSAGE);
-                    return;
-                }
-
-                if (adminEncontrado) {
-                    iniciarTimer(); // Inicia o timer após login bem-sucedido
-                    layout.show(painelPrincipal, "Admin");
-                    return;
-                }
-
-                // Verifica se é metroviário
-                boolean encontrado = false;
-                List<Metroviario> lista = dao.listarTodos();
-                for (Metroviario m : lista) {
-                    if (m.getRegistro().equals(registro) && m.getSenha().equals(senha)) {
-                        encontrado = true;
-                        break;
-                    }
-                }
-                if (encontrado) {
-                    iniciarTimer(); // Inicia o timer após login bem-sucedido
-                    layout.show(painelPrincipal, "Jogo");
-                } else {
-                    JOptionPane.showMessageDialog(this, "Registro ou senha inválidos!", "Erro",
-                            JOptionPane.ERROR_MESSAGE);
-                }
+            if (isAdmin) {
+                UsuarioLogado.setRegistro(registro);
+                layout.show(painelPrincipal, "Admin"); // Redireciona para o menu admin
+            } else if (isMetroviario) {
+                UsuarioLogado.setRegistro(registro);
+                Menu.inicializarTelasJogo(layout, painelPrincipal);
+                layout.show(painelPrincipal, "Jogo");
             } else {
-                JOptionPane.showMessageDialog(this, "Registro ou senha inválidos!", "Erro", JOptionPane.ERROR_MESSAGE);
+                JOptionPane.showMessageDialog(this,
+                        "Registro ou senha inválidos!",
+                        "Erro",
+                        JOptionPane.ERROR_MESSAGE);
             }
         });
 

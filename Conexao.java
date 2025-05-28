@@ -8,6 +8,7 @@ public class Conexao {
     private static final String PASSWORD = "Deco2005";
 
 
+
     public static Connection conectar() {
         try {
             return DriverManager.getConnection(URL, USER, PASSWORD);

@@ -16,15 +16,27 @@ public class Menu extends JFrame {
         painelPrincipal = new JPanel(layout);
         painelPrincipal.setOpaque(false);
 
+        // Inicializa apenas as telas do menu principal
         painelPrincipal.add(new MenuPrincipal(layout, painelPrincipal), "Menu");
         painelPrincipal.add(new MenuLogin(layout, painelPrincipal), "Login");
         painelPrincipal.add(new MenuOpcoes(layout, painelPrincipal), "Opções");
         painelPrincipal.add(new MenuPlacar(layout, painelPrincipal), "Placar");
-        painelPrincipal.add(new Parte1(layout, painelPrincipal), "Jogo");
-
-        // painel admin
         painelPrincipal.add(new MenuAdmin(layout, painelPrincipal), "Admin");
 
+        add(painelPrincipal);
+        setVisible(true);
+    }
+
+    // Método para inicializar as telas do jogo após o login
+    public static void inicializarTelasJogo(CardLayout layout, JPanel painelPrincipal) {
+        if (!UsuarioLogado.isLogado()) {
+            System.out.println("Tentativa de inicializar telas do jogo sem usuário logado!");
+            return;
+        }
+
+        System.out.println("Inicializando telas do jogo para o usuário: " + UsuarioLogado.getRegistro());
+
+        painelPrincipal.add(new Parte1(layout, painelPrincipal), "Jogo");
         painelPrincipal.add(new TremPortaAberta(layout, painelPrincipal), "PortaAberta");
         painelPrincipal.add(new TremPesOlhando(layout, painelPrincipal), "PesOlhando");
         painelPrincipal.add(new TremEmergencia(layout, painelPrincipal), "TremEmergencia");
@@ -34,8 +46,7 @@ public class Menu extends JFrame {
         painelPrincipal.add(new JogoPA(layout, painelPrincipal), "JogoPA");
         painelPrincipal.add(new JogoDireitaChaveCBTC(layout, painelPrincipal), "JogoDireitaChaveCBTC");
         painelPrincipal.add(new TremPainelExterno(layout, painelPrincipal), "TremPainelExterno");
-        add(painelPrincipal);
-        setVisible(true);
+        painelPrincipal.add(new JogoReversora(layout, painelPrincipal), "Reversora");
     }
 
     public static void main(String[] args) {

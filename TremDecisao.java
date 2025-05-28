@@ -58,8 +58,7 @@ public class TremDecisao extends JPanel {
                                 public void run() {
                                     imgAdesivo = new ImageIcon("imagens/Fotos editadas/Adesivo de porta isolada instalado.jpg").getImage();
                                     repaint(); // Atualiza o painel para desenhar a terceira imagem
-
-
+                                    System.out.println("Adesivo instalado!");
                                     // Aguarda mais 0,5 segundos, apaga os botões e leva o jogador ao painel Parte1
                                     new Timer().schedule(new TimerTask() {
                                         @Override
