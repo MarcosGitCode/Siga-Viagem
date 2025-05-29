@@ -28,7 +28,7 @@ public class TremDecisao extends JPanel {
         setLayout(null); // Define layout absoluto
 
         // Botão 1 (aparece apenas se o jogador tiver a fita)
-        botao1 = new JButton();
+        botao1 = new JButton("Opção 1");
         botao1.setBounds(400, 300, 800, 300); // Posição e tamanho
         botao1.setOpaque(false); // Torna o botão transparente
         botao1.setContentAreaFilled(false); // Remove a área de fundo
@@ -85,7 +85,7 @@ public class TremDecisao extends JPanel {
         add(botao1);
 
         // Botão 2 (aparece apenas se o jogador tiver o cinturão)
-        botao2 = new JButton();
+        botao2 = new JButton("Opção 2");
         botao2.setBounds(100, 300, 300, 300); // Posição e tamanho
         botao2.addActionListener(e -> System.out.println("Botão 2 clicado!"));
         botao2.setOpaque(false); // Torna o botão transparente
@@ -109,18 +109,16 @@ public class TremDecisao extends JPanel {
         add(botaoVoltar); // Adiciona o botão ao painel
     }
 
-    // Ensure the player is redirected if they haven't picked up the tape
-    //@Override
-//    public void setVisible(boolean aFlag) {
-  //      super.setVisible(aFlag);
-  //      if (aFlag) {
-   //         botao1.setVisible(InventarioUI.isPegouFita()); // Botão 1 aparece se tiver a fita
-    //        botao2.setVisible(InventarioUI.isPegouCinturao()); // Botão 2 aparece se tiver o cinturão
-     //       if (!InventarioUI.isPegouFita()) {
-     //           layout.show(painelPrincipal, "TremPortaAberta");
-      //      }
-       // }
-    //}
+    @Override
+    public void setVisible(boolean aFlag) {
+        super.setVisible(aFlag);
+        if (aFlag) {
+            // Atualiza a visibilidade dos botões com base no estado atual
+            botao1.setVisible(InventarioUI.isPegouFita()); // Botão 1 aparece se tiver a fita
+            botao2.setVisible(InventarioUI.isPegouCinturao()); // Botão 2 aparece se tiver o cinturão
+        }
+    }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
