@@ -94,6 +94,11 @@ public class TremPortaAberta extends JPanel {
         add(botaoFecharPorta);
 
         painelPrincipal.add(new TremDecisao(layout, painelPrincipal), "TremDecisao");
+        if(InventarioUI.isPegouFita() == true && InventarioUI.isPegouCinturao() == true) {
+            botaoFecharPorta.setVisible(true); // Show the button if the player has the tape
+        } else {
+            botaoFecharPorta.setVisible(false); // Hide the button if the player does not have the tape
+        }
     }
 
     // Method to update the background image based on portafechada
