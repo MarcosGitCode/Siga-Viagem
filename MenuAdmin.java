@@ -164,7 +164,10 @@ public class MenuAdmin extends JPanel {
         btnJogar = new JButton("Jogar");
         btnJogar.setFont(new Font("Arial", Font.PLAIN, 18));
         btnJogar.setBounds(645, 490, 245, 50);
-        btnJogar.addActionListener(e -> layout.show(painelPrincipal, "Jogo"));
+        btnJogar.addActionListener(e -> {
+            Menu.inicializarTelasJogo(layout, painelPrincipal); // Inicializa as telas do jogo
+            layout.show(painelPrincipal, "Jogo"); // Vai para o jogo
+        });
         add(btnJogar);
 
         comboLista = new JComboBox<>(new String[]{"Metroviários", "Administradores"});

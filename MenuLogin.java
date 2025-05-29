@@ -89,10 +89,13 @@ public class MenuLogin extends PainelComImagem {
                 return;
             }
 
-            if (isAdmin || isMetroviario) {
-                UsuarioLogado.setRegistro(registro); // Armazena o registro do usuário logado
-                Menu.inicializarTelasJogo(layout, painelPrincipal); // Inicializa as telas do jogo
-                layout.show(painelPrincipal, "Jogo"); // Redireciona para o jogo
+            if (isAdmin) {
+                UsuarioLogado.setRegistro(registro);
+                layout.show(painelPrincipal, "Admin"); // Redireciona para o menu admin
+            } else if (isMetroviario) {
+                UsuarioLogado.setRegistro(registro);
+                Menu.inicializarTelasJogo(layout, painelPrincipal);
+                layout.show(painelPrincipal, "Jogo");
             } else {
                 JOptionPane.showMessageDialog(this,
                         "Registro ou senha inválidos!",
