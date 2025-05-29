@@ -28,7 +28,7 @@ public class TremDecisao extends JPanel {
         setLayout(null); // Define layout absoluto
 
         // Botão 1 (aparece apenas se o jogador tiver a fita)
-        botao1 = new JButton("Opção 1");
+        botao1 = new JButton("");
         botao1.setBounds(400, 300, 800, 300); // Posição e tamanho
         botao1.setOpaque(false); // Torna o botão transparente
         botao1.setContentAreaFilled(false); // Remove a área de fundo
@@ -85,7 +85,7 @@ public class TremDecisao extends JPanel {
         add(botao1);
 
         // Botão 2 (aparece apenas se o jogador tiver o cinturão)
-        botao2 = new JButton("Opção 2");
+        botao2 = new JButton("");
         botao2.setBounds(100, 300, 300, 300); // Posição e tamanho
         botao2.addActionListener(e -> System.out.println("Botão 2 clicado!"));
         botao2.setOpaque(false); // Torna o botão transparente
@@ -103,8 +103,8 @@ public class TremDecisao extends JPanel {
         botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
         botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
         botaoVoltar.addActionListener(e -> {
-            System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "TremPortaAberta"); // Volta para o painel anterior
+        System.out.println("Botão voltar clicado!");
+        layout.show(painelPrincipal, "Jogo"); // Volta para o painel anterior
         });
         add(botaoVoltar); // Adiciona o botão ao painel
     }
