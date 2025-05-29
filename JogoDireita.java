@@ -2,20 +2,23 @@ import java.awt.*;
 import javax.swing.*;
 
 public class JogoDireita extends BasePainelComBotao {
+    // Adicione um atributo para armazenar o caminho da imagem atual
+    private String imagemAtual = "imagens/Fotos editadas/direita3.png";
 
     public JogoDireita(CardLayout layout, JPanel painelPrincipal) {
-        super("imagens/Fotos editadas/direita2.png", layout, painelPrincipal);
-        setLayout(null); // Absolute layout for precise positioning
+        super("imagens/Fotos editadas/direita3.png", layout, painelPrincipal);
+        setLayout(null); // Layout absoluto para posicionar componentes, se necessário
 
-        // JLabel for the key image (initially visible)
+        // Remova/adicione painéis apenas no Menu.java para evitar loops!
+
+        // JLabel para a imagem da chave (inicialmente invisível)
         JLabel chaveLabel = new JLabel();
-        chaveLabel.setBounds(546, 403, 100, 100); // Position and size of the key
+        chaveLabel.setBounds(546, 403, 100, 100); // Mesma posição/tamanho do botão
         chaveLabel.setOpaque(false);
-        chaveLabel.setIcon(new ImageIcon("imagens/Fotos editadas/chave.png")); // Set the key image
-        chaveLabel.setVisible(true); // Start with the key visible
-        add(chaveLabel); // Add the key label on top of the background
+        chaveLabel.setVisible(false); // Só aparece quando clicar no botão
+        add(chaveLabel);
 
-        // Button to navigate to the next panel
+        // Botão visível no painel
         JButton botaoSetaDireita = new JButton("");
         botaoSetaDireita.setBounds(900, 300, 290, 300);
         botaoSetaDireita.setContentAreaFilled(false);
@@ -27,56 +30,67 @@ public class JogoDireita extends BasePainelComBotao {
         botaoSetaDireita.addActionListener(e -> {
             System.out.println("Botão seta direita clicado!");
             layout.show(painelPrincipal, "JogoEsquerda");
+            // Exibe a chave quando o botão é clicado
+            chaveLabel.setVisible(true);
+
         });
         add(botaoSetaDireita);
 
-        // Button to hide the key image
+        // Botão visível de 100x100px na posição (546, 403)
         JButton botaoVisivel = new JButton();
-        botaoVisivel.setBounds(546, 390, 100, 100); // Same position as the key
+        botaoVisivel.setBounds(546, 390, 100, 100);
+        // Torna o botão totalmente transparente/invisível
         botaoVisivel.setContentAreaFilled(false);
         botaoVisivel.setOpaque(false);
         botaoVisivel.setBorderPainted(false);
+        botaoVisivel.setFocusPainted(false);
+        botaoVisivel.setText(""); // Sem texto
         botaoVisivel.addActionListener(e -> {
             System.out.println("Botão visível clicado!");
-            chaveLabel.setIcon(null); // Remove the key image
-            chaveLabel.setVisible(false); // Hide the key label
+            // Atualiza a imagem de fundo para "direita2.png"
+            imagemAtual = "imagens/Fotos editadas/direita2.png";
+            repaint(); // Repaint para atualizar a tela
         });
         add(botaoVisivel);
 
-        // Back button to return to the previous panel
+        // Botão Voltar para Parte1
         JButton botaoVoltar = new JButton("<");
-        botaoVoltar.setBounds(10, 10, 60, 60); // Position and size of the button
-        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Font settings
+        botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
         botaoVoltar.setForeground(Color.BLACK);
-        botaoVoltar.setBackground(Color.RED); // Button background color
-        botaoVoltar.setContentAreaFilled(true);
-        botaoVoltar.setOpaque(true);
-        botaoVoltar.setBorderPainted(false);
+        botaoVoltar.setBackground(Color.RED); // Define a cor do texto
+        botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
+        botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
+        botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "Jogo"); // Go back to the previous panel
+            layout.show(painelPrincipal, "Jogo"); // Volta para o painel anterior
         });
-        add(botaoVoltar);
+        add(botaoVoltar); // Adiciona o botão ao painel
 
-        // Additional button for navigation
         JButton chaveCBTC = new JButton();
-        chaveCBTC.setBounds(550, 650, 75, 75); // Position and size of the button
-        chaveCBTC.setContentAreaFilled(false); // Remove the fill area
-        chaveCBTC.setOpaque(false); // Make the button transparent
-        chaveCBTC.setBorderPainted(false); // Remove the border
-        chaveCBTC.setFocusPainted(false); // Remove the focus visual
-        chaveCBTC.setText(""); // Remove the button text
+        chaveCBTC.setBounds(550, 650, 75, 75); // Posição e tamanho do botão
+        chaveCBTC.setContentAreaFilled(false); // Remove a área de preenchimento
+        chaveCBTC.setOpaque(false); // Torna o botão transparente
+        chaveCBTC.setBorderPainted(false); // Remove as bordas
+        chaveCBTC.setFocusPainted(false); // Remove o foco visual
+        chaveCBTC.setText(""); // Remove o texto do botão
         chaveCBTC.addActionListener(e -> {
             System.out.println("Novo botão clicado!");
-            layout.show(painelPrincipal, "JogoDireitaChaveCBTC"); // Navigate to the next screen
+            layout.show(painelPrincipal, "JogoDireitaChaveCBTC"); // Navega para a tela JogoDireitaChaveCBTC
         });
-        add(chaveCBTC);
+        add(chaveCBTC); // Adiciona o botão ao painel
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Draw the inventory in the top-right corner
+
+        // Desenha a imagem de fundo atual
+        Image imagemFundo = new ImageIcon(imagemAtual).getImage();
+        g.drawImage(imagemFundo, 0, 0, getWidth(), getHeight(), this);
+
+        // Desenha o inventário no canto superior direito
         InventarioUI.desenhar((Graphics2D) g, getWidth());
     }
 }
