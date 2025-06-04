@@ -46,10 +46,10 @@ public class JogoDireita extends BasePainelComBotao {
         botaoVisivel.setFocusPainted(false);
         botaoVisivel.setText(""); // Sem texto
         botaoVisivel.addActionListener(e -> {
-            System.out.println("Botão visível clicado!");
-            // Atualiza a imagem de fundo para "direita2.png"
-            imagemAtual = "imagens/Fotos editadas/direita2.png";
-            repaint(); // Repaint para atualizar a tela
+            System.out.println("Item coletado pelo botãoVisivel!");
+            Inventario.adicionar("Chave"); // Adiciona ao inventário
+            repaint(); // Atualiza o painel para mostrar o item no inventário
+            botaoVisivel.setVisible(false); // Esconde o botão após coletar
         });
         add(botaoVisivel);
 
