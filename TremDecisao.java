@@ -35,7 +35,7 @@ public class TremDecisao extends JPanel {
         botao1.setBorderPainted(false); // Remove as bordas do botão
         botao1.addActionListener(e -> {
             System.out.println("Botão 1 clicado!");
-            imgFita = null; // Apaga a imagem da fita
+            Inventario.remover("Fita"); // Apaga a imagem da fita
             repaint(); // Atualiza o painel para remover a imagem da fita
 
             // Aguarda 1 segundo e exibe a primeira imagem no topo

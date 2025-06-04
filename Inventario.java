@@ -12,6 +12,10 @@ public class Inventario {
         return itens.contains(item);
     }
 
+    public static void remover(String item) {
+        itens.remove(item);
+    }
+
     public static Set<String> getItens() {
         return itens;
     }
