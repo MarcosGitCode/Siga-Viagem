@@ -2,23 +2,13 @@ import java.awt.*;
 import javax.swing.*;
 
 public class JogoDireita extends BasePainelComBotao {
-    // Adicione um atributo para armazenar o caminho da imagem atual
     private String imagemAtual = "imagens/Fotos editadas/direita3.png";
 
     public JogoDireita(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/direita3.png", layout, painelPrincipal);
-        setLayout(null); // Layout absoluto para posicionar componentes, se necessário
+        setLayout(null);
 
-        // Remova/adicione painéis apenas no Menu.java para evitar loops!
-
-        // JLabel para a imagem da chave (inicialmente invisível)
-        JLabel chaveLabel = new JLabel();
-        chaveLabel.setBounds(546, 403, 100, 100); // Mesma posição/tamanho do botão
-        chaveLabel.setOpaque(false);
-        chaveLabel.setVisible(false); // Só aparece quando clicar no botão
-        add(chaveLabel);
-
-        // Botão visível no painel
+        // Botão seta direita
         JButton botaoSetaDireita = new JButton("");
         botaoSetaDireita.setBounds(900, 300, 290, 300);
         botaoSetaDireita.setContentAreaFilled(false);
@@ -30,56 +20,54 @@ public class JogoDireita extends BasePainelComBotao {
         botaoSetaDireita.addActionListener(e -> {
             System.out.println("Botão seta direita clicado!");
             layout.show(painelPrincipal, "JogoEsquerda");
-            // Exibe a chave quando o botão é clicado
-            chaveLabel.setVisible(true);
-
         });
         add(botaoSetaDireita);
 
-        // Botão visível de 100x100px na posição (546, 403)
+        // Botão invisível para coletar a chave
         JButton botaoVisivel = new JButton();
         botaoVisivel.setBounds(546, 390, 100, 100);
-        // Torna o botão totalmente transparente/invisível
         botaoVisivel.setContentAreaFilled(false);
         botaoVisivel.setOpaque(false);
         botaoVisivel.setBorderPainted(false);
         botaoVisivel.setFocusPainted(false);
-        botaoVisivel.setText(""); // Sem texto
+        botaoVisivel.setText("");
         botaoVisivel.addActionListener(e -> {
-            System.out.println("Item coletado pelo botãoVisivel!");
-            Inventario.adicionar("Chave"); // Adiciona ao inventário
-            repaint(); // Atualiza o painel para mostrar o item no inventário
+            System.out.println("Botão visível clicado!");
+            imagemAtual = "imagens/Fotos editadas/direita2.png";
+            Inventario.adicionar("Chave"); // Adiciona a chave ao inventário
+            repaint();
             botaoVisivel.setVisible(false); // Esconde o botão após coletar
         });
         add(botaoVisivel);
 
         // Botão Voltar para Parte1
         JButton botaoVoltar = new JButton("<");
-        botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
-        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
+        botaoVoltar.setBounds(10, 10, 60, 60);
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
         botaoVoltar.setForeground(Color.BLACK);
-        botaoVoltar.setBackground(Color.RED); // Define a cor do texto
-        botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
-        botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
-        botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
+        botaoVoltar.setBackground(Color.RED);
+        botaoVoltar.setContentAreaFilled(true);
+        botaoVoltar.setOpaque(true);
+        botaoVoltar.setBorderPainted(false);
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "Jogo"); // Volta para o painel anterior
+            layout.show(painelPrincipal, "Jogo");
         });
-        add(botaoVoltar); // Adiciona o botão ao painel
+        add(botaoVoltar);
 
+        // Botão para JogoDireitaChaveCBTC
         JButton chaveCBTC = new JButton();
-        chaveCBTC.setBounds(550, 650, 75, 75); // Posição e tamanho do botão
-        chaveCBTC.setContentAreaFilled(false); // Remove a área de preenchimento
-        chaveCBTC.setOpaque(false); // Torna o botão transparente
-        chaveCBTC.setBorderPainted(false); // Remove as bordas
-        chaveCBTC.setFocusPainted(false); // Remove o foco visual
-        chaveCBTC.setText(""); // Remove o texto do botão
+        chaveCBTC.setBounds(550, 650, 75, 75);
+        chaveCBTC.setContentAreaFilled(false);
+        chaveCBTC.setOpaque(false);
+        chaveCBTC.setBorderPainted(false);
+        chaveCBTC.setFocusPainted(false);
+        chaveCBTC.setText("");
         chaveCBTC.addActionListener(e -> {
             System.out.println("Novo botão clicado!");
-            layout.show(painelPrincipal, "JogoDireitaChaveCBTC"); // Navega para a tela JogoDireitaChaveCBTC
+            layout.show(painelPrincipal, "JogoDireitaChaveCBTC");
         });
-        add(chaveCBTC); // Adiciona o botão ao painel
+        add(chaveCBTC);
     }
 
     @Override
@@ -89,6 +77,8 @@ public class JogoDireita extends BasePainelComBotao {
         // Desenha a imagem de fundo atual
         Image imagemFundo = new ImageIcon(imagemAtual).getImage();
         g.drawImage(imagemFundo, 0, 0, getWidth(), getHeight(), this);
+
+        // NÃO desenhe mais a chave na tela aqui!
 
         // Desenha o inventário no canto superior direito
         InventarioUI.desenhar((Graphics2D) g, getWidth());

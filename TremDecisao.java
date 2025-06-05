@@ -29,35 +29,30 @@ public class TremDecisao extends JPanel {
 
         // Botão 1 (aparece apenas se o jogador tiver a fita)
         botao1 = new JButton("");
-        botao1.setBounds(400, 300, 800, 300); // Posição e tamanho
         botao1.setOpaque(false); // Torna o botão transparente
         botao1.setContentAreaFilled(false); // Remove a área de fundo
         botao1.setBorderPainted(false); // Remove as bordas do botão
         botao1.addActionListener(e -> {
             System.out.println("Botão 1 clicado!");
-            Inventario.remover("Fita"); // Apaga a imagem da fita
-            repaint(); // Atualiza o painel para remover a imagem da fita
+            Inventario.remover("Fita"); // Remove a fita do inventário
+            repaint(); // Atualiza o painel
 
-            // Aguarda 1 segundo e exibe a primeira imagem no topo
+            // Inicia a sequência de frames:
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
                     imgAdesivo = new ImageIcon("imagens/Fotos editadas/21 - Adesivo de porta isolada - 1 terço instalado.jpg").getImage();
-                    repaint(); // Atualiza o painel para desenhar a nova imagem
-
-                    // Aguarda 0,5 segundos e exibe a segunda imagem no topo
+                    repaint();
                     new Timer().schedule(new TimerTask() {
                         @Override
                         public void run() {
                             imgAdesivo = new ImageIcon("imagens/Fotos editadas/22 - Adesivo de porta isolada - 2 terços instalado.jpg").getImage();
-                            repaint(); // Atualiza o painel para desenhar a segunda imagem
-
-                            // Aguarda mais 0,5 segundos e exibe a terceira imagem no topo
+                            repaint();
                             new Timer().schedule(new TimerTask() {
                                 @Override
                                 public void run() {
                                     imgAdesivo = new ImageIcon("imagens/Fotos editadas/Adesivo de porta isolada instalado.jpg").getImage();
-                                    repaint(); // Atualiza o painel para desenhar a terceira imagem
+                                    repaint();
                                     System.out.println("Adesivo instalado!");
                                     // Aguarda mais 0,5 segundos, apaga os botões e leva o jogador ao painel Parte1
                                     new Timer().schedule(new TimerTask() {
@@ -113,9 +108,8 @@ public class TremDecisao extends JPanel {
     public void setVisible(boolean aFlag) {
         super.setVisible(aFlag);
         if (aFlag) {
-            // Atualiza a visibilidade dos botões com base no estado atual
-            botao1.setVisible(InventarioUI.isPegouFita()); // Botão 1 aparece se tiver a fita
-            botao2.setVisible(InventarioUI.isPegouCinturao()); // Botão 2 aparece se tiver o cinturão
+            botao1.setVisible(Inventario.contem("Fita")); // Corrigido!
+            botao2.setVisible(Inventario.contem("Cinturão"));
         }
     }
 
@@ -127,19 +121,34 @@ public class TremDecisao extends JPanel {
             g.drawImage(imagemFundo, 0, 0, getWidth(), getHeight(), this);
         }
 
-        // Verifica se o jogador pegou o cinturão e desenha a imagem ocupando a tela inteira
-        if (InventarioUI.isPegouCinturao()) {
-            g.drawImage(imgCinturao, 0, 0, getWidth(), getHeight(), this);
+        // Desenha o cinturão grande no centro se estiver no inventário
+        if (Inventario.contem("Cinturão")) {
+            Image imgCinturaoGrande = new ImageIcon("imagens/Fotos editadas/ItensCinturao2.png").getImage();
+            int largura = 300, altura = 120;
+            int x = (getWidth() - largura) / 2;
+            int y = (getHeight() / 2) - altura - 20;
+            g.drawImage(imgCinturaoGrande, x, y, largura, altura, this);
         }
 
-        // Verifica se o jogador pegou a fita e desenha a imagem ocupando a tela inteira
-        if (InventarioUI.isPegouFita() && imgFita != null) {
-            g.drawImage(imgFita, 0, 0, getWidth(), getHeight(), this);
+        // Desenha a fita grande no centro se estiver no inventário
+        if (Inventario.contem("Fita")) {
+            Image imgFitaGrande = new ImageIcon("imagens/Fotos editadas/ItensFita2.png").getImage();
+            int largura = 300, altura = 120;
+            int x = (getWidth() - largura) / 2;
+            int y = (getHeight() / 2) + 20;
+            g.drawImage(imgFitaGrande, x, y, largura, altura, this);
         }
 
-        // Desenha a nova imagem no topo, se existir
+        // (restante do seu código para sobrepor imagens grandes)
         if (imgAdesivo != null) {
             g.drawImage(imgAdesivo, 0, 0, getWidth(), getHeight(), this);
+        }
+
+        if (botao1 != null && Inventario.contem("Fita")) {
+            int largura = 300, altura = 120;
+            int x = (getWidth() - largura) / 2;
+            int y = (getHeight() / 2) + 20;
+            botao1.setBounds(x, y, largura, altura);
         }
     }
 }
