@@ -15,7 +15,7 @@ public class Parte1 extends PainelComImagem {
         
 
         // Layout geral com BorderLayout
-        var bl = new BorderLayout();
+        BorderLayout bl = new BorderLayout();
         setLayout(bl);
         
         // Painel para os botões
