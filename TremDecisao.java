@@ -28,6 +28,18 @@ public class TremDecisao extends JPanel {
         setLayout(null); // Define layout absoluto
 
         // Botão 1 (aparece apenas se o jogador tiver a fita)
+        JButton botaoChecarLuzes = new JButton("");
+        botaoChecarLuzes.setBounds(800, 100, 200, 50); // Centralized
+        botaoChecarLuzes.setBackground(new Color(255, 0, 0)); // Red
+        botaoChecarLuzes.setFocusPainted(false);
+        botaoChecarLuzes.setBorderPainted(false);
+        botaoChecarLuzes.setOpaque(false);
+        botaoChecarLuzes.addActionListener(e -> {
+            System.out.println("Botão 'checar luzes' clicado!");
+            layout.show(painelPrincipal, "TremLuzesApagadas"); // Switch to TremDecisao panel
+        });
+        add(botaoChecarLuzes);
+        painelPrincipal.add(new TremLuzesApagadas(layout, painelPrincipal), "TremLuzesApagadas");
         botao1 = new JButton("");
         botao1.setOpaque(false); // Torna o botão transparente
         botao1.setContentAreaFilled(false); // Remove a área de fundo
@@ -36,7 +48,6 @@ public class TremDecisao extends JPanel {
             System.out.println("Botão 1 clicado!");
             Inventario.remover("Fita"); // Remove a fita do inventário
             repaint(); // Atualiza o painel
-
             // Inicia a sequência de frames:
             new Timer().schedule(new TimerTask() {
                 @Override
@@ -59,6 +70,10 @@ public class TremDecisao extends JPanel {
                                         @Override
                                         public void run() {
                                             System.out.println("Apagando os botões...");
+                                            botaoChecarLuzes.setText("Checar luzes");
+                                            botaoChecarLuzes.setOpaque(true);
+                                            botaoChecarLuzes.setFont(new Font("Arial", Font.BOLD, 18));
+                                            botaoChecarLuzes.setForeground(Color.WHITE);
                                             botao1.setVisible(false); // Torna o botão 1 invisível
                                             botao1.setEnabled(false); // Desativa o botão 1
                                             botao2.setVisible(false); // Torna o botão 2 invisível
