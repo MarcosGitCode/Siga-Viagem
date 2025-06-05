@@ -9,6 +9,7 @@ public class TremPortaAberta extends JPanel {
 
     private Image imagemFundo;
     private JButton botaoFecharPorta; // Reference to the "Fechar porta" button
+    private JButton botaoChecarLuzes; // Reference to the "Checar luzes" button
     private boolean portafechada = false; // Initially false
 
     public TremPortaAberta(CardLayout layout, JPanel painelPrincipal) {
@@ -89,11 +90,12 @@ public class TremPortaAberta extends JPanel {
             portafechada = true; // Set portafechada to true
             atualizarImagemFundo(); // Update the background image
             removerBotaoFecharPorta(); // Remove the "Fechar porta" button
+            removerBotaoChecarLuzes(); // Remove the "Checar luzes" button
             layout.show(painelPrincipal, "TremDecisao"); // Switch to TremDecisao panel
         });
         add(botaoFecharPorta);
 
-        JButton botaoChecarLuzes = new JButton("Checar luzes");
+        botaoChecarLuzes = new JButton("Checar luzes");
         botaoChecarLuzes.setBounds(800, 100, 200, 50); // Centralized
         botaoChecarLuzes.setFont(new Font("Arial", Font.BOLD, 18));
         botaoChecarLuzes.setForeground(Color.WHITE);
@@ -110,6 +112,24 @@ public class TremPortaAberta extends JPanel {
 
         painelPrincipal.add(new TremDecisao(layout, painelPrincipal), "TremDecisao");
         painelPrincipal.add(new TremLuzesAcesas(layout, painelPrincipal), "TremLuzesAcesas");
+
+        JButton botaoChecarLuzes2 = new JButton("Checar luzes");
+        botaoChecarLuzes2.setBounds(800, 100, 200, 50); // Centralized
+        botaoChecarLuzes2.setFont(new Font("Arial", Font.BOLD, 18));
+        botaoChecarLuzes2.setForeground(Color.WHITE);
+        botaoChecarLuzes2.setBackground(new Color(255, 0, 0)); // Red
+        botaoChecarLuzes2.setFocusPainted(false);
+        botaoChecarLuzes2.setBorderPainted(false);
+        botaoChecarLuzes2.setOpaque(true);
+        botaoChecarLuzes2.addActionListener(e -> {
+            System.out.println("Botão 'checar luzes' clicado!");
+            atualizarImagemFundo(); // Update the background image
+            layout.show(painelPrincipal, "TremLuzesApagadas"); // Switch to TremDecisao panel
+        });
+        add(botaoChecarLuzes2);
+
+        painelPrincipal.add(new TremDecisao(layout, painelPrincipal), "TremDecisao");
+        painelPrincipal.add(new TremLuzesApagadas(layout, painelPrincipal), "TremLuzesApagadas");
     }
 
     // Method to update the background image based on portafechada
@@ -132,6 +152,14 @@ public class TremPortaAberta extends JPanel {
         if (botaoFecharPorta != null) {
             remove(botaoFecharPorta); // Remove the button from the panel
             botaoFecharPorta = null; // Clear the reference
+            repaint(); // Redraw the panel
+        }
+    }
+
+    private void removerBotaoChecarLuzes() {
+        if (botaoChecarLuzes != null) {
+            remove(botaoChecarLuzes); // Remove the button from the panel
+            botaoChecarLuzes = null; // Clear the reference
             repaint(); // Redraw the panel
         }
     }
