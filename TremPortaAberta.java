@@ -139,7 +139,7 @@ public class TremPortaAberta extends JPanel {
             atualizarImagemFundo(); // Update the background image
             removerBotaoFecharPorta(); // Remove the "Fechar porta" button
             removerBotaoChecarLuzes(); // Remove the "Checar luzes" button
-            layout.show(painelPrincipal, "TremDecisao"); // Switch to TremDecisao panel
+            layout.show(painelPrincipal, "TremPortaFechada"); // Switch to TremDecisao panel
         });
         add(botaoFecharPorta);
 
