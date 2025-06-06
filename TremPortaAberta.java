@@ -14,6 +14,9 @@ public class TremPortaAberta extends JPanel {
 
     private boolean pontosAdicionados = false;
     private boolean pontosAdicionadosInferior = false; // Add this field
+    private boolean pontosAdicionadosChecarLuzes = false;
+    private boolean pontosAdicionadosChecarLuzes2 = false;
+    private boolean pontosAdicionadosFecharPorta = false;
     private String mensagemTemporaria = "";
     private long mensagemFim = 0;
 
@@ -120,10 +123,10 @@ public class TremPortaAberta extends JPanel {
             System.out.println("Botão 'Fechar porta' clicado!");
 
             // Adiciona 2 pontos ao usuário, se ainda não adicionou
-            if (!pontosAdicionados) {
+            if (!pontosAdicionadosFecharPorta) {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
-                pontosAdicionados = true;
+                pontosAdicionadosFecharPorta = true;
 
                 mensagemTemporaria = "Você ganhou 2 pontos!";
                 mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
@@ -152,10 +155,10 @@ public class TremPortaAberta extends JPanel {
             System.out.println("Botão 'checar luzes' clicado!");
 
             // Adiciona 2 pontos ao usuário, se ainda não adicionou
-            if (!pontosAdicionados) {
+            if (!pontosAdicionadosChecarLuzes) {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
-                pontosAdicionados = true;
+                pontosAdicionadosChecarLuzes = true;
 
                 mensagemTemporaria = "Você ganhou 2 pontos!";
                 mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
@@ -184,10 +187,10 @@ public class TremPortaAberta extends JPanel {
             System.out.println("Botão 'checar luzes' clicado!");
 
             // Adiciona 2 pontos ao usuário, se ainda não adicionou
-            if (!pontosAdicionados) {
+            if (!pontosAdicionadosChecarLuzes2) {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
-                pontosAdicionados = true;
+                pontosAdicionadosChecarLuzes2 = true;
 
                 mensagemTemporaria = "Você ganhou 2 pontos!";
                 mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
