@@ -12,6 +12,11 @@ public class TremPortaAberta extends JPanel {
     private JButton botaoChecarLuzes; // Reference to the "Checar luzes" button
     private boolean portafechada = false; // Initially false
 
+    private boolean pontosAdicionados = false;
+    private boolean pontosAdicionadosInferior = false; // Add this field
+    private String mensagemTemporaria = "";
+    private long mensagemFim = 0;
+
     public TremPortaAberta(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
 
@@ -38,7 +43,20 @@ public class TremPortaAberta extends JPanel {
         botaoInferior.setOpaque(false);
         botaoInferior.setContentAreaFilled(false);
         botaoInferior.setBorderPainted(false);
-        botaoInferior.addActionListener(e -> layout.show(painelPrincipal, "PesOlhando"));
+        botaoInferior.addActionListener(e -> {
+            if (!pontosAdicionadosInferior) {
+                MetroviarioDAO dao = new MetroviarioDAO();
+                dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
+                pontosAdicionadosInferior = true;
+
+                mensagemTemporaria = "Você ganhou 1 ponto!";
+                mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+
+                System.out.println("1 ponto adicionado para: " + UsuarioLogado.getRegistro());
+                repaint();
+            }
+            layout.show(painelPrincipal, "PesOlhando");
+        });
         add(botaoInferior);
 
         // Botão "Emergência" invisível no canto superior esquerdo
@@ -58,7 +76,20 @@ public class TremPortaAberta extends JPanel {
         // Botão representando a seta apontando para cima
         JButton botaoSetaCima = new JButton("↑");
         botaoSetaCima.setBounds(610, 575, 80, 50);
-        botaoSetaCima.addActionListener(e -> layout.show(painelPrincipal, "TremEmergencia"));
+        botaoSetaCima.addActionListener(e -> {
+            if (!pontosAdicionados) {
+                MetroviarioDAO dao = new MetroviarioDAO();
+                dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
+                pontosAdicionados = true;
+
+                mensagemTemporaria = "Você ganhou 1 ponto!";
+                mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+
+                System.out.println("1 ponto adicionado para: " + UsuarioLogado.getRegistro());
+                repaint();
+            }
+            layout.show(painelPrincipal, "TremEmergencia");
+        });
         botaoSetaCima.setOpaque(false);
         botaoSetaCima.setContentAreaFilled(false);
         botaoSetaCima.setBorderPainted(false);
@@ -171,7 +202,18 @@ public class TremPortaAberta extends JPanel {
         if (imagemFundo != null) {
             g.drawImage(imagemFundo, 0, 0, 1280, 856, this);
         }
-        // Draw the inventory in the top-right corner
+
+        // Draw temporary message if it exists
+        if (!mensagemTemporaria.isEmpty() && System.currentTimeMillis() < mensagemFim) {
+            g.setFont(new Font("Arial", Font.BOLD, 24));
+            g.setColor(Color.WHITE);
+            FontMetrics fm = g.getFontMetrics();
+            int msgWidth = fm.stringWidth(mensagemTemporaria);
+            int x = (getWidth() - msgWidth) / 2;
+            g.drawString(mensagemTemporaria, x, 100);
+        }
+
+        // Draw the inventory
         InventarioUI.desenhar((Graphics2D) g, getWidth());
     }
 }
