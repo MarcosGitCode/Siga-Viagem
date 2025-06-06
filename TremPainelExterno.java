@@ -8,6 +8,9 @@ import javax.swing.*;
 public class TremPainelExterno extends JPanel {
 
     private Image imagemFundo;
+    private boolean pontosAdicionados = false; // Adicionado para controlar a pontuação
+    private String mensagemTemporaria;
+    private long mensagemFim;
 
     public TremPainelExterno(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
@@ -60,18 +63,31 @@ public class TremPainelExterno extends JPanel {
             botaoCentral.addActionListener(event -> {
                 System.out.println("Botão central clicado!");
 
+                // Adiciona 3 pontos ao usuário
+                if (!pontosAdicionados) {
+                    MetroviarioDAO dao = new MetroviarioDAO();
+                    dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 3); // <-- aqui!
+                    pontosAdicionados = true;
+
+                    mensagemTemporaria = "Você ganhou 3 pontos!";
+                    mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+
+                    System.out.println("3 pontos adicionados para: " + UsuarioLogado.getRegistro());
+                    repaint();
+                }
+
                 // Atualiza a imagem de fundo
                 try {
                     imagemFundo = ImageIO.read(new File("imagens/Fotos editadas/19 - Painel externo porta 3 isolada.jpg"));
-                    repaint(); // Redesenha o painel para refletir a nova imagem
+                    repaint();
                 } catch (IOException ex) {
                     ex.printStackTrace();
                 }
 
                 // Remove o botão da tela
                 remove(botaoCentral);
-                revalidate(); // Atualiza o layout
-                repaint();    // Redesenha o painel
+                revalidate();
+                repaint();
             });
             add(botaoCentral);
             revalidate(); // Atualiza o layout novamente
