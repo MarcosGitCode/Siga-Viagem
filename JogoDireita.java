@@ -57,7 +57,7 @@ public class JogoDireita extends BasePainelComBotao {
 
         // Botão para JogoDireitaChaveCBTC
         JButton chaveCBTC = new JButton();
-        chaveCBTC.setBounds(550, 650, 75, 75);
+        chaveCBTC.setBounds(550, 600, 75, 75);
         chaveCBTC.setContentAreaFilled(false);
         chaveCBTC.setOpaque(false);
         chaveCBTC.setBorderPainted(false);

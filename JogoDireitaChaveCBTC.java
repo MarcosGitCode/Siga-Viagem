@@ -50,7 +50,7 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
 
         // Botão chaveCBTCRM
         JButton chaveCBTCRM = new JButton();
-        chaveCBTCRM.setBounds(700, 400, 75, 75); // Posição e tamanho do botão
+        chaveCBTCRM.setBounds(550, 400, 200, 150); // Posição e tamanho do botão
         chaveCBTCRM.setContentAreaFilled(false); // Remove a área de preenchimento
         chaveCBTCRM.setOpaque(false); // Torna o botão completamente transparente
         chaveCBTCRM.setBorderPainted(false); // Remove as bordas do botão
