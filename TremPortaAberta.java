@@ -150,6 +150,20 @@ public class TremPortaAberta extends JPanel {
         botaoChecarLuzes.setOpaque(true);
         botaoChecarLuzes.addActionListener(e -> {
             System.out.println("Botão 'checar luzes' clicado!");
+
+            // Adiciona 2 pontos ao usuário, se ainda não adicionou
+            if (!pontosAdicionados) {
+                MetroviarioDAO dao = new MetroviarioDAO();
+                dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
+                pontosAdicionados = true;
+
+                mensagemTemporaria = "Você ganhou 2 pontos!";
+                mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+
+                System.out.println("2 pontos adicionados para: " + UsuarioLogado.getRegistro());
+                repaint();
+            }
+
             atualizarImagemFundo(); // Update the background image
             layout.show(painelPrincipal, "TremLuzesAcesas"); // Switch to TremDecisao panel
         });
@@ -168,8 +182,22 @@ public class TremPortaAberta extends JPanel {
         botaoChecarLuzes2.setOpaque(true);
         botaoChecarLuzes2.addActionListener(e -> {
             System.out.println("Botão 'checar luzes' clicado!");
+
+            // Adiciona 2 pontos ao usuário, se ainda não adicionou
+            if (!pontosAdicionados) {
+                MetroviarioDAO dao = new MetroviarioDAO();
+                dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
+                pontosAdicionados = true;
+
+                mensagemTemporaria = "Você ganhou 2 pontos!";
+                mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+
+                System.out.println("2 pontos adicionados para: " + UsuarioLogado.getRegistro());
+                repaint();
+            }
+
             atualizarImagemFundo(); // Update the background image
-            layout.show(painelPrincipal, "TremLuzesApagadas"); // Switch to TremDecisao panel
+            layout.show(painelPrincipal, "TremLuzesApagadas"); // Switch to TremLuzesApagadas panel
         });
         add(botaoChecarLuzes2);
 

@@ -46,8 +46,21 @@ public class TremDecisao extends JPanel {
         botao1.setBorderPainted(false); // Remove as bordas do botão
         botao1.addActionListener(e -> {
             System.out.println("Botão 1 clicado!");
+
+            // Adiciona 2 pontos ao usuário, se ainda não adicionou
+            if (!portafechada) {
+                MetroviarioDAO dao = new MetroviarioDAO();
+                dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
+                portafechada = true;
+
+                // Mensagem temporária (opcional)
+                JOptionPane.showMessageDialog(this, "Você ganhou 2 pontos!");
+                System.out.println("2 pontos adicionados para: " + UsuarioLogado.getRegistro());
+            }
+
             Inventario.remover("Fita"); // Remove a fita do inventário
             repaint(); // Atualiza o painel
+
             // Inicia a sequência de frames:
             new Timer().schedule(new TimerTask() {
                 @Override
@@ -78,7 +91,6 @@ public class TremDecisao extends JPanel {
                                             botao1.setEnabled(false); // Desativa o botão 1
                                             botao2.setVisible(false); // Torna o botão 2 invisível
                                             botao2.setEnabled(false); // Desativa o botão 2
-                                            portafechada = true; // Marca que a porta foi fechada
                                             System.out.println("Levando o jogador ao painel Parte1...");
                                             layout.show(painelPrincipal, "Parte1"); // Leva o jogador ao painel Parte1
                                         }
