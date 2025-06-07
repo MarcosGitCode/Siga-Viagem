@@ -57,20 +57,25 @@ public class JogoPA extends BasePainelComBotao {
         });
         add(botaoVoltar);
 
-        // Área clicável para PA
-        addMouseListener(new MouseAdapter() {
-            @Override
-            public void mouseClicked(MouseEvent e) {
-                imagemAlternada = !imagemAlternada;
-                if (imagemAlternada) {
-                    imagemAtual = imagemAtivado;
-                    verificarEAdicionarPontuacao();
-                } else {
-                    imagemAtual = imagemNeutro;
-                }
-                repaint();
+        // Botão PA
+        JButton botaoPA = new JButton("PA");
+        botaoPA.setBounds(325, 175, 175, 100); // Define posição e tamanho
+        botaoPA.setContentAreaFilled(false); // Remove o preenchimento
+        botaoPA.setOpaque(false); // Torna o botão transparente
+        botaoPA.setBorderPainted(false); // Remove a borda
+        botaoPA.setFocusPainted(false); // Remove o foco visual
+        botaoPA.setText(""); // Remove o texto visível
+        botaoPA.addActionListener(e -> {
+            if (imagemAtual == imagemAtivado) {
+                // Despinta a tela ao clicar novamente
+                imagemAtual = imagemNeutro; // Redefine para a imagem neutra
+            } else {
+                System.out.println("Botão PA clicado!");
+                imagemAtual = imagemAtivado; // Altera a imagem atual para ativado
             }
+            repaint(); // Atualiza a tela
         });
+        add(botaoPA);
     }
 
     private void verificarEAdicionarPontuacao() {
