@@ -6,7 +6,6 @@ import java.io.File;
 import java.io.IOException;
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
-import javax.swing.JOptionPane;
 
 public class JogoPA extends BasePainelComBotao {
     private boolean imagemAlternada = false;
@@ -19,6 +18,10 @@ public class JogoPA extends BasePainelComBotao {
     private static final String TAREFA_PA_INICIAL = "PA_INICIAL";
     private static final String TAREFA_PA_MEIO = "PA_MEIO";
     private static final String TAREFA_PA_FINAL = "PA_FINAL";
+    private JButton botaoCCO;
+    private JButton botaoInformarPortaNaoFechada;
+    private JButton botaoInformarVerificacoes;
+    private JButton botaoInformarIsolamento;
 
     public JogoPA(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/05 - Módulo de Comunicação - tela de início.jpg", layout, painelPrincipal);
@@ -41,6 +44,60 @@ public class JogoPA extends BasePainelComBotao {
                     JOptionPane.ERROR_MESSAGE);
         }
 
+        botaoCCO = new JButton("");
+        botaoCCO.setBounds(200, 350, 300, 180);
+        botaoCCO.setFont(new Font("Arial", Font.PLAIN, 20));
+        botaoCCO.setForeground(Color.BLACK);
+        botaoCCO.setBackground(Color.RED);
+        botaoCCO.setContentAreaFilled(false);
+        botaoCCO.setOpaque(false);
+        botaoCCO.setBorderPainted(false);
+        botaoCCO.addActionListener(e -> {
+            System.out.println("Botão CCO clicado!");
+            botaoInformarPortaNaoFechada = new JButton("Informar porta não fechada");
+            botaoInformarPortaNaoFechada.setBounds(200, 300, 250, 60);
+            botaoInformarPortaNaoFechada.setFont(new Font("Arial", Font.BOLD, 15));
+            botaoInformarPortaNaoFechada.setForeground(Color.WHITE);
+            botaoInformarPortaNaoFechada.setBackground(Color.RED);
+            botaoInformarPortaNaoFechada.setContentAreaFilled(true);
+            botaoInformarPortaNaoFechada.setOpaque(true);
+            botaoInformarPortaNaoFechada.setBorderPainted(false);
+            botaoInformarPortaNaoFechada.addActionListener(ev -> {
+                System.out.println("Botão InformarPortaNaoFechada clicado!");
+            });
+            add(botaoInformarPortaNaoFechada);
+
+            botaoInformarVerificacoes = new JButton("Informar verificações");
+            botaoInformarVerificacoes.setBounds(500, 300, 250, 60);
+            botaoInformarVerificacoes.setFont(new Font("Arial", Font.BOLD, 15));
+            botaoInformarVerificacoes.setForeground(Color.WHITE);
+            botaoInformarVerificacoes.setBackground(Color.red);
+            botaoInformarVerificacoes.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
+            botaoInformarVerificacoes.setContentAreaFilled(true);
+            botaoInformarVerificacoes.setOpaque(true);
+            botaoInformarVerificacoes.setBorderPainted(false);
+            botaoInformarVerificacoes.addActionListener(ev -> {
+                System.out.println("Botão InformarVerificacoes clicado!");
+            });
+            add(botaoInformarVerificacoes);
+
+            botaoInformarIsolamento = new JButton("Informar isolamento");
+            botaoInformarIsolamento.setBounds(800, 300, 250, 60);
+            botaoInformarIsolamento.setFont(new Font("Arial", Font.BOLD, 15));
+            botaoInformarIsolamento.setForeground(Color.WHITE);
+            botaoInformarIsolamento.setBackground(Color.RED);
+            botaoInformarIsolamento.setContentAreaFilled(true);
+            botaoInformarIsolamento.setOpaque(true);
+            botaoInformarIsolamento.setBorderPainted(false);
+            botaoInformarIsolamento.addActionListener(ev -> {
+                System.out.println("Botão InformarIsolamento clicado!");
+            });
+            add(botaoInformarIsolamento);
+            revalidate(); // <- Adicione esta linha
+            repaint();
+        });
+        add(botaoCCO);
+
         // Botão Voltar
         JButton botaoVoltar = new JButton("<");
         botaoVoltar.setBounds(10, 10, 60, 60);
@@ -52,6 +109,9 @@ public class JogoPA extends BasePainelComBotao {
         botaoVoltar.setBorderPainted(false);
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
+            removerBotaoInformarPortaNaoFechada();
+            removerBotaoInformarVerificacoes();
+            removerBotaoInformarIsolamento();
             mostrarPontuacaoFinal();
             layout.show(painelPrincipal, "Jogo");
         });
@@ -76,6 +136,38 @@ public class JogoPA extends BasePainelComBotao {
             repaint(); // Atualiza a tela
         });
         add(botaoPA);
+    }
+
+    private void removerBotaoCCO() {
+        if (botaoCCO != null) {
+            remove(botaoCCO); // Remove the button from the panel
+            botaoCCO = null; // Clear the reference
+            repaint(); // Redraw the panel
+        }
+    }
+
+    private void removerBotaoInformarPortaNaoFechada() {
+        if (botaoInformarPortaNaoFechada != null) {
+            remove(botaoInformarPortaNaoFechada); // Remove the button from the panel
+            botaoInformarPortaNaoFechada = null; // Clear the reference
+            repaint(); // Redraw the panel
+        }
+    }
+
+    private void removerBotaoInformarVerificacoes() {
+        if (botaoInformarVerificacoes != null) {
+            remove(botaoInformarVerificacoes); // Remove the button from the panel
+            botaoInformarVerificacoes = null; // Clear the reference
+            repaint(); // Redraw the panel
+        }
+    }
+
+    private void removerBotaoInformarIsolamento() {
+        if (botaoInformarIsolamento != null) {
+            remove(botaoInformarIsolamento); // Remove the button from the panel
+            botaoInformarIsolamento = null; // Clear the reference
+            repaint(); // Redraw the panel
+        }
     }
 
     private void verificarEAdicionarPontuacao() {
