@@ -168,7 +168,13 @@ public class TremPortaAberta extends JPanel {
             }
 
             atualizarImagemFundo(); // Update the background image
-            layout.show(painelPrincipal, "TremLuzesAcesas"); // Switch to TremDecisao panel
+
+            // Troca para a tela correta conforme o estado das luzes
+            if (EstadoJogo.luzesApagadas) {
+                layout.show(painelPrincipal, "TremLuzesApagadas");
+            } else {
+                layout.show(painelPrincipal, "TremLuzesAcesas");
+            }
         });
         add(botaoChecarLuzes);
 

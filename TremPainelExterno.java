@@ -85,6 +85,7 @@ public class TremPainelExterno extends JPanel {
                 }
 
                 // Remove o botão da tela
+                EstadoJogo.luzesApagadas = true;
                 remove(botaoCentral);
                 revalidate();
                 repaint();
