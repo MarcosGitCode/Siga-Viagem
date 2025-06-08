@@ -16,7 +16,11 @@ public class Metroviario {
     }
 
     public Metroviario(String nome, String email, String senha, String registro, int pontuacaoTotal) {
-        this(0, nome, email, senha, registro, pontuacaoTotal);
+        this.nome = nome;
+        this.email = email;
+        this.senha = senha;
+        this.registro = registro;
+        this.pontuacaoTotal = pontuacaoTotal;
     }
 
     public int getId() { return id; }

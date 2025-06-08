@@ -128,7 +128,7 @@ public class MenuAdmin extends JPanel {
                     JOptionPane.showMessageDialog(this, "Erro ao cadastrar administrador.", "Erro", JOptionPane.ERROR_MESSAGE);
                 }
             } else {
-                Metroviario novo = new Metroviario(nome, email, registro, senha, 0);
+                Metroviario novo = new Metroviario(nome, email, senha, registro, 0);
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.inserir(novo);
                 JOptionPane.showMessageDialog(this, "Metroviário cadastrado com sucesso!");
@@ -344,5 +344,9 @@ public class MenuAdmin extends JPanel {
             }
             txtAreaUsuarios.setText(sb.toString());
         }
+    }
+
+    public void atualizarUsuarios() {
+        atualizarListaUsuarios();
     }
 }
