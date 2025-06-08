@@ -3,6 +3,8 @@ import javax.swing.*;
 
 public class JogoDireita extends BasePainelComBotao {
     private String imagemAtual = "imagens/Fotos editadas/direita3.png";
+    private final String imagemOriginal = "imagens/Fotos editadas/direita3.png";
+    private final String imagemAlternativa = "imagens/Fotos editadas/direita2.png";
     private boolean pontosAdicionados = false;
     private String mensagemTemporaria = "";
     private long mensagemFim = 0;
@@ -36,25 +38,27 @@ public class JogoDireita extends BasePainelComBotao {
         botaoVisivel.setText("");
         botaoVisivel.addActionListener(e -> {
             System.out.println("Botão visível clicado!");
-            imagemAtual = "imagens/Fotos editadas/direita2.png";
-            Inventario.adicionar("Chave");
 
-            // Verifica se todos os itens foram coletados
-            if (!pontosAdicionados && Inventario.contem("Cinturão") && Inventario.contem("Fita")) {
-                // Adiciona pontos ao usuário
-                MetroviarioDAO dao = new MetroviarioDAO();
-                dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 3);
-                pontosAdicionados = true;
+            if (imagemAtual.equals(imagemOriginal)) {
+                imagemAtual = imagemAlternativa;
+                Inventario.adicionar("Chave");
 
-                // Mostra mensagem temporária
-                mensagemTemporaria = "Parabéns! Você coletou todos os itens! (+3 pontos)";
-                mensagemFim = System.currentTimeMillis() + 3000; // Mensagem aparece por 3 segundos
+                // Verifica se todos os itens foram coletados
+                if (!pontosAdicionados && Inventario.contem("Cinturão") && Inventario.contem("Fita")) {
+                    MetroviarioDAO dao = new MetroviarioDAO();
+                    dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 3);
+                    pontosAdicionados = true;
 
-                System.out.println("3 pontos adicionados para: " + UsuarioLogado.getRegistro());
+                    mensagemTemporaria = "Parabéns! Você coletou todos os itens! (+3 pontos)";
+                    mensagemFim = System.currentTimeMillis() + 3000;
+                    System.out.println("3 pontos adicionados para: " + UsuarioLogado.getRegistro());
+                }
+            } else {
+                imagemAtual = imagemOriginal;
+                Inventario.remover("Chave"); // Remove a chave do inventário ao devolver
             }
 
             repaint();
-            botaoVisivel.setVisible(false); // Esconde o botão após coletar
         });
         add(botaoVisivel);
 
