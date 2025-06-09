@@ -22,7 +22,9 @@ public class JogoPA extends BasePainelComBotao {
     private JButton botaoInformarPortaNaoFechada;
     private JButton botaoInformarVerificacoes;
     private JButton botaoInformarIsolamento;
-    private boolean pontosAdicionadosPortaNaoFechada = false; // Add this field at the top of the class
+    private boolean pontosAdicionadosPortaNaoFechada = false;
+    private boolean pontosAdicionadosInformarVerificacoes = false;
+    private boolean pontosAdicionadosInformarIsolamento = false;
     private String mensagemTemporaria = "";
     private long mensagemFim = 0;
 
@@ -92,6 +94,17 @@ public class JogoPA extends BasePainelComBotao {
             botaoInformarVerificacoes.setBorderPainted(false);
             botaoInformarVerificacoes.addActionListener(ev -> {
                 System.out.println("Botão InformarVerificacoes clicado!");
+                if (!pontosAdicionadosInformarVerificacoes) {
+                    MetroviarioDAO dao = new MetroviarioDAO();
+                    dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
+                    pontosAdicionadosInformarVerificacoes = true;
+
+                    mensagemTemporaria = "Você ganhou 2 pontos!";
+                    mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+
+                    System.out.println("2 pontos adicionados para: " + UsuarioLogado.getRegistro());
+                    repaint();
+                }
             });
             add(botaoInformarVerificacoes);
 
@@ -105,6 +118,17 @@ public class JogoPA extends BasePainelComBotao {
             botaoInformarIsolamento.setBorderPainted(false);
             botaoInformarIsolamento.addActionListener(ev -> {
                 System.out.println("Botão InformarIsolamento clicado!");
+                if (!pontosAdicionadosInformarIsolamento) {
+                    MetroviarioDAO dao = new MetroviarioDAO();
+                    dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
+                    pontosAdicionadosInformarIsolamento = true;
+
+                    mensagemTemporaria = "Você ganhou 2 pontos!";
+                    mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+
+                    System.out.println("2 pontos adicionados para: " + UsuarioLogado.getRegistro());
+                    repaint();
+                }
             });
             add(botaoInformarIsolamento);
             revalidate(); // <- Adicione esta linha
