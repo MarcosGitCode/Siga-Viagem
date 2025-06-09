@@ -38,6 +38,21 @@ public class JogoItens extends JPanel {
         });
         add(botaoVoltar);
 
+        JButton botaoMenu = new JButton("Menu");
+        botaoMenu.setBounds(580, 10, 100, 60);
+        botaoMenu.setFont(new Font("Arial", Font.PLAIN, 20));
+        botaoMenu.setForeground(Color.white);
+        botaoMenu.setBackground(Color.BLACK);
+        botaoMenu.setContentAreaFilled(true);
+        botaoMenu.setOpaque(true);
+        botaoMenu.setBorderPainted(false);
+        botaoMenu.setLayout(null);
+        botaoMenu.addActionListener(e -> {
+            System.out.println("Botão Menu clicado!");
+            layout.show(painelPrincipal, "Menu");
+        });
+        add(botaoMenu);
+        
         // Botão quadrado 1 (Cinturão)
         JButton botaoQuadrado1 = new JButton();
         botaoQuadrado1.setBounds(100, 250, 200, 400);

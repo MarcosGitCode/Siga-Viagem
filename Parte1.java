@@ -65,20 +65,20 @@ public class Parte1 extends PainelComImagem {
             layout.show(painelPrincipal, "JogoPA"); // Alterna para o painel JogoPA
         });
 
-        JButton botaoVoltar = new JButton("Menu");
-        botaoVoltar.setBounds(580, 10, 100, 60);
-        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
-        botaoVoltar.setForeground(Color.white);
-        botaoVoltar.setBackground(Color.BLACK);
-        botaoVoltar.setContentAreaFilled(true);
-        botaoVoltar.setOpaque(true);
-        botaoVoltar.setBorderPainted(false);
-        botaoVoltar.setLayout(null);
-        botaoVoltar.addActionListener(e -> {
-            System.out.println("Botão voltar clicado!");
+        JButton botaoMenu = new JButton("Menu");
+        botaoMenu.setBounds(580, 10, 100, 60);
+        botaoMenu.setFont(new Font("Arial", Font.PLAIN, 20));
+        botaoMenu.setForeground(Color.white);
+        botaoMenu.setBackground(Color.BLACK);
+        botaoMenu.setContentAreaFilled(true);
+        botaoMenu.setOpaque(true);
+        botaoMenu.setBorderPainted(false);
+        botaoMenu.setLayout(null);
+        botaoMenu.addActionListener(e -> {
+            System.out.println("Botão Menu clicado!");
             layout.show(painelPrincipal, "Menu");
         });
-        painelBotoes.add(botaoVoltar);
+        painelBotoes.add(botaoMenu);
     
         painelPrincipal.add(new JogoDDU(layout, painelPrincipal), "JogoDDU");
         painelPrincipal.add(new JogoADU(layout, painelPrincipal), "JogoADU");

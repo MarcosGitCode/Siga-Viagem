@@ -41,6 +41,21 @@ public class JogoAlavanca extends BasePainelComBotao {
         });
         add(botaoVoltar); // Adiciona o botão ao painel
         
+        JButton botaoMenu = new JButton("Menu");
+        botaoMenu.setBounds(580, 10, 100, 60);
+        botaoMenu.setFont(new Font("Arial", Font.PLAIN, 20));
+        botaoMenu.setForeground(Color.white);
+        botaoMenu.setBackground(Color.BLACK);
+        botaoMenu.setContentAreaFilled(true);
+        botaoMenu.setOpaque(true);
+        botaoMenu.setBorderPainted(false);
+        botaoMenu.setLayout(null);
+        botaoMenu.addActionListener(e -> {
+            System.out.println("Botão Menu clicado!");
+            layout.show(painelPrincipal, "Menu");
+        });
+        add(botaoMenu);
+        
         // Adiciona um MouseListener para alternar a imagem ao clicar
         addMouseListener(new MouseAdapter() {
             @Override
