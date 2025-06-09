@@ -65,6 +65,21 @@ public class Parte1 extends PainelComImagem {
             layout.show(painelPrincipal, "JogoPA"); // Alterna para o painel JogoPA
         });
 
+        JButton botaoVoltar = new JButton("Menu");
+        botaoVoltar.setBounds(580, 10, 100, 60);
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
+        botaoVoltar.setForeground(Color.white);
+        botaoVoltar.setBackground(Color.BLACK);
+        botaoVoltar.setContentAreaFilled(true);
+        botaoVoltar.setOpaque(true);
+        botaoVoltar.setBorderPainted(false);
+        botaoVoltar.setLayout(null);
+        botaoVoltar.addActionListener(e -> {
+            System.out.println("Botão voltar clicado!");
+            layout.show(painelPrincipal, "Menu");
+        });
+        painelBotoes.add(botaoVoltar);
+    
         painelPrincipal.add(new JogoDDU(layout, painelPrincipal), "JogoDDU");
         painelPrincipal.add(new JogoADU(layout, painelPrincipal), "JogoADU");
         painelPrincipal.add(new JogoReversora(layout, painelPrincipal), "JogoReversora");
