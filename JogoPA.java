@@ -22,6 +22,9 @@ public class JogoPA extends BasePainelComBotao {
     private JButton botaoInformarPortaNaoFechada;
     private JButton botaoInformarVerificacoes;
     private JButton botaoInformarIsolamento;
+    private boolean pontosAdicionadosPortaNaoFechada = false; // Add this field at the top of the class
+    private String mensagemTemporaria = "";
+    private long mensagemFim = 0;
 
     public JogoPA(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/05 - Módulo de Comunicação - tela de início.jpg", layout, painelPrincipal);
@@ -64,6 +67,17 @@ public class JogoPA extends BasePainelComBotao {
             botaoInformarPortaNaoFechada.setBorderPainted(false);
             botaoInformarPortaNaoFechada.addActionListener(ev -> {
                 System.out.println("Botão InformarPortaNaoFechada clicado!");
+                if (!pontosAdicionadosPortaNaoFechada) {
+                    MetroviarioDAO dao = new MetroviarioDAO();
+                    dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
+                    pontosAdicionadosPortaNaoFechada = true;
+
+                    mensagemTemporaria = "Você ganhou 2 pontos!";
+                    mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+
+                    System.out.println("2 pontos adicionados para: " + UsuarioLogado.getRegistro());
+                    repaint();
+                }
             });
             add(botaoInformarPortaNaoFechada);
 
@@ -209,6 +223,17 @@ public class JogoPA extends BasePainelComBotao {
         if (imagemAtual != null) {
             g.drawImage(imagemAtual, 0, 0, getWidth(), getHeight(), this);
         }
+
+        // Draw temporary message if it exists
+        if (!mensagemTemporaria.isEmpty() && System.currentTimeMillis() < mensagemFim) {
+            g.setFont(new Font("Arial", Font.BOLD, 24));
+            g.setColor(Color.WHITE);
+            FontMetrics fm = g.getFontMetrics();
+            int msgWidth = fm.stringWidth(mensagemTemporaria);
+            int x = (getWidth() - msgWidth) / 2;
+            g.drawString(mensagemTemporaria, x, 100);
+        }
+
         InventarioUI.desenhar((Graphics2D) g, getWidth());
     }
 }
