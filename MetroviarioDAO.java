@@ -369,4 +369,28 @@ public class MetroviarioDAO {
             System.err.println("Erro ao atualizar pontuação: " + e.getMessage());
         }
     }
+
+    // === MÉTODO PARA ZERAR PONTUAÇÃO ===
+    public void zerarPontuacao(String registro) {
+        String sql = "UPDATE metroviarios SET pontuacao_total = 0 WHERE registro = ?";
+        try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, registro);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Erro ao zerar pontuação: " + e.getMessage());
+        }
+    }
+
+    // === MÉTODO PARA LIMPAR TAREFAS REALIZADAS ===
+    public void limparTarefasRealizadas(String registro) {
+        String sql = "DELETE FROM tarefas_realizadas WHERE id_metroviario = (SELECT id FROM metroviarios WHERE registro = ?)";
+        try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, registro);
+            stmt.executeUpdate();
+        } catch (SQLException e) {
+            System.out.println("Erro ao limpar tarefas realizadas: " + e.getMessage());
+        }
+    }
+
+    
 }

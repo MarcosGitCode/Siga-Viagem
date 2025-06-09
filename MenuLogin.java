@@ -84,6 +84,11 @@ public class MenuLogin extends PainelComImagem {
             // Login de teste para facilitar o desenvolvimento
             if (registro.equals("a") && senha.equals("a")) {
                 UsuarioLogado.setRegistro("R12345-6"); // Registro fictício para testes
+
+                // Zera pontuação e tarefas ANTES de iniciar o jogo
+                dao.zerarPontuacao("R12345-6");
+                dao.limparTarefasRealizadas("R12345-6");
+
                 Menu.inicializarTelasJogo(layout, painelPrincipal); // Inicializa as telas do jogo
                 layout.show(painelPrincipal, "Jogo"); // Redireciona para o jogo
                 return;
@@ -94,6 +99,11 @@ public class MenuLogin extends PainelComImagem {
                 layout.show(painelPrincipal, "Admin"); // Redireciona para o menu admin
             } else if (isMetroviario) {
                 UsuarioLogado.setRegistro(registro);
+
+                // Zera pontuação e tarefas ANTES de iniciar o jogo
+                dao.zerarPontuacao(registro);
+                dao.limparTarefasRealizadas(registro);
+
                 Menu.inicializarTelasJogo(layout, painelPrincipal);
                 layout.show(painelPrincipal, "Jogo");
             } else {
