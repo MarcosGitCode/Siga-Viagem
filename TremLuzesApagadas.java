@@ -23,7 +23,7 @@ public class TremLuzesApagadas extends JPanel {
         botaoVoltar.setBorderPainted(false);
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "Jogo");
+            layout.show(painelPrincipal, "TremPortaAberta");
         });
         add(botaoVoltar);
 

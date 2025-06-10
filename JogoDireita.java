@@ -8,6 +8,7 @@ public class JogoDireita extends BasePainelComBotao {
     private boolean pontosAdicionados = false;
     private String mensagemTemporaria = "";
     private long mensagemFim = 0;
+    private boolean pontosAdicionadosChaveInserida = false;
 
     public JogoDireita(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/direita3.png", layout, painelPrincipal);
@@ -53,9 +54,11 @@ public class JogoDireita extends BasePainelComBotao {
                     mensagemFim = System.currentTimeMillis() + 3000;
                     System.out.println("3 pontos adicionados para: " + UsuarioLogado.getRegistro());
                 }
-            } else {
+            }
+            else {
                 imagemAtual = imagemOriginal;
-                Inventario.remover("Chave"); // Remove a chave do inventário ao devolver
+                Inventario.remover("Chave");
+                EstadoJogo.chaveInserida = true; // Remove a chave do inventário ao devolver
             }
 
             repaint();
@@ -111,6 +114,20 @@ public class JogoDireita extends BasePainelComBotao {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
+        // Verifica se a chave foi inserida e ainda não ganhou ponto
+        if(EstadoJogo.portaFechada == true && EstadoJogo.chaveInserida == true) {
+            EstadoJogo.chaveInserida = true; // Marca que a chave foi inserida
+            if (EstadoJogo.chaveInserida && !pontosAdicionadosChaveInserida) {
+                MetroviarioDAO dao = new MetroviarioDAO();
+                dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
+                pontosAdicionadosChaveInserida = true;
+
+                mensagemTemporaria = "Você ganhou 1 ponto!";
+                mensagemFim = System.currentTimeMillis() + 3000;
+                System.out.println("1 ponto adicionado para: " + UsuarioLogado.getRegistro());
+                repaint();
+            }
+        }
         // Desenha a imagem de fundo atual
         Image imagemFundo = new ImageIcon(imagemAtual).getImage();
         g.drawImage(imagemFundo, 0, 0, getWidth(), getHeight(), this);
