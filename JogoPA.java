@@ -26,6 +26,7 @@ public class JogoPA extends BasePainelComBotao {
     private boolean pontosAdicionadosInformarVerificacoes = false;
     private boolean pontosAdicionadosInformarIsolamento = false;
     private boolean pontosAdicionadosPA = false;
+    private boolean pontosAdicionadosPAaposCCO = false;
     private String mensagemTemporaria = "";
     private long mensagemFim = 0;
 
@@ -74,7 +75,7 @@ public class JogoPA extends BasePainelComBotao {
                     MetroviarioDAO dao = new MetroviarioDAO();
                     dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
                     pontosAdicionadosPortaNaoFechada = true;
-
+                    EstadoJogo.CCOPortaFechada = true;
                     mensagemTemporaria = "Você ganhou 2 pontos!";
                     mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
 
@@ -200,6 +201,19 @@ public class JogoPA extends BasePainelComBotao {
                     repaint();
                 }
             repaint(); // Atualiza a tela
+
+            if (EstadoJogo.CCOPortaFechada == true && !pontosAdicionadosPAaposCCO) {
+                    MetroviarioDAO dao = new MetroviarioDAO();
+                    dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
+                    pontosAdicionadosPAaposCCO = true;
+
+                    mensagemTemporaria = "Você ganhou 1 ponto!";
+                    mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+
+                    System.out.println("1 pontos adicionados para: " + UsuarioLogado.getRegistro());
+                    repaint();
+                }
+            repaint();
         });
         add(botaoPA);
     }

@@ -5,5 +5,6 @@ public class EstadoJogo {
     public static boolean reversoraNeutra = true;
     public static boolean reversoraFrente = false;
     public static boolean chaveCBTCAM = false;
+    public static boolean CCOPortaFechada = false;
 
 }
