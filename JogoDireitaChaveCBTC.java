@@ -13,6 +13,7 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
     private String mensagemTemporaria = "";
     private long mensagemFim = 0;
     private boolean pontosAdicionadosChaveCBTCAM = false;
+    private boolean pontosAdicionadosChaveRM = false;
     private Image imagemAtual = null;
 
     public JogoDireitaChaveCBTC(CardLayout layout, JPanel painelPrincipal) {
@@ -78,28 +79,15 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
         chaveCBTCRM.addActionListener(e -> {
             System.out.println("Botão chaveCBTCRM clicado!");
             mostrarImagemChaveCBTCRM();
+            if (EstadoJogo.reversoraFrente == true && !pontosAdicionadosChaveRM) {
+                MetroviarioDAO dao = new MetroviarioDAO();
+                dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
+                pontosAdicionadosChaveRM = true;
 
-            // Verifica se a tarefa já foi completada
-            if (!sequencia.isTarefaCompletada(TAREFA_CBCT_RM)) {
-                // Verifica se a reversora está em frente antes
-                if (!sequencia.isTarefaCompletada("REVERSORA_INICIO")) {
-                    adicionarPontuacao(-1); // Penalidade por sequência incorreta
-                    JOptionPane.showMessageDialog(this,
-                            "Sequência incorreta! A reversora deve ser posicionada primeiro.",
-                            "Penalidade",
-                            JOptionPane.WARNING_MESSAGE);
-                } else {
-                    adicionarPontuacao(1); // Pontuação normal
-                    JOptionPane.showMessageDialog(this,
-                            "Chave CBCT posicionada corretamente em RM!",
-                            "Sucesso",
-                            JOptionPane.INFORMATION_MESSAGE);
-                }
-            } else {
-                JOptionPane.showMessageDialog(this,
-                        "Você já completou esta tarefa!",
-                        "Aviso",
-                        JOptionPane.INFORMATION_MESSAGE);
+                mensagemTemporaria = "Você ganhou 1 ponto!";
+                mensagemFim = System.currentTimeMillis() + 3000;
+                System.out.println("1 ponto adicionado para: " + UsuarioLogado.getRegistro());
+                repaint();
             }
         });
         add(chaveCBTCRM); // Adiciona o botão ao painel
@@ -121,6 +109,7 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
                 pontosAdicionadosChaveCBTCAM = true;
+                EstadoJogo.chaveCBTCAM = true; 
 
                 mensagemTemporaria = "Você ganhou 1 ponto!";
                 mensagemFim = System.currentTimeMillis() + 3000;

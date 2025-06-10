@@ -32,7 +32,7 @@ public class Parte1 extends PainelComImagem {
 
         criarBotaoVisivel(painelBotoes, 400, 400, 50, 60, Color.BLUE, e -> {
             System.out.println("Botão chave reversora clicado!");
-            layout.show(painelPrincipal, "JogoReversora"); // Alterna para o painel JogoReversora
+            layout.show(painelPrincipal, "JogoReversoraOficial"); // Alterna para o painel JogoReversora
         });
 
         criarBotaoVisivel(painelBotoes, 450, 240, 330, 220, Color.PINK, e -> {
@@ -82,7 +82,7 @@ public class Parte1 extends PainelComImagem {
     
         painelPrincipal.add(new JogoDDU(layout, painelPrincipal), "JogoDDU");
         painelPrincipal.add(new JogoADU(layout, painelPrincipal), "JogoADU");
-        painelPrincipal.add(new JogoReversora(layout, painelPrincipal), "JogoReversora");
+        painelPrincipal.add(new JogoReversoraOficial(layout, painelPrincipal), "JogoReversoraOficial");
         painelPrincipal.add(new JogoVDU(layout, painelPrincipal), "JogoVDU");
         painelPrincipal.add(new JogoDireita(layout, painelPrincipal), "JogoDireita");
         painelPrincipal.add(new JogoEsquerda(layout, painelPrincipal), "JogoEsquerda");
