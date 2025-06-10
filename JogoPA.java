@@ -25,6 +25,7 @@ public class JogoPA extends BasePainelComBotao {
     private boolean pontosAdicionadosPortaNaoFechada = false;
     private boolean pontosAdicionadosInformarVerificacoes = false;
     private boolean pontosAdicionadosInformarIsolamento = false;
+    private boolean pontosAdicionadosPA = false;
     private String mensagemTemporaria = "";
     private long mensagemFim = 0;
 
@@ -186,17 +187,21 @@ public class JogoPA extends BasePainelComBotao {
                 System.out.println("Botão PA clicado!");
                 imagemAtual = imagemAtivado; // Altera a imagem atual para ativado
             }
+            
+            if (!pontosAdicionadosPA) {
+                    MetroviarioDAO dao = new MetroviarioDAO();
+                    dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
+                    pontosAdicionadosPA = true;
+
+                    mensagemTemporaria = "Você ganhou 1 ponto!";
+                    mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+
+                    System.out.println("1 pontos adicionados para: " + UsuarioLogado.getRegistro());
+                    repaint();
+                }
             repaint(); // Atualiza a tela
         });
         add(botaoPA);
-    }
-
-    private void removerBotaoCCO() {
-        if (botaoCCO != null) {
-            remove(botaoCCO); // Remove the button from the panel
-            botaoCCO = null; // Clear the reference
-            repaint(); // Redraw the panel
-        }
     }
 
     private void removerBotaoInformarPortaNaoFechada() {
