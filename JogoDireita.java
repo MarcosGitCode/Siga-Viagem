@@ -115,7 +115,7 @@ public class JogoDireita extends BasePainelComBotao {
         super.paintComponent(g);
 
         // Verifica se a chave foi inserida e ainda não ganhou ponto
-        if(EstadoJogo.portaFechada == true && EstadoJogo.chaveInserida == true) {
+        if(EstadoJogo.portaAdesivo == true && EstadoJogo.chaveInserida == true) {
             EstadoJogo.chaveInserida = true; // Marca que a chave foi inserida
             if (EstadoJogo.chaveInserida && !pontosAdicionadosChaveInserida) {
                 MetroviarioDAO dao = new MetroviarioDAO();

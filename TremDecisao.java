@@ -91,7 +91,7 @@ public class TremDecisao extends JPanel {
                                             botao1.setEnabled(false); // Desativa o botão 1
                                             botao2.setVisible(false); // Torna o botão 2 invisível
                                             botao2.setEnabled(false); // Desativa o botão 2
-                                            EstadoJogo.portaFechada = true; // Marca que a chave foi inserida
+                                            EstadoJogo.portaAdesivo = true; // Marca que a chave foi inserida
                                             System.out.println("Levando o jogador ao painel Parte1...");
                                             layout.show(painelPrincipal, "Parte1"); // Leva o jogador ao painel Parte1
                                         }

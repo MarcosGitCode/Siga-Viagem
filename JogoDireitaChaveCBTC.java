@@ -103,7 +103,7 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
             System.out.println("Botão chaveCBTCAM clicado!");
             mostrarImagemChaveCBTCAM();
             // Verifica se é a chave AM final
-            if(EstadoJogo.portaFechada == true && EstadoJogo.chaveInserida == true) {
+            if(EstadoJogo.portaAdesivo == true && EstadoJogo.chaveInserida == true) {
             EstadoJogo.chaveInserida = true; // Marca que a chave foi inserida
             if (EstadoJogo.chaveInserida && !pontosAdicionadosChaveCBTCAM) {
                 MetroviarioDAO dao = new MetroviarioDAO();

@@ -120,7 +120,7 @@ public class JogoPA extends BasePainelComBotao {
             botaoInformarIsolamento.setBorderPainted(false);
             botaoInformarIsolamento.addActionListener(ev -> {
                 System.out.println("Botão InformarIsolamento clicado!");
-                if (!pontosAdicionadosInformarIsolamento) {
+                if (EstadoJogo.portaAdesivo == true && EstadoJogo.luzesApagadas == true && !pontosAdicionadosInformarIsolamento) {
                     MetroviarioDAO dao = new MetroviarioDAO();
                     dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
                     pontosAdicionadosInformarIsolamento = true;
