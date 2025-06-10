@@ -96,7 +96,7 @@ public class JogoPA extends BasePainelComBotao {
             botaoInformarVerificacoes.setBorderPainted(false);
             botaoInformarVerificacoes.addActionListener(ev -> {
                 System.out.println("Botão InformarVerificacoes clicado!");
-                if (!pontosAdicionadosInformarVerificacoes) {
+                if (EstadoJogo.verificarEmergencia == true && !pontosAdicionadosInformarVerificacoes) {
                     MetroviarioDAO dao = new MetroviarioDAO();
                     dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
                     pontosAdicionadosInformarVerificacoes = true;

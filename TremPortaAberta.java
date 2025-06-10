@@ -99,7 +99,7 @@ public class TremPortaAberta extends JPanel {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
                 pontosAdicionados = true;
-
+                EstadoJogo.verificarEmergencia = true; // Set the emergency state
                 mensagemTemporaria = "Você ganhou 1 ponto!";
                 mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
 
