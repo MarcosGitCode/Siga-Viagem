@@ -208,7 +208,7 @@ public class TremPortaAberta extends JPanel {
             System.out.println("Botão 'checar luzes' clicado!");
 
             // Adiciona 2 pontos ao usuário, se ainda não adicionou
-            if (!pontosAdicionadosChecarLuzes2) {
+            if (EstadoJogo.luzesApagadas == true && !pontosAdicionadosChecarLuzes2) {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
                 pontosAdicionadosChecarLuzes2 = true;

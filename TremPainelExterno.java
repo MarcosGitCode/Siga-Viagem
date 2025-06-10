@@ -83,7 +83,7 @@ public class TremPainelExterno extends JPanel {
                     MetroviarioDAO dao = new MetroviarioDAO();
                     dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 3); // <-- aqui!
                     pontosAdicionados = true;
-
+                    EstadoJogo.luzesApagadas = true;
                     mensagemTemporaria = "Você ganhou 3 pontos!";
                     mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
 

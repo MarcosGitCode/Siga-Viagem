@@ -14,6 +14,9 @@ public class TremDecisao extends JPanel {
 
     private JButton botao1;
     private JButton botao2;
+    private boolean pontosAdicionadosChecarLuzes = false;
+    private String mensagemTemporaria = "";
+    private long mensagemFim = 0;
 
     private boolean portafechada = false; // Inicialmente, a porta está aberta
 
@@ -36,7 +39,18 @@ public class TremDecisao extends JPanel {
         botaoChecarLuzes.setOpaque(false);
         botaoChecarLuzes.addActionListener(e -> {
             System.out.println("Botão 'checar luzes' clicado!");
-            layout.show(painelPrincipal, "TremLuzesApagadas"); // Switch to TremDecisao panel
+            layout.show(painelPrincipal, "TremLuzesApagadas");
+            if (EstadoJogo.luzesApagadas == true && !pontosAdicionadosChecarLuzes) {
+                MetroviarioDAO dao = new MetroviarioDAO();
+                dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
+                pontosAdicionadosChecarLuzes = true;
+
+                mensagemTemporaria = "Você ganhou 2 pontos!";
+                mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+
+                System.out.println("2 pontos adicionados para: " + UsuarioLogado.getRegistro());
+                repaint();
+            } // Switch to TremDecisao panel
         });
         add(botaoChecarLuzes);
         painelPrincipal.add(new TremLuzesApagadas(layout, painelPrincipal), "TremLuzesApagadas");
@@ -91,7 +105,8 @@ public class TremDecisao extends JPanel {
                                             botao1.setEnabled(false); // Desativa o botão 1
                                             botao2.setVisible(false); // Torna o botão 2 invisível
                                             botao2.setEnabled(false); // Desativa o botão 2
-                                            EstadoJogo.portaAdesivo = true; // Marca que a chave foi inserida
+                                            EstadoJogo.portaAdesivo = true;
+                                            EstadoJogo.luzesApagadas = true;
                                             System.out.println("Levando o jogador ao painel Parte1...");
                                             layout.show(painelPrincipal, "Parte1"); // Leva o jogador ao painel Parte1
                                         }
