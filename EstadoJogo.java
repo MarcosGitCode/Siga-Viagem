@@ -8,4 +8,5 @@ public class EstadoJogo {
     public static boolean chaveCBTCAM = false;
     public static boolean CCOPortaFechada = false;
     public static boolean verificarEmergencia = false;
+    public static boolean informarIsolamento = false;
 }
