@@ -1,4 +1,4 @@
-    import java.awt.*;
+import java.awt.*;
 import javax.swing.*;
 
 public class JogoDireitaChaveCBTC extends BasePainelComBotao {
@@ -10,6 +10,10 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
     private SequenciaDecisoes sequencia;
     private static final String TAREFA_CBCT_RM = "CBCT_RM";
     private static final String TAREFA_CBCT_AM_FINAL = "CBCT_AM_FINAL";
+    private String mensagemTemporaria = "";
+    private long mensagemFim = 0;
+    private boolean pontosAdicionadosChaveCBTCAM = false;
+    private Image imagemAtual = null;
 
     public JogoDireitaChaveCBTC(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/09 - Chave do CBTC - MCS.jpg", layout, painelPrincipal);
@@ -43,6 +47,7 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
         botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
+            mensagemTemporaria = "";
             mostrarPontuacaoFinal(); // Mostra o resultado final
             layout.show(painelPrincipal, "JogoDireita"); // Volta para o painel anterior
         });
@@ -110,9 +115,19 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
             System.out.println("Botão chaveCBTCAM clicado!");
             mostrarImagemChaveCBTCAM();
             // Verifica se é a chave AM final
-            if (sequencia.isTarefaCompletada("INSERIR_CHAVE")) {
-                adicionarPontuacao(1); // Pontos para AM final
+            if(EstadoJogo.portaFechada == true && EstadoJogo.chaveInserida == true) {
+            EstadoJogo.chaveInserida = true; // Marca que a chave foi inserida
+            if (EstadoJogo.chaveInserida && !pontosAdicionadosChaveCBTCAM) {
+                MetroviarioDAO dao = new MetroviarioDAO();
+                dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
+                pontosAdicionadosChaveCBTCAM = true;
+
+                mensagemTemporaria = "Você ganhou 1 ponto!";
+                mensagemFim = System.currentTimeMillis() + 3000;
+                System.out.println("1 ponto adicionado para: " + UsuarioLogado.getRegistro());
+                repaint();
             }
+        }
         });
         add(chaveCBTCAM); // Adiciona o botão ao painel
 
@@ -144,62 +159,18 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
     }
 
     private void mostrarImagemChaveCBTCRM() {
-        int largura = getWidth();
-        int altura = getHeight();
-
-        if (largura > 0 && altura > 0) {
-            ImageIcon imagemOriginal = new ImageIcon("imagens/Fotos editadas/Chave do CBTC - RM.jpg");
-            Image imagemRedimensionada = imagemOriginal.getImage().getScaledInstance(largura, altura,
-                    Image.SCALE_SMOOTH);
-            imagemChaveCBTCRM.setIcon(new ImageIcon(imagemRedimensionada)); // Atualiza o ícone com a imagem
-                                                                            // redimensionada
-            imagemChaveCBTCRM.setBounds(0, 0, largura, altura); // Ajusta para preencher a tela inteira
-        }
-
-        imagemChaveCBTCRM.setVisible(true); // Torna a imagem visível
-        imagemChaveCBTCAM.setVisible(false); // Oculta a outra imagem
-        repaint(); // Atualiza o painel para exibir a imagem
+        imagemAtual = new ImageIcon("imagens/Fotos editadas/Chave do CBTC - RM.jpg").getImage();
+        repaint();
     }
 
     private void mostrarImagemChaveCBTCAM() {
-        int largura = getWidth();
-        int altura = getHeight();
-
-        if (largura > 0 && altura > 0) {
-            ImageIcon imagemOriginal = new ImageIcon("imagens/Fotos editadas/Chave do CBTC - AM.jpg");
-            Image imagemRedimensionada = imagemOriginal.getImage().getScaledInstance(largura, altura,
-                    Image.SCALE_SMOOTH);
-            imagemChaveCBTCAM.setIcon(new ImageIcon(imagemRedimensionada)); // Atualiza o ícone com a imagem
-                                                                            // redimensionada
-            imagemChaveCBTCAM.setBounds(0, 0, largura, altura); // Ajusta para preencher a tela inteira
-        }
-
-        imagemChaveCBTCAM.setVisible(true); // Torna a imagem visível
-        imagemChaveCBTCRM.setVisible(false); // Oculta a outra imagem
-        repaint(); // Atualiza o painel para exibir a imagem
+        imagemAtual = new ImageIcon("imagens/Fotos editadas/Chave do CBTC - AM.jpg").getImage();
+        repaint();
     }
 
     private void mostrarImagemPrincipal() {
-        int largura = getWidth();
-        int altura = getHeight();
-
-        if (largura > 0 && altura > 0) {
-            ImageIcon imagemOriginal = new ImageIcon("imagens/Fotos editadas/09 - Chave do CBTC - MCS.jpg");
-            Image imagemRedimensionada = imagemOriginal.getImage().getScaledInstance(largura, altura,
-                    Image.SCALE_SMOOTH);
-            JLabel imagemPrincipal = new JLabel(new ImageIcon(imagemRedimensionada));
-            imagemPrincipal.setBounds(0, 0, largura, altura); // Ajusta para preencher a tela inteira
-            add(imagemPrincipal); // Adiciona a imagem ao painel
-            imagemPrincipal.setVisible(true); // Torna a imagem principal visível
-        }
-
-        // Oculta outras imagens
-        if (imagemChaveCBTCRM != null)
-            imagemChaveCBTCRM.setVisible(false);
-        if (imagemChaveCBTCAM != null)
-            imagemChaveCBTCAM.setVisible(false);
-
-        repaint(); // Atualiza o painel para exibir a imagem
+        imagemAtual = new ImageIcon("imagens/Fotos editadas/09 - Chave do CBTC - MCS.jpg").getImage();
+        repaint();
     }
 
     private void adicionarPontuacao(int pontos) {
@@ -243,6 +214,25 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
                     "Você já completou esta tarefa anteriormente!",
                     "Tarefa Já Realizada",
                     JOptionPane.INFORMATION_MESSAGE);
+        }
+    }
+
+    @Override
+    protected void paintComponent(Graphics g) {
+        super.paintComponent(g);
+
+        // Desenha a imagem atual, se houver
+        if (imagemAtual != null) {
+            g.drawImage(imagemAtual, 0, 0, getWidth(), getHeight(), this);
+        }
+
+        // Exibe a mensagem temporária se estiver ativa
+        if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
+            g.setColor(Color.WHITE);
+            g.setFont(new Font("Arial", Font.BOLD, 32));
+            int x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
+            int y = 100;
+            g.drawString(mensagemTemporaria, x, y);
         }
     }
 }
