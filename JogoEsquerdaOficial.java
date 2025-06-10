@@ -4,7 +4,7 @@ import javax.swing.*;
 public class JogoEsquerdaOficial extends BasePainelComBotao {
 
     public JogoEsquerdaOficial(CardLayout layout, JPanel painelPrincipal) {
-        super("imagens/Fotos editadas/JogoEsquerdaOficial.png", layout, painelPrincipal);
+        super("imagens\\Fotos editadas\\12 - Porta de cabine lateral esquerda.png", layout, painelPrincipal);
         setLayout(null); // Layout absoluto para posicionar componentes, se necessário
 
         // Remova/adicione painéis apenas no Menu.java para evitar loops!
@@ -49,7 +49,7 @@ public class JogoEsquerdaOficial extends BasePainelComBotao {
         
         // Botão transparente de 500x500px na metade esquerda da tela
         JButton botaoEsquerda = new JButton();
-        botaoEsquerda.setBounds(0, 150, 500, 500); // Posição: do topo (150px) até 500px de altura
+        botaoEsquerda.setBounds(0, 150, 500, 300); // Posição: do topo (150px) até 500px de altura
         botaoEsquerda.setOpaque(false);
         botaoEsquerda.setContentAreaFilled(false);
         botaoEsquerda.setBorderPainted(false);
@@ -57,12 +57,22 @@ public class JogoEsquerdaOficial extends BasePainelComBotao {
             layout.show(painelPrincipal, "JogoItens");
         });
         add(botaoEsquerda);
+
+        JButton botaoPorta = new JButton();
+        botaoPorta.setBounds(550, 150, 800, 800); // Posição: do topo (150px) até 500px de altura
+        botaoPorta.setOpaque(false);
+        botaoPorta.setContentAreaFilled(false);
+        botaoPorta.setBorderPainted(false);
+        botaoPorta.addActionListener(e -> {
+            layout.show(painelPrincipal, "Trem1");
+        });
+        add(botaoPorta);
     }
 
     private void criarBotaoVisivel(JPanel painel, int x, int y, int width, int height, Color color, java.awt.event.ActionListener action) {
         JButton botao = new JButton();
         botao.setBounds(x, y, width, height);
-        botao.setOpaque(false); // Torna o botão transparente
+        botao.setOpaque(true); // Torna o botão transparente
         botao.setContentAreaFilled(false); // Remove a área de fundo
         botao.setBorderPainted(false); // Remove as bordas do botão
         botao.addActionListener(action);

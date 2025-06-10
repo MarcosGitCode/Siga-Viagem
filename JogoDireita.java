@@ -4,7 +4,7 @@ import javax.swing.*;
 public class JogoDireita extends BasePainelComBotao {
     private String imagemAtual = "imagens/Fotos editadas/direita3.png";
     private final String imagemOriginal = "imagens/Fotos editadas/direita3.png";
-    private final String imagemAlternativa = "imagens/Fotos editadas/direita2.png";
+    private final String imagemAlternativa = "imagens\\Fotos editadas\\07 - Coluna lateral direita - DIC, Derivação de Portas e Chave do CBTC.jpg";
     private boolean pontosAdicionados = false;
     private String mensagemTemporaria = "";
     private long mensagemFim = 0;
@@ -15,19 +15,19 @@ public class JogoDireita extends BasePainelComBotao {
         setLayout(null);
 
         // Botão seta direita
-        JButton botaoSetaDireita = new JButton("");
-        botaoSetaDireita.setBounds(900, 300, 290, 300);
-        botaoSetaDireita.setContentAreaFilled(false);
-        botaoSetaDireita.setBorderPainted(false);
-        botaoSetaDireita.setFocusPainted(false);
-        botaoSetaDireita.setOpaque(false);
-        botaoSetaDireita.setForeground(Color.WHITE);
-        botaoSetaDireita.setFont(new Font("Arial", Font.BOLD, 20));
-        botaoSetaDireita.addActionListener(e -> {
-            System.out.println("Botão seta direita clicado!");
-            layout.show(painelPrincipal, "JogoEsquerda");
-        });
-        add(botaoSetaDireita);
+        // JButton botaoSetaDireita = new JButton("");
+        // botaoSetaDireita.setBounds(900, 300, 290, 300);
+        // botaoSetaDireita.setContentAreaFilled(false);
+        // botaoSetaDireita.setBorderPainted(false);
+        // botaoSetaDireita.setFocusPainted(false);
+        // botaoSetaDireita.setOpaque(false);
+        // botaoSetaDireita.setForeground(Color.WHITE);
+        // botaoSetaDireita.setFont(new Font("Arial", Font.BOLD, 20));
+        // botaoSetaDireita.addActionListener(e -> {
+        //     System.out.println("Botão seta direita clicado!");
+        //     layout.show(painelPrincipal, "JogoEsquerda");
+        // });
+        // add(botaoSetaDireita);
 
         // Botão invisível para coletar a chave
         JButton botaoVisivel = new JButton();
@@ -97,7 +97,7 @@ public class JogoDireita extends BasePainelComBotao {
         
         // Botão para JogoDireitaChaveCBTC
         JButton chaveCBTC = new JButton();
-        chaveCBTC.setBounds(550, 600, 75, 75);
+        chaveCBTC.setBounds(550, 650, 75, 75);
         chaveCBTC.setContentAreaFilled(false);
         chaveCBTC.setOpaque(false);
         chaveCBTC.setBorderPainted(false);

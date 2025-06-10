@@ -31,7 +31,7 @@ public class Trem1 extends BasePainelComBotao {
         botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "JogoEsquerda"); // Volta para o painel anterior
+            layout.show(painelPrincipal, "JogoEsquerdaOficial"); // Volta para o painel anterior
         });
         add(botaoVoltar); // Adiciona o botão ao painel
 
