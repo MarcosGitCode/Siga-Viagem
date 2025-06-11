@@ -189,8 +189,12 @@ public class JogoPA extends BasePainelComBotao {
                 System.out.println("Botão PA clicado!");
                 imagemAtual = imagemAtivado; // Altera a imagem atual para ativado
             }
-            
-            if (!pontosAdicionadosPA) {
+            if (EstadoJogo.chaveCBTCRM == false || EstadoJogo.reversoraFrente == false) {
+                EstadoJogo.pontosPerdidos += 2;
+                mensagemTemporaria = "Você perdeu 2 pontos!";
+                repaint();
+            }
+            if (EstadoJogo.chaveCBTCRM == true && !pontosAdicionadosPA) {
                     MetroviarioDAO dao = new MetroviarioDAO();
                     dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
                     pontosAdicionadosPA = true;

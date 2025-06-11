@@ -83,6 +83,7 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
                 pontosAdicionadosChaveRM = true;
+                EstadoJogo.chaveCBTCRM = true; // Marca que a chave foi inserida
 
                 mensagemTemporaria = "Você ganhou 1 ponto!";
                 mensagemFim = System.currentTimeMillis() + 3000;
