@@ -190,6 +190,8 @@ public class JogoPA extends BasePainelComBotao {
                 imagemAtual = imagemAtivado; // Altera a imagem atual para ativado
             }
             if (EstadoJogo.chaveCBTCRM == false || EstadoJogo.reversoraFrente == false) {
+                MetroviarioDAO dao = new MetroviarioDAO();
+                dao.adicionarPontuacao(UsuarioLogado.getRegistro(), -2);
                 EstadoJogo.pontosPerdidos += 2;
                 mensagemTemporaria = "Você perdeu 2 pontos!";
                 repaint();

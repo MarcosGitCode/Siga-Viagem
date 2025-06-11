@@ -354,9 +354,8 @@ public class MetroviarioDAO {
 
     public void adicionarPontuacao(String registro, int pontos) {
         String sql = "UPDATE metroviarios SET pontuacao_total = pontuacao_total + ? WHERE registro = ?";
-
         try (Connection conn = Conexao.conectar();
-                PreparedStatement stmt = conn.prepareStatement(sql)) {
+             PreparedStatement stmt = conn.prepareStatement(sql)) {
 
             stmt.setInt(1, pontos);
             stmt.setString(2, registro);

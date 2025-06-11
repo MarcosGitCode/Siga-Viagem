@@ -144,6 +144,8 @@ public class TremDecisao extends JPanel {
         botao3.setBorderPainted(false); // Remove as bordas do botão
         botao3.setVisible(false); // Deixa o botão invisível
         botao3.addActionListener(e -> {
+            MetroviarioDAO dao = new MetroviarioDAO();
+            dao.adicionarPontuacao(UsuarioLogado.getRegistro(), -1);
             System.out.println("Botão 3 clicado!");
             EstadoJogo.pontosPerdidos += 1;
             mensagemTemporaria = "Você inseriu a chave no lugar errado! (-1 ponto)";

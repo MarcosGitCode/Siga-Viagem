@@ -153,6 +153,8 @@ public class TremPainelExterno extends JPanel {
             botaoIsolamento.setOpaque(false);
             botaoIsolamento.setBackground(Color.RED);
             botaoIsolamento.addActionListener(event -> {
+                MetroviarioDAO dao = new MetroviarioDAO();
+                dao.adicionarPontuacao(UsuarioLogado.getRegistro(), -3);
                 EstadoJogo.pontosPerdidos += 3;
                 mensagemTemporaria = "Você perdeu 3 pontos por isolar a porta errada!";
                 repaint();
