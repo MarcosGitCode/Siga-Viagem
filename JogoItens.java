@@ -1,7 +1,7 @@
 import java.awt.*;
-import javax.swing.*;
 import java.util.Timer;
 import java.util.TimerTask;
+import javax.swing.*;
 
 public class JogoItens extends JPanel {
 
