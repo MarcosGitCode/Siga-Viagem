@@ -51,6 +51,7 @@ public class Menu extends JFrame {
         painelPrincipal.add(new TremPainelExterno(layout, painelPrincipal), "TremPainelExterno");
         painelPrincipal.add(new JogoReversoraOficial(layout, painelPrincipal), "JogoReversoraOficial");
         painelPrincipal.add(new TremPortaFechada(), "TremPortaFechada");
+        painelPrincipal.add(new TremDecisao(layout, painelPrincipal), "TremDecisao");
     }
 
     public void mostrarMenuAdmin() {
