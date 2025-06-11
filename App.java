@@ -4,16 +4,16 @@ import java.sql.SQLException;
 
 public class App {
     public static void main(String[] args) {
-        String url = "jdbc:mysql://localhost:3306/metro"; // substitua pelo nome do seu banco
-        String user = "root"; // seu usuário do MySQL
-        String password = "batata123"; // sua senha do MySQL
+        String url = "jdbc:mysql://localhost:3306/metro"; // conecta no banco 'metro' local
+        String user = "root"; // usuário padrão do mysql
+        String password = "batata123"; // senha do mysql (altere se precisar)
 
         try {
             Connection conn = DriverManager.getConnection(url, user, password);
-            System.out.println("Conectado com sucesso!");
+            System.out.println("conectado com sucesso :)");
             conn.close();
         } catch (SQLException e) {
-            System.out.println("Erro na conexão: " + e.getMessage());
+            System.out.println("ops, erro na conexão: " + e.getMessage());
         }
     }
 }

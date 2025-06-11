@@ -24,8 +24,8 @@ public class InventarioUI {
         g2d.drawString("Inventário:", x + 15, y + 38);
 
         int itemX = x + 120;
-        int iconSize = 60; // Tamanho padrão do ícone
-        int itemY = y + (60 - iconSize) / 2; // Centraliza o ícone verticalmente na caixa
+        int iconSize = 60; // tamanho do icon
+        int itemY = y + (60 - iconSize) / 2; // centraliza na tela
 
         for (String item : itens) {
             if (item.equalsIgnoreCase("Cinturão")) {
@@ -41,7 +41,7 @@ public class InventarioUI {
         }
     }
 
-    // Métodos para verificar se os itens foram pegos
+    // metodos pra pegar itens
     public static boolean isPegouCinturao() {
         return pegouCinturao;
     }
