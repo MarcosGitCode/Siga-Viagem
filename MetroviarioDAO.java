@@ -3,6 +3,7 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class MetroviarioDAO {
+    public int pontuacaoTotal;
     public void inserir(Metroviario m) {
         String sql = "INSERT INTO metroviarios (nome, email, senha, registro, pontuacao_total) VALUES (?, ?, ?, ?, ?)";
         try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -369,6 +370,23 @@ public class MetroviarioDAO {
         }
     }
 
+    public int mostrarPontuacaoUser(String registro) {
+        String sql = "SELECT pontuacao_total FROM metroviarios WHERE registro = ?";
+        try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
+            stmt.setString(1, registro);
+            ResultSet rs = stmt.executeQuery();
+            if (rs.next()) {
+                int pontuacaoTotal = rs.getInt("pontuacao_total");
+                System.out.println("Pontuação total do usuário " + registro + ": " + pontuacaoTotal);
+                return pontuacaoTotal;
+            } else {
+                System.out.println("Usuário não encontrado.");
+            }
+        } catch (SQLException e) {
+            System.out.println("Erro ao buscar pontuação: " + e.getMessage());
+        }
+        return pontuacaoTotal; // Retorna 0 se não encontrar o usuário ou ocorrer um erro
+    }
     // === MÉTODO PARA ZERAR PONTUAÇÃO ===
     public void zerarPontuacao(String registro) {
         String sql = "UPDATE metroviarios SET pontuacao_total = 0 WHERE registro = ?";

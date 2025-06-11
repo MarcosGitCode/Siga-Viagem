@@ -9,6 +9,8 @@ public class TelaFinal extends JPanel {
 
     private Image imagemFundo;
     private String mensagemTemporaria = "";
+    private int pontuacaoTotal;
+
     public TelaFinal(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
 
@@ -22,6 +24,9 @@ public class TelaFinal extends JPanel {
             imagemFundo = null;
         }
         
+        MetroviarioDAO dao = new MetroviarioDAO();
+        pontuacaoTotal = dao.mostrarPontuacaoUser(UsuarioLogado.getRegistro());
+
         JButton botaoMenu = new JButton("Menu");
         int xBotao = (1280 - 300) / 2;
         botaoMenu.setBounds(xBotao, 650, 300, 70);
@@ -48,11 +53,29 @@ public class TelaFinal extends JPanel {
         // Desenha o inventário no canto superior direito
         InventarioUI.desenhar((Graphics2D) g, getWidth());
 
+        // Exibe a pontuação final centralizada
+        String textoPontuacao = "Sua pontuação final: " + pontuacaoTotal;
+        g.setFont(new Font("Arial", Font.BOLD, 40));
+        g.setColor(Color.BLACK);
+        int x = getWidth() / 2 - g.getFontMetrics().stringWidth(textoPontuacao) / 2;
+        int y = 350;
+        // Borda preta
+        for (int dx = -2; dx <= 2; dx++) {
+            for (int dy = -2; dy <= 2; dy++) {
+                if (dx != 0 || dy != 0) {
+                    g.drawString(textoPontuacao, x + dx, y + dy);
+                }
+            }
+        }
+        // Texto branco por cima
+        g.setColor(Color.WHITE);
+        g.drawString(textoPontuacao, x, y);
+
         // Desenha a mensagem temporária, se houver
         if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
             g.setFont(new Font("Arial", Font.BOLD, 32));
-            int x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
-            int y = 100;
+            x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
+            y = 100;
             // Desenha a borda preta (várias vezes ao redor)
             g.setColor(Color.BLACK);
             for (int dx = -2; dx <= 2; dx++) {
