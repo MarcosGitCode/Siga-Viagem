@@ -49,7 +49,7 @@ public class JogoDireita extends BasePainelComBotao {
                     MetroviarioDAO dao = new MetroviarioDAO();
                     dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 3);
                     pontosAdicionados = true;
-
+                    EstadoJogo.chaveColetada = true;
                     mensagemTemporaria = "Parabéns! Você coletou todos os itens! (+3 pontos)";
                     mensagemFim = System.currentTimeMillis() + 3000;
                     System.out.println("3 pontos adicionados para: " + UsuarioLogado.getRegistro());

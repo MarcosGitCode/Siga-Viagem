@@ -126,6 +126,10 @@ public class JogoReversoraOficial extends BasePainelComBotao {
                     setRepeats(false);
                     start();
                 }};
+            } else if (EstadoJogo.reversoraNeutra == true && EstadoJogo.chaveCBTCAM == false) {
+                mensagemTemporaria = "Você precisa da chave CBTC em AM! (-1 ponto)";
+                EstadoJogo.pontosPerdidos += 1;
+                mensagemFim = System.currentTimeMillis() + 3000;
             }
             repaint();
 

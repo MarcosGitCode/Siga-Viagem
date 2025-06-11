@@ -2,11 +2,11 @@ import java.awt.*;
 import javax.swing.*;
 
 public class JogoEsquerdaOficial extends BasePainelComBotao {
-
+        private String mensagemTemporaria = "";
     public JogoEsquerdaOficial(CardLayout layout, JPanel painelPrincipal) {
         super("imagens\\Fotos editadas\\12 - Porta de cabine lateral esquerda.png", layout, painelPrincipal);
         setLayout(null); // Layout absoluto para posicionar componentes, se necessário
-
+        
         // Remova/adicione painéis apenas no Menu.java para evitar loops!
 
         JPanel painelBotoes = new JPanel();
@@ -64,7 +64,18 @@ public class JogoEsquerdaOficial extends BasePainelComBotao {
         botaoPorta.setContentAreaFilled(false);
         botaoPorta.setBorderPainted(false);
         botaoPorta.addActionListener(e -> {
-            layout.show(painelPrincipal, "Trem1");
+            if (EstadoJogo.chaveColetada == false) {
+            mensagemTemporaria = "Você saiu da cabine sem a chave!";
+                repaint();
+                new javax.swing.Timer(3000, ev -> {
+                    layout.show(painelPrincipal, "TelaFinal");
+                }) {{
+                    setRepeats(false);
+                    start();
+                }};
+            } else {
+                layout.show(painelPrincipal, "Trem1");
+            }
         });
         add(botaoPorta);
     }
@@ -83,5 +94,24 @@ public class JogoEsquerdaOficial extends BasePainelComBotao {
         super.paintComponent(g);
         // Desenha o inventário no canto superior direito
         InventarioUI.desenhar((Graphics2D) g, getWidth());
+
+        // Desenha a mensagem temporária, se houver
+        if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
+            g.setFont(new Font("Arial", Font.BOLD, 32));
+            int x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
+            int y = 100;
+            // Borda preta
+            g.setColor(Color.BLACK);
+            for (int dx = -2; dx <= 2; dx++) {
+                for (int dy = -2; dy <= 2; dy++) {
+                    if (dx != 0 || dy != 0) {
+                        g.drawString(mensagemTemporaria, x + dx, y + dy);
+                    }
+                }
+            }
+            // Texto branco
+            g.setColor(Color.WHITE);
+            g.drawString(mensagemTemporaria, x, y);
+        }
     }
 }

@@ -9,4 +9,6 @@ public class EstadoJogo {
     public static boolean CCOPortaFechada = false;
     public static boolean verificarEmergencia = false;
     public static boolean informarIsolamento = false;
+    public static int pontosPerdidos = 0;
+    public static boolean chaveColetada = false;
 }
