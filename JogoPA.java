@@ -297,13 +297,22 @@ public class JogoPA extends BasePainelComBotao {
         }
 
         // Draw temporary message if it exists
-        if (!mensagemTemporaria.isEmpty() && System.currentTimeMillis() < mensagemFim) {
-            g.setFont(new Font("Arial", Font.BOLD, 24));
+        if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
+            g.setFont(new Font("Arial", Font.BOLD, 32));
+            int x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
+            int y = 100;
+            // Desenha a borda preta (várias vezes ao redor)
+            g.setColor(Color.BLACK);
+            for (int dx = -2; dx <= 2; dx++) {
+                for (int dy = -2; dy <= 2; dy++) {
+                    if (dx != 0 || dy != 0) {
+                        g.drawString(mensagemTemporaria, x + dx, y + dy);
+                    }
+                }
+            }
+            // Desenha o texto branco por cima
             g.setColor(Color.WHITE);
-            FontMetrics fm = g.getFontMetrics();
-            int msgWidth = fm.stringWidth(mensagemTemporaria);
-            int x = (getWidth() - msgWidth) / 2;
-            g.drawString(mensagemTemporaria, x, 100);
+            g.drawString(mensagemTemporaria, x, y);
         }
 
         InventarioUI.desenhar((Graphics2D) g, getWidth());

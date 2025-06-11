@@ -8,10 +8,10 @@ import javax.swing.*;
 public class TremLuzesApagadas extends JPanel {
 
     private Image imagemFundo;
-
+    private String mensagemTemporaria = "";
     public TremLuzesApagadas(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
-
+        mensagemTemporaria = "Você ganhou 2 pontos!";
         // Botão para voltar
         JButton botaoVoltar = new JButton("<");
         botaoVoltar.setBounds(10, 10, 60, 60);
@@ -61,5 +61,24 @@ public class TremLuzesApagadas extends JPanel {
         }
         // Desenha o inventário no canto superior direito
         InventarioUI.desenhar((Graphics2D) g, getWidth());
+
+        // Desenha a mensagem temporária, se houver
+        if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
+            g.setFont(new Font("Arial", Font.BOLD, 32));
+            int x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
+            int y = 100;
+            // Desenha a borda preta (várias vezes ao redor)
+            g.setColor(Color.BLACK);
+            for (int dx = -2; dx <= 2; dx++) {
+                for (int dy = -2; dy <= 2; dy++) {
+                    if (dx != 0 || dy != 0) {
+                        g.drawString(mensagemTemporaria, x + dx, y + dy);
+                    }
+                }
+            }
+            // Desenha o texto branco por cima
+            g.setColor(Color.WHITE);
+            g.drawString(mensagemTemporaria, x, y);
+        }
     }
 }

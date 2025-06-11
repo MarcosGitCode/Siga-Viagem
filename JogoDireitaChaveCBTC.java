@@ -217,10 +217,20 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
 
         // Exibe a mensagem temporária se estiver ativa
         if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
-            g.setColor(Color.WHITE);
             g.setFont(new Font("Arial", Font.BOLD, 32));
             int x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
             int y = 100;
+            // Desenha a borda preta (várias vezes ao redor)
+            g.setColor(Color.BLACK);
+            for (int dx = -2; dx <= 2; dx++) {
+                for (int dy = -2; dy <= 2; dy++) {
+                    if (dx != 0 || dy != 0) {
+                        g.drawString(mensagemTemporaria, x + dx, y + dy);
+                    }
+                }
+            }
+            // Desenha o texto branco por cima
+            g.setColor(Color.WHITE);
             g.drawString(mensagemTemporaria, x, y);
         }
     }

@@ -8,7 +8,7 @@ import javax.swing.*;
 public class TremPesOlhando extends JPanel {
 
     private Image imagemFundo;
-
+    private String mensagemTemporaria = "";
     public TremPesOlhando(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
 
@@ -16,6 +16,8 @@ public class TremPesOlhando extends JPanel {
         try {
             BufferedImage img = ImageIO.read(new File("imagens/Fotos editadas/pes_olhando.jpg"));
             imagemFundo = img.getScaledInstance(1280, 856, Image.SCALE_SMOOTH);
+            mensagemTemporaria = "Você ganhou 1 ponto!";
+            repaint();
         } catch (IOException e) {
             e.printStackTrace();
             imagemFundo = null;
@@ -79,5 +81,24 @@ public class TremPesOlhando extends JPanel {
         }
         // Desenha o inventário no canto superior direito
         InventarioUI.desenhar((Graphics2D) g, getWidth());
+
+        // Desenha a mensagem temporária, se houver
+        if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
+            g.setFont(new Font("Arial", Font.BOLD, 32));
+            int x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
+            int y = 100;
+            // Desenha a borda preta (várias vezes ao redor)
+            g.setColor(Color.BLACK);
+            for (int dx = -2; dx <= 2; dx++) {
+                for (int dy = -2; dy <= 2; dy++) {
+                    if (dx != 0 || dy != 0) {
+                        g.drawString(mensagemTemporaria, x + dx, y + dy);
+                    }
+                }
+            }
+            // Desenha o texto branco por cima
+            g.setColor(Color.WHITE);
+            g.drawString(mensagemTemporaria, x, y);
+        }
     }
 }
