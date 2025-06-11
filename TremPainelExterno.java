@@ -103,7 +103,6 @@ public class TremPainelExterno extends JPanel {
                 }
         });
         add(botaoFecharPainel);
-
             // Adiciona o botão central
             JButton botaoCentral = new JButton();
             int tamanho = 100;
@@ -144,7 +143,21 @@ public class TremPainelExterno extends JPanel {
             });
             add(botaoCentral);
             revalidate(); // Atualiza o layout novamente
-            repaint();    // Redesenha o painel
+            repaint();  
+            JButton botaoIsolamento = new JButton();
+            int tamanhos = 100;
+            botaoIsolamento.setBounds(350, 560 - (tamanhos / 2), 650, 100);
+            botaoIsolamento.setContentAreaFilled(false);
+            botaoIsolamento.setBorderPainted(false);
+            botaoIsolamento.setFocusPainted(false);
+            botaoIsolamento.setOpaque(false);
+            botaoIsolamento.setBackground(Color.RED);
+            botaoIsolamento.addActionListener(event -> {
+                EstadoJogo.pontosPerdidos += 3;
+                mensagemTemporaria = "Você perdeu 3 pontos por isolar a porta errada!";
+                repaint();
+            });
+            add(botaoIsolamento);
         });
         add(botaoPainelExterno);
 

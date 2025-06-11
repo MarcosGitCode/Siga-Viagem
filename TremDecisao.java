@@ -10,10 +10,12 @@ public class TremDecisao extends JPanel {
     private Image imagemFundo;
     private Image imgCinturao;
     private Image imgFita;
+    private Image imgChave;
     private Image imgAdesivo; // Nova imagem para aparecer no topo
 
     private JButton botao1;
     private JButton botao2;
+    private JButton botao3;
     private boolean pontosAdicionadosChecarLuzes = false;
     private String mensagemTemporaria = "";
     private long mensagemFim = 0;
@@ -27,6 +29,7 @@ public class TremDecisao extends JPanel {
         imagemFundo = new ImageIcon("imagens/Fotos editadas/decisao.jpg").getImage();
         imgCinturao = new ImageIcon("imagens/Fotos editadas/ItensCinturao.png").getImage();
         imgFita = new ImageIcon("imagens/Fotos editadas/ItensFita.png").getImage();
+        imgChave = new ImageIcon("imagens/Fotos editadas/ItensChave.png").getImage();
         imgAdesivo = null; // Inicialmente, a imagem do adesivo é nula
         setLayout(null); // Define layout absoluto
 
@@ -105,6 +108,8 @@ public class TremDecisao extends JPanel {
                                             botao1.setEnabled(false); // Desativa o botão 1
                                             botao2.setVisible(false); // Torna o botão 2 invisível
                                             botao2.setEnabled(false); // Desativa o botão 2
+                                            botao3.setVisible(false); // Torna o botão 3 invisível
+                                            botao3.setEnabled(false); // Desativa o botão 3
                                             EstadoJogo.portaAdesivo = true;
                                             EstadoJogo.luzesApagadas = true;
                                             System.out.println("Levando o jogador ao painel Parte1...");
@@ -131,6 +136,20 @@ public class TremDecisao extends JPanel {
         botao2.setBorderPainted(false); // Remove as bordas do botão
         botao2.setVisible(false); // Deixa o botão invisível
         add(botao2);
+
+        botao3 = new JButton("");
+        botao3.setBounds(540, 550, 200, 200); // Posição e tamanho
+        botao3.setOpaque(false); // Torna o botão transparente
+        botao3.setContentAreaFilled(false); // Remove a área de fundo
+        botao3.setBorderPainted(false); // Remove as bordas do botão
+        botao3.setVisible(false); // Deixa o botão invisível
+        botao3.addActionListener(e -> {
+            System.out.println("Botão 3 clicado!");
+            EstadoJogo.pontosPerdidos += 1;
+            mensagemTemporaria = "Você inseriu a chave no lugar errado! (-1 ponto)";
+            repaint();
+        });
+        add(botao3);
 
         JButton botaoVoltar = new JButton("<");
         botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
@@ -168,6 +187,7 @@ public class TremDecisao extends JPanel {
         if (aFlag) {
             botao1.setVisible(Inventario.contem("Fita")); // Corrigido!
             botao2.setVisible(Inventario.contem("Cinturão"));
+            botao3.setVisible(Inventario.contem("Chave"));
         }
     }
 
@@ -188,6 +208,13 @@ public class TremDecisao extends JPanel {
             g.drawImage(imgCinturaoGrande, x, y, largura, altura, this);
         }
 
+        if (Inventario.contem("Chave")) {
+            Image imgChave = new ImageIcon("imagens/Fotos editadas/ItensChave.png").getImage();
+            int largura = 300, altura = 120;
+            int x = (getWidth() - largura) / 2;
+            int y = (getHeight() / 2) + 160;
+            g.drawImage(imgChave, x, y, largura, altura, this);
+        }
         // Desenha a fita grande no centro se estiver no inventário
         if (Inventario.contem("Fita")) {
             Image imgFitaGrande = new ImageIcon("imagens/Fotos editadas/ItensFita2.png").getImage();
@@ -207,6 +234,25 @@ public class TremDecisao extends JPanel {
             int x = (getWidth() - largura) / 2;
             int y = (getHeight() / 2) + 20;
             botao1.setBounds(x, y, largura, altura);
+        }
+
+        // Desenha a mensagem temporária, se houver
+        if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
+            g.setFont(new Font("Arial", Font.BOLD, 32));
+            int x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
+            int y = 100;
+            // Borda preta
+            g.setColor(Color.BLACK);
+            for (int dx = -2; dx <= 2; dx++) {
+                for (int dy = -2; dy <= 2; dy++) {
+                    if (dx != 0 || dy != 0) {
+                        g.drawString(mensagemTemporaria, x + dx, y + dy);
+                    }
+                }
+            }
+            // Texto branco
+            g.setColor(Color.WHITE);
+            g.drawString(mensagemTemporaria, x, y);
         }
     }
 }
