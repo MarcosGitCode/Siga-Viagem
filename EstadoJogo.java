@@ -11,4 +11,5 @@ public class EstadoJogo {
     public static boolean informarIsolamento = false;
     public static int pontosPerdidos = 0;
     public static boolean chaveColetada = false;
+    public static boolean painelExternoFechado = false;
 }

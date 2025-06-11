@@ -26,7 +26,22 @@ public class TremPainelExterno extends JPanel {
         botaoVoltar.setBorderPainted(false);
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "TremPortaAberta");
+            if (EstadoJogo.painelExternoFechado == false) {
+                mensagemTemporaria = "Você não fechou o painel! (-3 pontos)";
+                EstadoJogo.pontosPerdidos += 3; 
+                System.out.println("Pontos perdidos: " + EstadoJogo.pontosPerdidos);
+                mensagemFim = System.currentTimeMillis() + 3000;
+                repaint();
+                // Aguarda 3 segundos antes de trocar de tela
+                new javax.swing.Timer(3000, ev -> {
+                    layout.show(painelPrincipal, "TremPortaAberta");
+                }) {{
+                    setRepeats(false);
+                    start();
+                }};
+            } else {
+                layout.show(painelPrincipal, "TremPortaAberta");
+            }
         });
         add(botaoVoltar);
 
@@ -44,7 +59,7 @@ public class TremPainelExterno extends JPanel {
             layout.show(painelPrincipal, "Menu");
         });
         add(botaoMenu);
-        
+
         // Botão no centro da tela
         JButton botaoPainelExterno = new JButton();
         botaoPainelExterno.setBounds(410, 300, 400, 300);
@@ -66,6 +81,28 @@ public class TremPainelExterno extends JPanel {
             remove(botaoPainelExterno);
             revalidate(); // Atualiza o layout
             repaint();    // Redesenha o painel
+            
+            JButton botaoFecharPainel = new JButton("Fechar Painel");
+            botaoFecharPainel.setBounds(580, 150, 200, 60);
+            botaoFecharPainel.setFont(new Font("Arial", Font.PLAIN, 20));
+            botaoFecharPainel.setForeground(Color.white);
+            botaoFecharPainel.setBackground(Color.RED);
+            botaoFecharPainel.setContentAreaFilled(true);
+            botaoFecharPainel.setOpaque(true);
+            botaoFecharPainel.setBorderPainted(false);
+            botaoFecharPainel.setLayout(null);
+            botaoFecharPainel.addActionListener(es -> {
+                System.out.println("Botão FecharPainel clicado!");
+                try {
+                imagemFundo = ImageIO.read(new File("imagens/Fotos editadas/17 - Painel externo fechado.jpg"));
+                remove(botaoFecharPainel);
+                EstadoJogo.painelExternoFechado = true; 
+                repaint();
+                } catch (IOException ex) {
+                    ex.printStackTrace();
+                }
+        });
+        add(botaoFecharPainel);
 
             // Adiciona o botão central
             JButton botaoCentral = new JButton();
