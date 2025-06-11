@@ -119,16 +119,17 @@ public class JogoReversoraOficial extends BasePainelComBotao {
                 mensagemFim = System.currentTimeMillis() + 3000;
                 System.out.println("1 ponto adicionado para: " + UsuarioLogado.getRegistro());
                 repaint();
+                // Aguarda 3 segundos antes de trocar para TelaFinal
+                new javax.swing.Timer(3000, ev -> {
+                    layout.show(painelPrincipal, "TelaFinal");
+                }) {{
+                    setRepeats(false);
+                    start();
+                }};
             }
             repaint();
 
-            // Aguarda 3 segundos antes de trocar para TelaFinal
-            new javax.swing.Timer(3000, ev -> {
-                layout.show(painelPrincipal, "TelaFinal");
-            }) {{
-                setRepeats(false);
-                start();
-            }};
+            
         });
         add(botaoNeutro); // Adiciona o botão ao painel
 
