@@ -20,6 +20,7 @@ public class JogoReversoraOficial extends BasePainelComBotao {
     private String mensagemTemporaria = "";
     private long mensagemFim = 0;
     private boolean pontosAdicionadosChaveFrente = false; // Controle para evitar adicionar pontos repetidos
+    private TelaFinal telaFinal; // Adiciona a referência para TelaFinal
 
     public JogoReversoraOficial(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/Reversora em neutro.jpg", layout, painelPrincipal);
@@ -121,6 +122,7 @@ public class JogoReversoraOficial extends BasePainelComBotao {
                 repaint();
                 // Aguarda 3 segundos antes de trocar para TelaFinal
                 new javax.swing.Timer(3000, ev -> {
+                    telaFinal.atualizarPontuacao();
                     layout.show(painelPrincipal, "TelaFinal");
                 }) {{
                     setRepeats(false);
@@ -139,10 +141,9 @@ public class JogoReversoraOficial extends BasePainelComBotao {
             
         });
         add(botaoNeutro); // Adiciona o botão ao painel
-
-        painelPrincipal.add(new TelaFinal(layout, painelPrincipal), "TelaFinal");
-    }
-
+        telaFinal = new TelaFinal(layout, painelPrincipal); // Inicializa telaFinal
+        painelPrincipal.add(telaFinal, "TelaFinal");
+}
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);

@@ -8,8 +8,7 @@ import javax.swing.*;
 public class TelaFinal extends JPanel {
 
     private Image imagemFundo;
-    private String mensagemTemporaria = "";
-    private int pontuacaoTotal;
+    private JLabel lblPontuacao;
 
     public TelaFinal(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
@@ -23,9 +22,18 @@ public class TelaFinal extends JPanel {
             e.printStackTrace();
             imagemFundo = null;
         }
-        
-        MetroviarioDAO dao = new MetroviarioDAO();
-        pontuacaoTotal = dao.mostrarPontuacaoUser(UsuarioLogado.getRegistro());
+
+        JLabel lblMensagem = new JLabel("Pontuação total:");
+        lblMensagem.setFont(new Font("Arial", Font.BOLD, 40));
+        lblMensagem.setForeground(Color.WHITE);
+        lblMensagem.setHorizontalAlignment(SwingConstants.CENTER);
+        lblMensagem.setBounds(390, 250, 500, 50);
+
+        lblPontuacao = new JLabel("0");
+        lblPontuacao.setFont(new Font("Arial", Font.BOLD, 60));
+        lblPontuacao.setForeground(Color.WHITE);
+        lblPontuacao.setHorizontalAlignment(SwingConstants.CENTER);
+        lblPontuacao.setBounds(390, 320, 500, 70);
 
         JButton botaoMenu = new JButton("Menu");
         int xBotao = (1280 - 300) / 2;
@@ -40,54 +48,25 @@ public class TelaFinal extends JPanel {
             System.out.println("Botão Menu clicado!");
             layout.show(painelPrincipal, "Menu");
         });
+
+        add(lblMensagem);
+        add(lblPontuacao);
         add(botaoMenu);
+    }
+
+    // Chame este método antes de mostrar a tela final!
+    public void atualizarPontuacao() {
+        MetroviarioDAO dao = new MetroviarioDAO();
+        int pontuacaoTotal = dao.mostrarPontuacaoUser(UsuarioLogado.getRegistro());
+        lblPontuacao.setText(String.valueOf(pontuacaoTotal));
+        repaint();
     }
 
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Desenha a imagem de fundo
         if (imagemFundo != null) {
             g.drawImage(imagemFundo, 0, 0, 1280, 856, this);
-        }
-        // Desenha o inventário no canto superior direito
-        InventarioUI.desenhar((Graphics2D) g, getWidth());
-
-        // Exibe a pontuação final centralizada
-        String textoPontuacao = "Sua pontuação final: " + pontuacaoTotal;
-        g.setFont(new Font("Arial", Font.BOLD, 40));
-        g.setColor(Color.BLACK);
-        int x = getWidth() / 2 - g.getFontMetrics().stringWidth(textoPontuacao) / 2;
-        int y = 350;
-        // Borda preta
-        for (int dx = -2; dx <= 2; dx++) {
-            for (int dy = -2; dy <= 2; dy++) {
-                if (dx != 0 || dy != 0) {
-                    g.drawString(textoPontuacao, x + dx, y + dy);
-                }
-            }
-        }
-        // Texto branco por cima
-        g.setColor(Color.WHITE);
-        g.drawString(textoPontuacao, x, y);
-
-        // Desenha a mensagem temporária, se houver
-        if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
-            g.setFont(new Font("Arial", Font.BOLD, 32));
-            x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
-            y = 100;
-            // Desenha a borda preta (várias vezes ao redor)
-            g.setColor(Color.BLACK);
-            for (int dx = -2; dx <= 2; dx++) {
-                for (int dy = -2; dy <= 2; dy++) {
-                    if (dx != 0 || dy != 0) {
-                        g.drawString(mensagemTemporaria, x + dx, y + dy);
-                    }
-                }
-            }
-            // Desenha o texto branco por cima
-            g.setColor(Color.WHITE);
-            g.drawString(mensagemTemporaria, x, y);
         }
     }
 }
