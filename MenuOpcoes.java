@@ -1,5 +1,4 @@
 import java.awt.*;
-
 import javax.sound.sampled.Clip;
 import javax.sound.sampled.FloatControl;
 import javax.swing.*;
@@ -10,11 +9,10 @@ public class MenuOpcoes extends JPanel {
     private final JLabel lblTela;
     private final JButton btnVoltar;
     private Image backgroundImage;
-    private static float volume = 50.0f; // Volume inicial (0-100)
+    private static float volume = 50.0f; // vol inicial 0-100
     private static Clip audioClip;
 
     public MenuOpcoes(CardLayout layout, JPanel painelPrincipal) {
-        // Load the background image
         backgroundImage = new ImageIcon("imagens/metro_blur.jpg").getImage();
         setLayout(null);
 
@@ -48,9 +46,7 @@ public class MenuOpcoes extends JPanel {
         });
         add(btnVoltar);
     }
-    
 
-    // Define the RoundedBorder class
     class RoundedBorder implements javax.swing.border.Border {
         private final int radius;
 
@@ -77,14 +73,13 @@ public class MenuOpcoes extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Draw the background image
         g.drawImage(backgroundImage, 0, 0, getWidth(), getHeight(), this);
     }
 
     private JButton criarBotao(String texto) {
         JButton botao = new JButton(texto);
         botao.setFont(new Font("Arial", Font.BOLD, 18));
-        botao.setBackground(new Color(128, 128, 128, 128)); // Cor cinza com transparência
+        botao.setBackground(new Color(128, 128, 128, 128));
         botao.setForeground(Color.WHITE);
         botao.setFocusPainted(false);
         botao.setContentAreaFilled(true);
@@ -92,17 +87,16 @@ public class MenuOpcoes extends JPanel {
         botao.setBorder(new RoundedBorder(20));
         return botao;
     }
-    // Método para definir o clip de áudio atual
+
     public static void setAudioClip(Clip clip) {
         audioClip = clip;
         atualizarVolume();
     }
-    // Método para atualizar o volume
+
     private static void atualizarVolume() {
         if (audioClip != null) {
             try {
                 FloatControl gainControl = (FloatControl) audioClip.getControl(FloatControl.Type.MASTER_GAIN);
-                // Converter o valor do slider (0-100) para decibéis (-80.0f até 6.0f)
                 float gain = (volume / 100.0f) * (gainControl.getMaximum() - gainControl.getMinimum()) + gainControl.getMinimum();
                 gainControl.setValue(gain);
             } catch (Exception e) {

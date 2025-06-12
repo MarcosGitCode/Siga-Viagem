@@ -19,11 +19,13 @@ public class RoundedBorder extends AbstractBorder {
 
     @Override
     public Insets getBorderInsets(Component c) {
+        // retorna um espaçamento igual em todos os lados, baseado no raio da borda
         return new Insets(radius + 1, radius + 1, radius + 1, radius + 1);
     }
 
     @Override
     public Insets getBorderInsets(Component c, Insets insets) {
+        // ajusta o objeto insets recebido, deixando todos os lados com o mesmo valor (raio + 1)
         insets.left = insets.right = insets.top = insets.bottom = radius + 1;
         return insets;
     }

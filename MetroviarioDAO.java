@@ -212,16 +212,16 @@ public class MetroviarioDAO {
                 return;
             }
 
-            // Desativa o autocommit para usar transação
+            // desativa o autocommit para usar transação
             conn.setAutoCommit(false);
 
-            // Primeiro verifica se a tarefa já foi completada
+            // primeiro verifica se a tarefa já foi completada
             if (verificarTarefaCompletada(registro, idTarefa)) {
                 System.out.println("Tarefa já foi completada anteriormente.");
                 return;
             }
 
-            // Registra a tarefa realizada
+            // registra a tarefa realizada
             String sql = "INSERT INTO tarefas_realizadas (id_metroviario, id_tarefa, pontuacao_obtida) " +
                     "SELECT m.id, ?, ? FROM metroviarios m WHERE m.registro = ?";
 
@@ -232,15 +232,15 @@ public class MetroviarioDAO {
 
                 int rowsAffected = stmt.executeUpdate();
                 if (rowsAffected > 0) {
-                    // Atualiza a pontuação total chamando a procedure
+                    // atualiza a pontuação total chamando a procedure
                     try (CallableStatement cstmt = conn.prepareCall("{CALL atualizar_pontuacao_metroviario(?)}")) {
-                        // Primeiro obtém o ID do metroviário
+                        
                         int idMetroviario = obterIdMetroviario(conn, registro);
                         if (idMetroviario > 0) {
                             cstmt.setInt(1, idMetroviario);
                             cstmt.execute();
 
-                            // Se tudo deu certo, commit na transação
+                            // se tudo deu certo commit na transação
                             conn.commit();
                             System.out.println("Pontuação registrada e atualizada com sucesso!");
                         }
@@ -385,9 +385,9 @@ public class MetroviarioDAO {
         } catch (SQLException e) {
             System.out.println("Erro ao buscar pontuação: " + e.getMessage());
         }
-        return pontuacaoTotal; // Retorna 0 se não encontrar o usuário ou ocorrer um erro
+        return pontuacaoTotal; 
     }
-    // === MÉTODO PARA ZERAR PONTUAÇÃO ===
+    // zerar pontuação
     public void zerarPontuacao(String registro) {
         String sql = "UPDATE metroviarios SET pontuacao_total = 0 WHERE registro = ?";
         try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {
@@ -397,8 +397,7 @@ public class MetroviarioDAO {
             System.out.println("Erro ao zerar pontuação: " + e.getMessage());
         }
     }
-
-    // === MÉTODO PARA LIMPAR TAREFAS REALIZADAS ===
+        // limpar tarefas
     public void limparTarefasRealizadas(String registro) {
         String sql = "DELETE FROM tarefas_realizadas WHERE id_metroviario = (SELECT id FROM metroviarios WHERE registro = ?)";
         try (Connection conn = Conexao.conectar(); PreparedStatement stmt = conn.prepareStatement(sql)) {

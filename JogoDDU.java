@@ -5,29 +5,30 @@ import javax.swing.*;
 
 public class JogoDDU extends BasePainelComBotao {
 
-    private JLabel imagemLabel;
-    private String caminhoImagemAtual = "imagens/Fotos editadas/Uma porta não fecha.jpg";
+    private JLabel imagemLabel; // label p/ mostrar img
+    private String caminhoImagemAtual = "imagens/Fotos editadas/Uma porta não fecha.jpg"; // caminho da img atual
 
     public JogoDDU(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/Uma porta não fecha.jpg", layout, painelPrincipal);
-        setLayout(null); // Layout absoluto
+        setLayout(null); // usa layout absoluto p/ facilitar pos dos btns
         
-        // Botão Voltar para Parte1
-      JButton botaoVoltar = new JButton("<");
-       botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
-       botaoVoltar.setFont(new Font("Arial", Font.BOLD, 20)); // Define a fonte do texto
-       botaoVoltar.setForeground(Color.BLACK);
-       botaoVoltar.setBackground(Color.RED); // Define a cor do texto
-       botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
-       botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
-       botaoVoltar.setBorderPainted(true);
-       botaoVoltar.setFocusPainted(false); // Remove as bordas do botão
-       botaoVoltar.addActionListener(e -> {
-           System.out.println("Botão voltar clicado!");
-           layout.show(painelPrincipal, "Jogo"); // Volta para o painel anterior
+        // btn p/ voltar pra tela Parte1
+        JButton botaoVoltar = new JButton("<");
+        botaoVoltar.setBounds(10, 10, 60, 60); // pos e tam do btn
+        botaoVoltar.setFont(new Font("Arial", Font.BOLD, 20)); // fonte do texto
+        botaoVoltar.setForeground(Color.BLACK);
+        botaoVoltar.setBackground(Color.RED); // cor do btn
+        botaoVoltar.setContentAreaFilled(true); // deixa fundo visível
+        botaoVoltar.setOpaque(true); // garante opacidade
+        botaoVoltar.setBorderPainted(true);
+        botaoVoltar.setFocusPainted(false); // tira borda
+        botaoVoltar.addActionListener(e -> {
+            System.out.println("botão voltar clicado!");
+            layout.show(painelPrincipal, "Jogo"); // volta pra tela anterior
         });
-        add(botaoVoltar); // Adiciona o botão ao painel
+        add(botaoVoltar); // add btn no painel
         
+        // btn p/ ir pro menu principal
         JButton botaoMenu = new JButton("Menu");
         botaoMenu.setBounds(580, 10, 100, 60);
         botaoMenu.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -38,41 +39,42 @@ public class JogoDDU extends BasePainelComBotao {
         botaoMenu.setBorderPainted(false);
         botaoMenu.setLayout(null);
         botaoMenu.addActionListener(e -> {
-            System.out.println("Botão Menu clicado!");
+            System.out.println("botão menu clicado!");
             layout.show(painelPrincipal, "Menu");
         });
         add(botaoMenu);
 
-        // Criação do JLabel para exibir a imagem
+        // label p/ exibir a img
         imagemLabel = new JLabel();
         imagemLabel.setBounds(0, 0, getWidth(), getHeight());
         add(imagemLabel);
         
-        // Inicializar a imagem
+        // inicializa a img
         atualizarImagemAtual();
         
-        // Criação dos botões com novos textos
+        // cria btns com textos novos
         JButton btnPrepara = criarBotao("Prepara");
         JButton btnFe = criarBotao("Fe");
         JButton btnInfopass = criarBotao("Infopass");
         JButton btnManut = criarBotao("Infopass");
 
-        // Configuração das posições dos botões
+        // define pos dos btns
         btnPrepara.setBounds(342,597, 50, 50);
         btnFe.setBounds(510,603, 50, 50);
-        btnInfopass.setBounds(562,612, 50, 50); // Ajustado para evitar sobreposição
+        btnInfopass.setBounds(562,612, 50, 50); // ajustado p/ não sobrepor
         btnManut.setBounds(740,603, 70, 70);
         add(btnPrepara);
         add(btnFe);
         add(btnInfopass);
         add(btnManut);
 
-        // Ações dos botões com caminhos de imagem
+        // ações dos btns mudam a img
         btnPrepara.addActionListener(e -> alterarImagem("imagens/Fotos editadas/Uma porta não fecha.jpg"));
         btnFe.addActionListener(e -> alterarImagem("imagens/Fotos editadas/DDU - tela FE- lista de emergência.jpg"));
         btnInfopass.addActionListener(e -> alterarImagem("imagens/Fotos editadas/DDU - tela INFOPASS.jpg"));
         btnManut.addActionListener(e -> alterarImagem("imagens/Fotos editadas/DDU - tela Manut.png"));
-        // Remover fundo e bordas dos botões
+
+        // tira fundo e borda dos btns
         btnPrepara.setContentAreaFilled(false);
         btnPrepara.setOpaque(false);
         btnPrepara.setBorderPainted(false);
@@ -89,38 +91,40 @@ public class JogoDDU extends BasePainelComBotao {
         btnManut.setOpaque(false);
         btnManut.setBorderPainted(false);
 
-        // Listener para redimensionamento: atualiza os limites e re-renderiza a imagem
+        // listener p/ redimensionar: atualiza limites e re-renderiza img
         addComponentListener(new ComponentAdapter() {
             @Override
             public void componentResized(ComponentEvent e) {
+                // ajusta o tamanho do label da img p/ ocupar todo painel
                 imagemLabel.setBounds(0, 0, getWidth(), getHeight());
+                // recarrega e redimensiona a img conforme novo tamanho do painel
                 atualizarImagemAtual();
             }
         });
     }
 
-    // Criação padrão de botões estilizados
+    // cria btn estilizado
     private JButton criarBotao(String texto) {
         JButton botao = new JButton(texto);
         botao.setFont(new Font("Arial", Font.BOLD, 18));
-        botao.setBackground(new Color(70, 130, 180)); // Azul claro
+        botao.setBackground(new Color(70, 130, 180)); // azul claro
         botao.setForeground(Color.WHITE);
         botao.setFocusPainted(false);
         botao.setBorder(BorderFactory.createLineBorder(Color.BLACK, 2));
         return botao;
     }
 
-    // Método para alterar a imagem utilizando o caminho informado
+    // muda a img usando o caminho informado
     private void alterarImagem(String caminhoImagem) {
-        System.out.println("Tentando carregar: " + caminhoImagem);
+        System.out.println("tentando carregar: " + caminhoImagem);
         
-        // Verifica se o arquivo existe
+        // verifica se o arquivo existe
         File arquivo = new File(caminhoImagem);
         if (!arquivo.exists()) {
-            System.out.println("Arquivo não encontrado: " + caminhoImagem);
+            System.out.println("arquivo não encontrado: " + caminhoImagem);
             JOptionPane.showMessageDialog(this, 
-                "Imagem não encontrada: " + caminhoImagem, 
-                "Erro", JOptionPane.ERROR_MESSAGE);
+                "imagem não encontrada: " + caminhoImagem, 
+                "erro", JOptionPane.ERROR_MESSAGE);
             return;
         }
         
@@ -128,43 +132,43 @@ public class JogoDDU extends BasePainelComBotao {
         atualizarImagemAtual();
     }
 
-    // Atualiza a imagem no JLabel, redimensionando-a conforme as dimensões atuais do painel
+    // atualiza a img no label, redimensionando conforme o painel
     private void atualizarImagemAtual() {
         if (getWidth() <= 0 || getHeight() <= 0) {
-            // Evita redimensionamento quando o painel ainda não tem tamanho definido
+            // evita redimensionar qdo painel ainda não tem tamanho
             return;
         }
         
         ImageIcon imagem = new ImageIcon(caminhoImagemAtual);
 
         if (imagem.getIconWidth() <= 0) {
-            System.out.println("Erro: imagem não carregada corretamente: " + caminhoImagemAtual);
+            System.out.println("erro: img não carregada: " + caminhoImagemAtual);
             imagemLabel.setIcon(null);
-            imagemLabel.setText("Imagem não encontrada");
+            imagemLabel.setText("imagem não encontrada");
             imagemLabel.setHorizontalAlignment(SwingConstants.CENTER);
             return;
         }
 
-        // Redimensiona a imagem para ocupar toda a área do painel
+        // redimensiona a img p/ ocupar toda área do painel
         Image imagemRedimensionada = imagem.getImage().getScaledInstance(
             getWidth(), getHeight(), Image.SCALE_SMOOTH);
         imagemLabel.setIcon(new ImageIcon(imagemRedimensionada));
-        imagemLabel.setText(null); // Remove o texto, se houver
+        imagemLabel.setText(null); // tira texto, se tiver
     }
     
     @Override
     public void setVisible(boolean visible) {
         super.setVisible(visible);
         if (visible) {
-            // Garante que a imagem seja atualizada quando o painel ficar visível
+            // garante q a img seja atualizada qdo painel ficar visível
             atualizarImagemAtual();
         }
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        // Desenha o inventário no canto superior direito
+        super.paintComponent(g); // limpa antes de desenhar, evita sobreposição
+        // desenha inventário no canto sup dir, usa largura p/ alinhar certinho
         InventarioUI.desenhar((Graphics2D) g, getWidth());
     }
 

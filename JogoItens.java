@@ -16,15 +16,14 @@ public class JogoItens extends JPanel {
     private long mensagemFim = 0;
 
     public JogoItens(CardLayout layout, JPanel painelPrincipal) {
-        // Carrega a imagem de fundo
         imagemFundo = new ImageIcon("imagens/Fotos editadas/fundoItens.png").getImage();
-        // Carrega as sobreposições
+        
         sobreposicaoCinturao = new ImageIcon("imagens/Fotos editadas/ItensCinturao.png").getImage();
         sobreposicaoFita = new ImageIcon("imagens/Fotos editadas/ItensFita.png").getImage();
 
         setLayout(null);
 
-        // Botão de voltar
+        // botao voltar
         JButton botaoVoltar = new JButton("<");
         botaoVoltar.setBounds(10, 10, 60, 60);
         botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -53,7 +52,7 @@ public class JogoItens extends JPanel {
         });
         add(botaoMenu);
         
-        // Botão quadrado 1 (Cinturão)
+        // botao (Cinturão)
         JButton botaoQuadrado1 = new JButton();
         botaoQuadrado1.setBounds(100, 250, 200, 400);
         botaoQuadrado1.setContentAreaFilled(false);
@@ -69,7 +68,7 @@ public class JogoItens extends JPanel {
         });
         add(botaoQuadrado1);
 
-        // Botão quadrado 2 (Fita)
+        // botao (Fita)
         JButton botaoQuadrado2 = new JButton();
         botaoQuadrado2.setBounds(380, 300, 800, 300);
         botaoQuadrado2.setContentAreaFilled(false);
@@ -90,7 +89,7 @@ public class JogoItens extends JPanel {
         mensagemTemporaria = mensagem;
         mensagemFim = System.currentTimeMillis() + 5000;
         repaint();
-        // Timer para esconder a mensagem após 5 segundos
+        // timer para esconder a mensagem após 5 segundos
         new Timer().schedule(new TimerTask() {
             @Override
             public void run() {
@@ -105,22 +104,22 @@ public class JogoItens extends JPanel {
         super.paintComponent(g);
         Graphics2D g2d = (Graphics2D) g;
 
-        // Desenha a imagem de fundo
+        // desenha a imagem de fundo
         if (imagemFundo != null) {
             g2d.drawImage(imagemFundo, 0, 0, getWidth(), getHeight(), this);
         }
 
-        // Desenha a sobreposição do cinto, se permitido
+        // desenha a sobreposição do cinto, se permitido
         if (mostrarCinturao && sobreposicaoCinturao != null) {
             g2d.drawImage(sobreposicaoCinturao, 0, 0, 1280, 853, this);
         }
 
-        // Desenha a sobreposição da fita, se permitido
+        // desenha a sobreposição da fita, se permitido
         if (mostrarFita && sobreposicaoFita != null) {
             g2d.drawImage(sobreposicaoFita, 0, 0, 1280, 853, this);
         }
 
-        // Inventário no canto superior direito
+        // inventário no canto superior direito
         InventarioUI.desenhar(g2d, getWidth());
     }
 }

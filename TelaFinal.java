@@ -54,7 +54,7 @@ public class TelaFinal extends JPanel {
         add(botaoMenu);
     }
 
-    // Chame este método antes de mostrar a tela final!
+    //atualiza pontuacao antes de chamar a tela final
     public void atualizarPontuacao() {
         MetroviarioDAO dao = new MetroviarioDAO();
         int pontuacaoTotal = dao.mostrarPontuacaoUser(UsuarioLogado.getRegistro());

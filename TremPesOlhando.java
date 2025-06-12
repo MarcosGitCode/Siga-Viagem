@@ -12,7 +12,7 @@ public class TremPesOlhando extends JPanel {
     public TremPesOlhando(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
 
-        // Carrega a imagem de fundo uma vez
+        
         try {
             BufferedImage img = ImageIO.read(new File("imagens/Fotos editadas/pes_olhando.jpg"));
             imagemFundo = img.getScaledInstance(1280, 856, Image.SCALE_SMOOTH);
@@ -23,7 +23,7 @@ public class TremPesOlhando extends JPanel {
             imagemFundo = null;
         }
 
-        // Botão metade superior (volta para TremPortaAberta)
+        
         JButton botaoSuperior = new JButton();
         botaoSuperior.setBounds(0, 0, 1280, 628);
         botaoSuperior.setOpaque(false);
@@ -32,16 +32,16 @@ public class TremPesOlhando extends JPanel {
         botaoSuperior.addActionListener(e -> layout.show(painelPrincipal, "PortaAberta"));
         add(botaoSuperior);
 
-        // Botão metade inferior (ação opcional)
+        
         JButton botaoInferior = new JButton();
         botaoInferior.setBounds(500, 650, 300, 300);
         botaoInferior.setOpaque(false);
         botaoInferior.setContentAreaFilled(false);
         botaoInferior.setBorderPainted(false);
-        // Se quiser trocar a imagem, implemente aqui
+        
         add(botaoInferior);
 
-        // Botão Voltar
+        
          JButton botaoVoltar = new JButton("<");
         botaoVoltar.setBounds(10, 10, 60, 60);
         botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -75,19 +75,19 @@ public class TremPesOlhando extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Desenha a imagem de fundo
+        
         if (imagemFundo != null) {
             g.drawImage(imagemFundo, 0, 0, 1280, 856, this);
         }
-        // Desenha o inventário no canto superior direito
+        
         InventarioUI.desenhar((Graphics2D) g, getWidth());
 
-        // Desenha a mensagem temporária, se houver
+        
         if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
             g.setFont(new Font("Arial", Font.BOLD, 32));
             int x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
             int y = 100;
-            // Desenha a borda preta (várias vezes ao redor)
+            
             g.setColor(Color.BLACK);
             for (int dx = -2; dx <= 2; dx++) {
                 for (int dy = -2; dy <= 2; dy++) {
@@ -96,7 +96,7 @@ public class TremPesOlhando extends JPanel {
                     }
                 }
             }
-            // Desenha o texto branco por cima
+            
             g.setColor(Color.WHITE);
             g.drawString(mensagemTemporaria, x, y);
         }

@@ -16,7 +16,6 @@ public class MenuPlacar extends PainelComImagem {
     }
 
     private void criarTelaLogin(CardLayout layout, JPanel painelPrincipal) {
-        // Labels
         JLabel lblRegistro = new JLabel("Registro:");
         lblRegistro.setFont(new Font("Arial", Font.BOLD, 24));
         lblRegistro.setForeground(Color.WHITE);
@@ -27,7 +26,6 @@ public class MenuPlacar extends PainelComImagem {
         lblSenha.setForeground(Color.WHITE);
         add(lblSenha);
 
-        // Campos
         JTextField txtRegistro = new JTextField();
         txtRegistro.setFont(new Font("Arial", Font.PLAIN, 18));
         add(txtRegistro);
@@ -36,7 +34,6 @@ public class MenuPlacar extends PainelComImagem {
         txtSenha.setFont(new Font("Arial", Font.PLAIN, 18));
         add(txtSenha);
 
-        // Checkbox Mostrar Senha
         JCheckBox chkMostrarSenha = new JCheckBox("Mostrar senha");
         chkMostrarSenha.setFont(new Font("Arial", Font.PLAIN, 16));
         chkMostrarSenha.setForeground(Color.WHITE);
@@ -50,7 +47,6 @@ public class MenuPlacar extends PainelComImagem {
         });
         add(chkMostrarSenha);
 
-        // Botões
         JButton btnEntrar = criarBotao("Visualizar Placar");
         btnEntrar.addActionListener(e -> {
             String registro = txtRegistro.getText().trim();
@@ -58,14 +54,12 @@ public class MenuPlacar extends PainelComImagem {
 
             MetroviarioDAO dao = new MetroviarioDAO();
 
-            // Verificar primeiro se é admin
             isAdmin = dao.verificarAdmin(registro, senha);
 
             if (isAdmin) {
                 registroUsuario = registro;
                 mostrarPlacar(layout, painelPrincipal);
             }
-            // Se não for admin, verifica se é metroviário
             else if (dao.verificarMetroviario(registro, senha)) {
                 isAdmin = false;
                 registroUsuario = registro;
@@ -83,7 +77,6 @@ public class MenuPlacar extends PainelComImagem {
         btnVoltar.addActionListener(e -> layout.show(painelPrincipal, "Menu"));
         add(btnVoltar);
 
-        // Posicionamento dos componentes
         int w = 1280;
         int h = 853;
         int compW = 500;
@@ -113,7 +106,6 @@ public class MenuPlacar extends PainelComImagem {
     private void mostrarPlacar(CardLayout layout, JPanel painelPrincipal) {
         removeAll();
 
-        // Criar tabela
         String[] colunas = { "Posição", "Nome", "Registro", "Pontuação" };
         modeloTabela = new DefaultTableModel(colunas, 0) {
             @Override
@@ -125,8 +117,6 @@ public class MenuPlacar extends PainelComImagem {
         tabela = new JTable(modeloTabela);
         configurarEstiloTabela();
 
-        // Carregar dados apropriados (todos para admin, apenas próprios para
-        // metroviário)
         MetroviarioDAO dao = new MetroviarioDAO();
         List<Metroviario> registros;
 
@@ -136,7 +126,6 @@ public class MenuPlacar extends PainelComImagem {
             registros = dao.listarPontuacoesJogador(registroUsuario);
         }
 
-        // Preencher tabela
         int posicao = 1;
         for (Metroviario m : registros) {
             modeloTabela.addRow(new Object[] {
@@ -147,7 +136,6 @@ public class MenuPlacar extends PainelComImagem {
             });
         }
 
-        // Configurar interface
         JScrollPane scrollPane = new JScrollPane(tabela);
         scrollPane.setOpaque(false);
         scrollPane.getViewport().setOpaque(false);
@@ -171,15 +159,9 @@ public class MenuPlacar extends PainelComImagem {
         tabela.setShowGrid(true);
         tabela.setGridColor(Color.WHITE);
         tabela.setIntercellSpacing(new Dimension(1, 1));
-
-        // Impedir reordenação das colunas
         tabela.getTableHeader().setReorderingAllowed(false);
-
-        // Impedir redimensionamento das colunas
         tabela.getTableHeader().setResizingAllowed(false);
-
-        // Definir larguras das colunas
-        int[] larguras = { 100, 300, 200, 200 }; // Posição, Nome, Registro, Pontuação
+        int[] larguras = { 100, 300, 200, 200 };
         for (int i = 0; i < larguras.length; i++) {
             tabela.getColumnModel().getColumn(i).setPreferredWidth(larguras[i]);
             tabela.getColumnModel().getColumn(i).setMinWidth(larguras[i]);

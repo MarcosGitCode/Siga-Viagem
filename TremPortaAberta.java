@@ -8,12 +8,12 @@ import javax.swing.*;
 public class TremPortaAberta extends JPanel {
 
     private Image imagemFundo;
-    private JButton botaoFecharPorta; // Reference to the "Fechar porta" button
-    private JButton botaoChecarLuzes; // Reference to the "Checar luzes" button
-    private boolean portafechada = false; // Initially false
+    private JButton botaoFecharPorta;
+    private JButton botaoChecarLuzes;
+    private boolean portafechada = false;
 
     private boolean pontosAdicionados = false;
-    private boolean pontosAdicionadosInferior = false; // Add this field
+    private boolean pontosAdicionadosInferior = false;
     private boolean pontosAdicionadosChecarLuzes = false;
     private boolean pontosAdicionadosChecarLuzes2 = false;
     private boolean pontosAdicionadosFecharPorta = false;
@@ -23,7 +23,6 @@ public class TremPortaAberta extends JPanel {
     public TremPortaAberta(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
 
-        // Load the initial background image
         atualizarImagemFundo();
 
         JButton botaoVoltar = new JButton("<");
@@ -35,7 +34,6 @@ public class TremPortaAberta extends JPanel {
         botaoVoltar.setOpaque(true);
         botaoVoltar.setBorderPainted(false);
         botaoVoltar.addActionListener(e -> {
-            System.out.println("Botão voltar clicado!");
             layout.show(painelPrincipal, "Trem1");
         });
         add(botaoVoltar);
@@ -50,12 +48,10 @@ public class TremPortaAberta extends JPanel {
         botaoMenu.setBorderPainted(false);
         botaoMenu.setLayout(null);
         botaoMenu.addActionListener(e -> {
-            System.out.println("Botão Menu clicado!");
             layout.show(painelPrincipal, "Menu");
         });
         add(botaoMenu);
-        
-        // Botão metade inferior (troca para TremPesOlhando)
+
         JButton botaoInferior = new JButton();
         botaoInferior.setBounds(500, 650, 300, 300);
         botaoInferior.setOpaque(false);
@@ -66,18 +62,14 @@ public class TremPortaAberta extends JPanel {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
                 pontosAdicionadosInferior = true;
-
                 mensagemTemporaria = "Você ganhou 1 ponto!";
-                mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
-
-                System.out.println("1 ponto adicionado para: " + UsuarioLogado.getRegistro());
+                mensagemFim = System.currentTimeMillis() + 3000;
                 repaint();
             }
             layout.show(painelPrincipal, "PesOlhando");
         });
         add(botaoInferior);
 
-        // Botão "Emergência" invisível no canto superior esquerdo
         JButton botaoEmergencia = new JButton("Emergência");
         botaoEmergencia.setFont(new Font("Arial", Font.PLAIN, 18));
         botaoEmergencia.setForeground(Color.WHITE);
@@ -86,12 +78,10 @@ public class TremPortaAberta extends JPanel {
         botaoEmergencia.setBounds(300, 400, 180, 200);
         botaoEmergencia.setVisible(false);
         botaoEmergencia.addActionListener(e -> {
-            System.out.println("Cliquei em Emergência!");
             layout.show(painelPrincipal, "TremEmergencia");
         });
         add(botaoEmergencia);
 
-        // Botão representando a seta apontando para cima
         JButton botaoSetaCima = new JButton("↑");
         botaoSetaCima.setBounds(610, 575, 80, 50);
         botaoSetaCima.addActionListener(e -> {
@@ -99,11 +89,9 @@ public class TremPortaAberta extends JPanel {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
                 pontosAdicionados = true;
-                EstadoJogo.verificarEmergencia = true; // Set the emergency state
+                EstadoJogo.verificarEmergencia = true;
                 mensagemTemporaria = "Você ganhou 1 ponto!";
-                mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
-
-                System.out.println("1 ponto adicionado para: " + UsuarioLogado.getRegistro());
+                mensagemFim = System.currentTimeMillis() + 3000;
                 repaint();
             }
             layout.show(painelPrincipal, "TremEmergencia");
@@ -113,78 +101,59 @@ public class TremPortaAberta extends JPanel {
         botaoSetaCima.setBorderPainted(false);
         add(botaoSetaCima);
 
-        // Botão da seta da direita
         JButton botaoSetaDireita = new JButton();
         botaoSetaDireita.setBounds(1150, 680, 80, 40);
         botaoSetaDireita.setOpaque(false);
         botaoSetaDireita.setContentAreaFilled(false);
         botaoSetaDireita.setBorderPainted(false);
         botaoSetaDireita.addActionListener(e -> {
-            System.out.println("Botão seta direita clicado!");
             layout.show(painelPrincipal, "TremPainelExterno");
         });
         add(botaoSetaDireita);
 
-        // "Fechar porta" button
         botaoFecharPorta = new JButton("Fechar porta");
-        botaoFecharPorta.setBounds(200, 100, 200, 50); // Centralized
+        botaoFecharPorta.setBounds(200, 100, 200, 50);
         botaoFecharPorta.setFont(new Font("Arial", Font.BOLD, 18));
         botaoFecharPorta.setForeground(Color.WHITE);
-        botaoFecharPorta.setBackground(new Color(255, 0, 0)); // Red
+        botaoFecharPorta.setBackground(new Color(255, 0, 0));
         botaoFecharPorta.setFocusPainted(false);
         botaoFecharPorta.setBorderPainted(false);
         botaoFecharPorta.setOpaque(true);
         botaoFecharPorta.addActionListener(e -> {
-            System.out.println("Botão 'Fechar porta' clicado!");
-
-            // Adiciona 2 pontos ao usuário, se ainda não adicionou
             if (!pontosAdicionadosFecharPorta) {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
                 pontosAdicionadosFecharPorta = true;
-
                 mensagemTemporaria = "Você ganhou 2 pontos!";
-                mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
-
-                System.out.println("2 pontos adicionados para: " + UsuarioLogado.getRegistro());
+                mensagemFim = System.currentTimeMillis() + 3000;
                 repaint();
             }
-
-            portafechada = true; // Set portafechada to true
-            atualizarImagemFundo(); // Update the background image
-            removerBotaoFecharPorta(); // Remove the "Fechar porta" button
-            removerBotaoChecarLuzes(); // Remove the "Checar luzes" button
-            layout.show(painelPrincipal, "TremPortaFechada"); // Switch to TremDecisao panel
+            portafechada = true;
+            atualizarImagemFundo();
+            removerBotaoFecharPorta();
+            removerBotaoChecarLuzes();
+            layout.show(painelPrincipal, "TremPortaFechada");
         });
         add(botaoFecharPorta);
 
         botaoChecarLuzes = new JButton("Checar luzes");
-        botaoChecarLuzes.setBounds(800, 100, 200, 50); // Centralized
+        botaoChecarLuzes.setBounds(800, 100, 200, 50);
         botaoChecarLuzes.setFont(new Font("Arial", Font.BOLD, 18));
         botaoChecarLuzes.setForeground(Color.WHITE);
-        botaoChecarLuzes.setBackground(new Color(255, 0, 0)); // Red
+        botaoChecarLuzes.setBackground(new Color(255, 0, 0));
         botaoChecarLuzes.setFocusPainted(false);
         botaoChecarLuzes.setBorderPainted(false);
         botaoChecarLuzes.setOpaque(true);
         botaoChecarLuzes.addActionListener(e -> {
-            System.out.println("Botão 'checar luzes' clicado!");
-
-            // Adiciona 2 pontos ao usuário, se ainda não adicionou
             if (!pontosAdicionadosChecarLuzes) {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
                 pontosAdicionadosChecarLuzes = true;
-
                 mensagemTemporaria = "Você ganhou 2 pontos!";
-                mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
-
-                System.out.println("2 pontos adicionados para: " + UsuarioLogado.getRegistro());
+                mensagemFim = System.currentTimeMillis() + 3000;
                 repaint();
             }
-
-            atualizarImagemFundo(); // Update the background image
-
-            // Troca para a tela correta conforme o estado das luzes
+            atualizarImagemFundo();
             if (EstadoJogo.luzesApagadas) {
                 layout.show(painelPrincipal, "TremLuzesApagadas");
             } else {
@@ -197,10 +166,10 @@ public class TremPortaAberta extends JPanel {
         painelPrincipal.add(new TremLuzesAcesas(layout, painelPrincipal), "TremLuzesAcesas");
 
         JButton botaoChecarLuzes2 = new JButton("Checar luzes");
-        botaoChecarLuzes2.setBounds(800, 100, 200, 50); // Centralized
+        botaoChecarLuzes2.setBounds(800, 100, 200, 50);
         botaoChecarLuzes2.setFont(new Font("Arial", Font.BOLD, 18));
         botaoChecarLuzes2.setForeground(Color.WHITE);
-        botaoChecarLuzes2.setBackground(new Color(255, 0, 0)); // Red
+        botaoChecarLuzes2.setBackground(new Color(255, 0, 0));
         botaoChecarLuzes2.setFocusPainted(false);
         botaoChecarLuzes2.setBorderPainted(false);
         botaoChecarLuzes2.setOpaque(true);

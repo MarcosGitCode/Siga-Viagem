@@ -194,9 +194,9 @@ public class MenuAdmin extends JPanel {
 
         Graphics2D g2 = (Graphics2D) g.create();
         g2.setFont(lblTitulo.getFont());
-        g2.setColor(Color.WHITE); // Ou outra cor desejada
+        g2.setColor(Color.WHITE); 
 
-        // Centraliza o título
+        
         FontMetrics fm = g2.getFontMetrics(lblTitulo.getFont());
         int tituloWidth = fm.stringWidth(lblTitulo.getText());
         int xTitulo = (getWidth() - tituloWidth) / 2;

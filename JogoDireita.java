@@ -12,24 +12,8 @@ public class JogoDireita extends BasePainelComBotao {
 
     public JogoDireita(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/direita3.png", layout, painelPrincipal);
-        setLayout(null);
-
-        // Botão seta direita
-        // JButton botaoSetaDireita = new JButton("");
-        // botaoSetaDireita.setBounds(900, 300, 290, 300);
-        // botaoSetaDireita.setContentAreaFilled(false);
-        // botaoSetaDireita.setBorderPainted(false);
-        // botaoSetaDireita.setFocusPainted(false);
-        // botaoSetaDireita.setOpaque(false);
-        // botaoSetaDireita.setForeground(Color.WHITE);
-        // botaoSetaDireita.setFont(new Font("Arial", Font.BOLD, 20));
-        // botaoSetaDireita.addActionListener(e -> {
-        //     System.out.println("Botão seta direita clicado!");
-        //     layout.show(painelPrincipal, "JogoEsquerda");
-        // });
-        // add(botaoSetaDireita);
-
-        // Botão invisível para coletar a chave
+        setLayout(null);  
+        // botão invisível para coletar a chave
         JButton botaoVisivel = new JButton();
         botaoVisivel.setBounds(546, 390, 100, 100);
         botaoVisivel.setContentAreaFilled(false);
@@ -44,7 +28,7 @@ public class JogoDireita extends BasePainelComBotao {
                 imagemAtual = imagemAlternativa;
                 Inventario.adicionar("Chave");
 
-                // Verifica se todos os itens foram coletados
+                // verifica se todos os itens foram coletados
                 if (!pontosAdicionados && Inventario.contem("Cinturão") && Inventario.contem("Fita")) {
                     MetroviarioDAO dao = new MetroviarioDAO();
                     dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 3);
@@ -58,14 +42,14 @@ public class JogoDireita extends BasePainelComBotao {
             else {
                 imagemAtual = imagemOriginal;
                 Inventario.remover("Chave");
-                EstadoJogo.chaveInserida = true; // Remove a chave do inventário ao devolver
+                EstadoJogo.chaveInserida = true; // remove a chave do inventário ao devolver
             }
 
             repaint();
         });
         add(botaoVisivel);
 
-        // Botão Voltar para Parte1
+        // botao Voltar para Parte1
         JButton botaoVoltar = new JButton("<");
         botaoVoltar.setBounds(10, 10, 60, 60);
         botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -114,9 +98,9 @@ public class JogoDireita extends BasePainelComBotao {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Verifica se a chave foi inserida e ainda não ganhou ponto
+        // verifica se a chave foi inserida e ainda não ganhou ponto
         if(EstadoJogo.portaAdesivo == true && EstadoJogo.chaveInserida == true) {
-            EstadoJogo.chaveInserida = true; // Marca que a chave foi inserida
+            EstadoJogo.chaveInserida = true; // marca que a chave foi inserida
             if (EstadoJogo.chaveInserida && !pontosAdicionadosChaveInserida) {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
@@ -128,19 +112,19 @@ public class JogoDireita extends BasePainelComBotao {
                 repaint();
             }
         }
-        // Desenha a imagem de fundo atual
+        // desenha a imagem de fundo atual
         Image imagemFundo = new ImageIcon(imagemAtual).getImage();
         g.drawImage(imagemFundo, 0, 0, getWidth(), getHeight(), this);
 
-        // Desenha o inventário
+        // desenha o inventário
         InventarioUI.desenhar((Graphics2D) g, getWidth());
 
-        // Desenha a mensagem temporária se existir
+        // desenha a mensagem temporária se existir
         if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
             g.setFont(new Font("Arial", Font.BOLD, 32));
             int x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
             int y = 100;
-            // Desenha a borda preta (várias vezes ao redor)
+            // desenha a borda preta 
             g.setColor(Color.BLACK);
             for (int dx = -2; dx <= 2; dx++) {
                 for (int dy = -2; dy <= 2; dy++) {
@@ -149,7 +133,7 @@ public class JogoDireita extends BasePainelComBotao {
                     }
                 }
             }
-            // Desenha o texto branco por cima
+            // desenha o texto branco 
             g.setColor(Color.WHITE);
             g.drawString(mensagemTemporaria, x, y);
         } else if (System.currentTimeMillis() >= mensagemFim) {

@@ -4,7 +4,7 @@ import javax.swing.*;
 public class Menu extends JFrame {
     private final CardLayout layout;
     private JPanel painelPrincipal;
-    private MenuAdmin menuAdmin; // Torne menuAdmin um atributo para acessar depois
+    private MenuAdmin menuAdmin; 
 
     public Menu() {
         setTitle("Siga Viagem");
@@ -17,14 +17,14 @@ public class Menu extends JFrame {
         painelPrincipal = new JPanel(layout);
         painelPrincipal.setOpaque(false);
 
-        // Inicializa apenas as telas do menu principal
+        
         painelPrincipal.add(new MenuPrincipal(layout, painelPrincipal), "Menu");
         painelPrincipal.add(new MenuLogin(layout, painelPrincipal), "Login");
         painelPrincipal.add(new MenuOpcoes(layout, painelPrincipal), "Opções");
         painelPrincipal.add(new MenuPlacar(layout, painelPrincipal), "Placar");
         menuAdmin = new MenuAdmin(layout, painelPrincipal);
         painelPrincipal.add(menuAdmin, "Admin");
-        // NÃO chame menuAdmin.atualizarUsuarios() aqui!
+        
 
         add(painelPrincipal);
         setVisible(true);
@@ -55,13 +55,12 @@ public class Menu extends JFrame {
     }
 
     public void mostrarMenuAdmin() {
-        menuAdmin.atualizarUsuarios(); // Atualiza a lista de usuários antes de mostrar
+        menuAdmin.atualizarUsuarios(); //atualiza lista de users
         layout.show(painelPrincipal, "Admin");
     }
 
     public static void main(String[] args) {
         Menu menu = new Menu();
-        // Exemplo de como mostrar o painel Admin corretamente:
-        // menu.mostrarMenuAdmin();
+        
     }
 }

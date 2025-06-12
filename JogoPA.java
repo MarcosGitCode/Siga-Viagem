@@ -103,7 +103,7 @@ public class JogoPA extends BasePainelComBotao {
                     pontosAdicionadosInformarVerificacoes = true;
 
                     mensagemTemporaria = "Você ganhou 2 pontos!";
-                    mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+                    mensagemFim = System.currentTimeMillis() + 3000; 
 
                     System.out.println("2 pontos adicionados para: " + UsuarioLogado.getRegistro());
                     repaint();
@@ -127,19 +127,19 @@ public class JogoPA extends BasePainelComBotao {
                     pontosAdicionadosInformarIsolamento = true;
                     EstadoJogo.informarIsolamento = true;
                     mensagemTemporaria = "Você ganhou 2 pontos!";
-                    mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+                    mensagemFim = System.currentTimeMillis() + 3000; 
 
                     System.out.println("2 pontos adicionados para: " + UsuarioLogado.getRegistro());
                     repaint();
                 }
             });
             add(botaoInformarIsolamento);
-            revalidate(); // <- Adicione esta linha
+            revalidate(); 
             repaint();
         });
         add(botaoCCO);
 
-        // Botão Voltar
+        
         JButton botaoVoltar = new JButton("<");
         botaoVoltar.setBounds(10, 10, 60, 60);
         botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -173,21 +173,20 @@ public class JogoPA extends BasePainelComBotao {
         });
         add(botaoMenu);
         
-        // Botão PA
+      
         JButton botaoPA = new JButton("PA");
-        botaoPA.setBounds(325, 175, 175, 100); // Define posição e tamanho
-        botaoPA.setContentAreaFilled(false); // Remove o preenchimento
-        botaoPA.setOpaque(false); // Torna o botão transparente
-        botaoPA.setBorderPainted(false); // Remove a borda
-        botaoPA.setFocusPainted(false); // Remove o foco visual
-        botaoPA.setText(""); // Remove o texto visível
+        botaoPA.setBounds(325, 175, 175, 100); 
+        botaoPA.setContentAreaFilled(false); 
+        botaoPA.setOpaque(false); 
+        botaoPA.setBorderPainted(false); 
+        botaoPA.setFocusPainted(false); 
+        botaoPA.setText(""); 
         botaoPA.addActionListener(e -> {
             if (imagemAtual == imagemAtivado) {
-                // Despinta a tela ao clicar novamente
-                imagemAtual = imagemNeutro; // Redefine para a imagem neutra
+                imagemAtual = imagemNeutro;
             } else {
                 System.out.println("Botão PA clicado!");
-                imagemAtual = imagemAtivado; // Altera a imagem atual para ativado
+                imagemAtual = imagemAtivado; 
             }
             if (EstadoJogo.chaveCBTCRM == false || EstadoJogo.reversoraFrente == false) {
                 MetroviarioDAO dao = new MetroviarioDAO();
@@ -202,12 +201,12 @@ public class JogoPA extends BasePainelComBotao {
                     pontosAdicionadosPA = true;
 
                     mensagemTemporaria = "Você ganhou 1 ponto!";
-                    mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+                    mensagemFim = System.currentTimeMillis() + 3000; 
 
                     System.out.println("1 pontos adicionados para: " + UsuarioLogado.getRegistro());
                     repaint();
                 }
-            repaint(); // Atualiza a tela
+            repaint(); 
 
             if (EstadoJogo.CCOPortaFechada == true && !pontosAdicionadosPAaposCCO) {
                     MetroviarioDAO dao = new MetroviarioDAO();
@@ -215,7 +214,7 @@ public class JogoPA extends BasePainelComBotao {
                     pontosAdicionadosPAaposCCO = true;
 
                     mensagemTemporaria = "Você ganhou 1 ponto!";
-                    mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+                    mensagemFim = System.currentTimeMillis() + 3000; 
 
                     System.out.println("1 pontos adicionados para: " + UsuarioLogado.getRegistro());
                     repaint();
@@ -227,7 +226,7 @@ public class JogoPA extends BasePainelComBotao {
                     pontosAdicionadosPAaposIsolamento = true;
 
                     mensagemTemporaria = "Você ganhou 1 ponto!";
-                    mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+                    mensagemFim = System.currentTimeMillis() + 3000; 
 
                     System.out.println("1 pontos adicionados para: " + UsuarioLogado.getRegistro());
                     repaint();
@@ -240,25 +239,25 @@ public class JogoPA extends BasePainelComBotao {
 
     private void removerBotaoInformarPortaNaoFechada() {
         if (botaoInformarPortaNaoFechada != null) {
-            remove(botaoInformarPortaNaoFechada); // Remove the button from the panel
-            botaoInformarPortaNaoFechada = null; // Clear the reference
-            repaint(); // Redraw the panel
+            remove(botaoInformarPortaNaoFechada); 
+            botaoInformarPortaNaoFechada = null; 
+            repaint(); 
         }
     }
 
     private void removerBotaoInformarVerificacoes() {
         if (botaoInformarVerificacoes != null) {
-            remove(botaoInformarVerificacoes); // Remove the button from the panel
-            botaoInformarVerificacoes = null; // Clear the reference
-            repaint(); // Redraw the panel
+            remove(botaoInformarVerificacoes); 
+            botaoInformarVerificacoes = null; 
+            repaint(); 
         }
     }
 
     private void removerBotaoInformarIsolamento() {
         if (botaoInformarIsolamento != null) {
-            remove(botaoInformarIsolamento); // Remove the button from the panel
-            botaoInformarIsolamento = null; // Clear the reference
-            repaint(); // Redraw the panel
+            remove(botaoInformarIsolamento); 
+            botaoInformarIsolamento = null; 
+            repaint(); 
         }
     }
 

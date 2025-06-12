@@ -2,35 +2,31 @@ import java.awt.*;
 import javax.swing.*;
 
 public class JogoEsquerdaOficial extends BasePainelComBotao {
-        private String mensagemTemporaria = "";
+    private String mensagemTemporaria = "";
+
     public JogoEsquerdaOficial(CardLayout layout, JPanel painelPrincipal) {
         super("imagens\\Fotos editadas\\12 - Porta de cabine lateral esquerda.png", layout, painelPrincipal);
-        setLayout(null); // Layout absoluto para posicionar componentes, se necessário
-        
-        // Remova/adicione painéis apenas no Menu.java para evitar loops!
+        setLayout(null);
 
         JPanel painelBotoes = new JPanel();
         painelBotoes.setBounds(0, 0, 856, 800);
         painelBotoes.setLayout(null);
-        painelBotoes.setOpaque(false); // Torna o painel transparente
+        painelBotoes.setOpaque(false);
         add(painelBotoes);
 
-        
-
-        // Botão Voltar para Parte1
         JButton botaoVoltar = new JButton("<");
-        botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
-        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
+        botaoVoltar.setBounds(10, 10, 60, 60);
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
         botaoVoltar.setForeground(Color.BLACK);
-        botaoVoltar.setBackground(Color.RED); // Define a cor do texto
-        botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
-        botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
-        botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
+        botaoVoltar.setBackground(Color.RED);
+        botaoVoltar.setContentAreaFilled(true);
+        botaoVoltar.setOpaque(true);
+        botaoVoltar.setBorderPainted(false);
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "Jogo"); // Volta para o painel anterior
+            layout.show(painelPrincipal, "Jogo");
         });
-        add(botaoVoltar); // Adiciona o botão ao painel
+        add(botaoVoltar);
 
         JButton botaoMenu = new JButton("Menu");
         botaoMenu.setBounds(580, 10, 100, 60);
@@ -46,10 +42,9 @@ public class JogoEsquerdaOficial extends BasePainelComBotao {
             layout.show(painelPrincipal, "Menu");
         });
         add(botaoMenu);
-        
-        // Botão transparente de 500x500px na metade esquerda da tela
+
         JButton botaoEsquerda = new JButton();
-        botaoEsquerda.setBounds(0, 150, 500, 300); // Posição: do topo (150px) até 500px de altura
+        botaoEsquerda.setBounds(0, 150, 500, 300);
         botaoEsquerda.setOpaque(false);
         botaoEsquerda.setContentAreaFilled(false);
         botaoEsquerda.setBorderPainted(false);
@@ -59,13 +54,13 @@ public class JogoEsquerdaOficial extends BasePainelComBotao {
         add(botaoEsquerda);
 
         JButton botaoPorta = new JButton();
-        botaoPorta.setBounds(550, 150, 800, 800); // Posição: do topo (150px) até 500px de altura
+        botaoPorta.setBounds(550, 150, 800, 800);
         botaoPorta.setOpaque(false);
         botaoPorta.setContentAreaFilled(false);
         botaoPorta.setBorderPainted(false);
         botaoPorta.addActionListener(e -> {
             if (EstadoJogo.chaveColetada == false) {
-            mensagemTemporaria = "Você saiu da cabine sem a chave!";
+                mensagemTemporaria = "Você saiu da cabine sem a chave!";
                 repaint();
                 new javax.swing.Timer(3000, ev -> {
                     layout.show(painelPrincipal, "TelaFinal");
@@ -83,24 +78,22 @@ public class JogoEsquerdaOficial extends BasePainelComBotao {
     private void criarBotaoVisivel(JPanel painel, int x, int y, int width, int height, Color color, java.awt.event.ActionListener action) {
         JButton botao = new JButton();
         botao.setBounds(x, y, width, height);
-        botao.setOpaque(true); // Torna o botão transparente
-        botao.setContentAreaFilled(false); // Remove a área de fundo
-        botao.setBorderPainted(false); // Remove as bordas do botão
+        botao.setOpaque(true);
+        botao.setContentAreaFilled(false);
+        botao.setBorderPainted(false);
         botao.addActionListener(action);
         painel.add(botao);
     }
+
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Desenha o inventário no canto superior direito
         InventarioUI.desenhar((Graphics2D) g, getWidth());
 
-        // Desenha a mensagem temporária, se houver
         if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
             g.setFont(new Font("Arial", Font.BOLD, 32));
             int x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
             int y = 100;
-            // Borda preta
             g.setColor(Color.BLACK);
             for (int dx = -2; dx <= 2; dx++) {
                 for (int dy = -2; dy <= 2; dy++) {
@@ -109,7 +102,6 @@ public class JogoEsquerdaOficial extends BasePainelComBotao {
                     }
                 }
             }
-            // Texto branco
             g.setColor(Color.WHITE);
             g.drawString(mensagemTemporaria, x, y);
         }

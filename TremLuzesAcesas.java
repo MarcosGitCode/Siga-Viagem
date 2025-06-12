@@ -12,7 +12,7 @@ public class TremLuzesAcesas extends JPanel {
     public TremLuzesAcesas(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
 
-        // Botão para voltar
+        
         JButton botaoVoltar = new JButton("<");
         botaoVoltar.setBounds(10, 10, 60, 60);
         botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -42,7 +42,7 @@ public class TremLuzesAcesas extends JPanel {
         });
         add(botaoMenu);
         
-        // Carrega a imagem de fundo
+        
         try {
             BufferedImage imagemOriginal = ImageIO.read(new File("imagens/Fotos editadas/Sinalização externa acesa 3.jpg"));
             imagemFundo = imagemOriginal.getScaledInstance(1280, 856, Image.SCALE_SMOOTH);
@@ -55,11 +55,11 @@ public class TremLuzesAcesas extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Desenha a imagem de fundo
+        
         if (imagemFundo != null) {
             g.drawImage(imagemFundo, 0, 0, 1280, 856, this);
         }
-        // Desenha o inventário no canto superior direito
+        
         InventarioUI.desenhar((Graphics2D) g, getWidth());
     }
 }

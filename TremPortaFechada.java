@@ -13,7 +13,7 @@ public class TremPortaFechada extends JPanel {
         }
         setLayout(null);
         mensagemTemporaria = "Você ganhou 2 pontos!";
-        // Botão "Conferir porta"
+        
         JButton botaoConferir = new JButton("Conferir porta");
         botaoConferir.setBounds(730, 50, 200, 40); // Ajuste a posição/tamanho conforme necessário
         botaoConferir.setFont(new Font("Arial", Font.BOLD, 22));
@@ -27,7 +27,7 @@ public class TremPortaFechada extends JPanel {
         });
         add(botaoConferir);
 
-        // Botão "Usar Itens"
+        
         JButton botaoUsarItens = new JButton("Usar Itens");
         botaoUsarItens.setBounds(330, 50, 200, 40); // Ajuste a posição/tamanho conforme necessário
         botaoUsarItens.setFont(new Font("Arial", Font.BOLD, 22));
@@ -37,7 +37,7 @@ public class TremPortaFechada extends JPanel {
         botaoUsarItens.setBorderPainted(true);
         botaoUsarItens.setOpaque(true);
         botaoUsarItens.addActionListener(e -> {
-            // Troca para o painel TremDecisao
+            
             mensagemTemporaria = "";
             Container parent = this.getParent();
             if (parent instanceof JPanel) {
@@ -56,12 +56,12 @@ public class TremPortaFechada extends JPanel {
         if (imagemFundo != null) {
             g.drawImage(imagemFundo, 0, 0, getWidth(), getHeight(), this);
         }
-        // Desenha a mensagem temporária, se houver
+        
         if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
             int x = 470;
             int y = 150;
             g.setFont(new Font("Arial", Font.BOLD, 32));
-            // Desenha a borda preta (várias vezes ao redor)
+            
             g.setColor(Color.BLACK);
             for (int dx = -2; dx <= 2; dx++) {
                 for (int dy = -2; dy <= 2; dy++) {
@@ -70,7 +70,7 @@ public class TremPortaFechada extends JPanel {
                     }
                 }
             }
-            // Desenha o texto branco por cima
+            
             g.setColor(Color.WHITE);
             g.drawString(mensagemTemporaria, x, y);
         }

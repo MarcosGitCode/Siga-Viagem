@@ -11,12 +11,11 @@ public class MenuLogin extends PainelComImagem {
     private JCheckBox chkMostrarSenha;
     private JButton btnEntrar, btnVoltar;
     private MetroviarioDAO dao = new MetroviarioDAO();
-    private int tempoDecorrido = 0; // Tempo em segundos
+    private int tempoDecorrido = 0;
 
     public MenuLogin(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/metro_blur.jpg");
 
-        // Teste de conexão
         Connection conn = Conexao.conectar();
         if (conn != null) {
             System.out.println("Conexão bem sucedida!");
@@ -31,7 +30,7 @@ public class MenuLogin extends PainelComImagem {
 
         setLayout(null);
 
-        lblNome = new JLabel("Registro:"); // Troca para Registro
+        lblNome = new JLabel("Registro:");
         lblNome.setFont(new Font("Arial", Font.BOLD, 24));
         lblNome.setBounds(390, 140, 100, 30);
         lblNome.setForeground(Color.WHITE);
@@ -81,26 +80,23 @@ public class MenuLogin extends PainelComImagem {
             boolean isAdmin = dao.verificarAdmin(registro, senha);
             boolean isMetroviario = dao.verificarMetroviario(registro, senha);
 
-            // Login de teste para facilitar o desenvolvimento
             if (registro.equals("a") && senha.equals("a")) {
-                UsuarioLogado.setRegistro("R12345-6"); // Registro fictício para testes
+                UsuarioLogado.setRegistro("R12345-6");
 
-                // Zera pontuação e tarefas ANTES de iniciar o jogo
                 dao.zerarPontuacao("R12345-6");
                 dao.limparTarefasRealizadas("R12345-6");
 
-                Menu.inicializarTelasJogo(layout, painelPrincipal); // Inicializa as telas do jogo
-                layout.show(painelPrincipal, "Jogo"); // Redireciona para o jogo
+                Menu.inicializarTelasJogo(layout, painelPrincipal);
+                layout.show(painelPrincipal, "Jogo");
                 return;
             }
 
             if (isAdmin) {
                 UsuarioLogado.setRegistro(registro);
-                layout.show(painelPrincipal, "Admin"); // Redireciona para o menu admin
+                layout.show(painelPrincipal, "Admin");
             } else if (isMetroviario) {
                 UsuarioLogado.setRegistro(registro);
 
-                // Zera pontuação e tarefas ANTES de iniciar o jogo
                 dao.zerarPontuacao(registro);
                 dao.limparTarefasRealizadas(registro);
 
@@ -114,7 +110,6 @@ public class MenuLogin extends PainelComImagem {
             }
         });
 
-        // Centraliza ao iniciar e ao redimensionar
         addComponentListener(new java.awt.event.ComponentAdapter() {
             public void componentResized(java.awt.event.ComponentEvent evt) {
                 centralizarComponentes();
@@ -151,11 +146,9 @@ public class MenuLogin extends PainelComImagem {
     }
 
     private void iniciarTimer() {
-        tempoDecorrido = 0; // Reseta o tempo ao iniciar o timer
+        tempoDecorrido = 0;
         Timer timer = new Timer(1000, e -> {
-            tempoDecorrido++; // Incrementa o tempo a cada segundo
-            // System.out.println("Tempo decorrido: " + tempoDecorrido + " segundos.");
-            // Adicione aqui a lógica que deseja executar periodicamente
+            tempoDecorrido++;
         });
         timer.start();
     }

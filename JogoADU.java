@@ -43,8 +43,8 @@ public class JogoADU extends BasePainelComBotao {
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
-        // Desenha o inventário no canto superior direito
+        super.paintComponent(g); // limpa o painel antes de desenhar, evita sobreposição
+        // desenha o inventário no canto sup dir da tela, usando largura p/ posicionar certinho
         InventarioUI.desenhar((Graphics2D) g, getWidth());
     }
 }

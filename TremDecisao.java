@@ -11,7 +11,7 @@ public class TremDecisao extends JPanel {
     private Image imgCinturao;
     private Image imgFita;
     private Image imgChave;
-    private Image imgAdesivo; // Nova imagem para aparecer no topo
+    private Image imgAdesivo;
 
     private JButton botao1;
     private JButton botao2;
@@ -20,28 +20,25 @@ public class TremDecisao extends JPanel {
     private String mensagemTemporaria = "";
     private long mensagemFim = 0;
 
-    private boolean portafechada = false; // Inicialmente, a porta está aberta
+    private boolean portafechada = false;
 
     public TremDecisao(CardLayout layout, JPanel painelPrincipal) {
         this.layout = layout;
         this.painelPrincipal = painelPrincipal;
-        // Carrega a imagem de fundo
         imagemFundo = new ImageIcon("imagens/Fotos editadas/decisao.jpg").getImage();
         imgCinturao = new ImageIcon("imagens/Fotos editadas/ItensCinturao.png").getImage();
         imgFita = new ImageIcon("imagens/Fotos editadas/ItensFita.png").getImage();
         imgChave = new ImageIcon("imagens/Fotos editadas/ItensChave.png").getImage();
-        imgAdesivo = null; // Inicialmente, a imagem do adesivo é nula
-        setLayout(null); // Define layout absoluto
+        imgAdesivo = null;
+        setLayout(null);
 
-        // Botão 1 (aparece apenas se o jogador tiver a fita)
         JButton botaoChecarLuzes = new JButton("");
-        botaoChecarLuzes.setBounds(800, 100, 200, 50); // Centralized
-        botaoChecarLuzes.setBackground(new Color(255, 0, 0)); // Red
+        botaoChecarLuzes.setBounds(800, 100, 200, 50);
+        botaoChecarLuzes.setBackground(new Color(255, 0, 0));
         botaoChecarLuzes.setFocusPainted(false);
         botaoChecarLuzes.setBorderPainted(false);
         botaoChecarLuzes.setOpaque(false);
         botaoChecarLuzes.addActionListener(e -> {
-            System.out.println("Botão 'checar luzes' clicado!");
             layout.show(painelPrincipal, "TremLuzesApagadas");
             if (EstadoJogo.luzesApagadas == true && !pontosAdicionadosChecarLuzes) {
                 MetroviarioDAO dao = new MetroviarioDAO();
@@ -49,36 +46,30 @@ public class TremDecisao extends JPanel {
                 pontosAdicionadosChecarLuzes = true;
 
                 mensagemTemporaria = "Você ganhou 2 pontos!";
-                mensagemFim = System.currentTimeMillis() + 3000; // 3 segundos
+                mensagemFim = System.currentTimeMillis() + 3000;
 
                 System.out.println("2 pontos adicionados para: " + UsuarioLogado.getRegistro());
                 repaint();
-            } // Switch to TremDecisao panel
+            }
         });
         add(botaoChecarLuzes);
         painelPrincipal.add(new TremLuzesApagadas(layout, painelPrincipal), "TremLuzesApagadas");
         botao1 = new JButton("");
-        botao1.setOpaque(false); // Torna o botão transparente
-        botao1.setContentAreaFilled(false); // Remove a área de fundo
-        botao1.setBorderPainted(false); // Remove as bordas do botão
+        botao1.setOpaque(false);
+        botao1.setContentAreaFilled(false);
+        botao1.setBorderPainted(false);
         botao1.addActionListener(e -> {
-            System.out.println("Botão 1 clicado!");
-
-            // Adiciona 2 pontos ao usuário, se ainda não adicionou
             if (!portafechada) {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 2);
                 portafechada = true;
-
-                // Mensagem temporária (opcional)
                 JOptionPane.showMessageDialog(this, "Você ganhou 2 pontos!");
                 System.out.println("2 pontos adicionados para: " + UsuarioLogado.getRegistro());
             }
 
-            Inventario.remover("Fita"); // Remove a fita do inventário
-            repaint(); // Atualiza o painel
+            Inventario.remover("Fita");
+            repaint();
 
-            // Inicia a sequência de frames:
             new Timer().schedule(new TimerTask() {
                 @Override
                 public void run() {
@@ -94,55 +85,49 @@ public class TremDecisao extends JPanel {
                                 public void run() {
                                     imgAdesivo = new ImageIcon("imagens/Fotos editadas/Adesivo de porta isolada instalado.jpg").getImage();
                                     repaint();
-                                    System.out.println("Adesivo instalado!");
-                                    // Aguarda mais 0,5 segundos, apaga os botões e leva o jogador ao painel Parte1
                                     new Timer().schedule(new TimerTask() {
                                         @Override
                                         public void run() {
-                                            System.out.println("Apagando os botões...");
                                             botaoChecarLuzes.setText("Checar luzes");
                                             botaoChecarLuzes.setOpaque(true);
                                             botaoChecarLuzes.setFont(new Font("Arial", Font.BOLD, 18));
                                             botaoChecarLuzes.setForeground(Color.WHITE);
-                                            botao1.setVisible(false); // Torna o botão 1 invisível
-                                            botao1.setEnabled(false); // Desativa o botão 1
-                                            botao2.setVisible(false); // Torna o botão 2 invisível
-                                            botao2.setEnabled(false); // Desativa o botão 2
-                                            botao3.setVisible(false); // Torna o botão 3 invisível
-                                            botao3.setEnabled(false); // Desativa o botão 3
+                                            botao1.setVisible(false);
+                                            botao1.setEnabled(false);
+                                            botao2.setVisible(false);
+                                            botao2.setEnabled(false);
+                                            botao3.setVisible(false);
+                                            botao3.setEnabled(false);
                                             EstadoJogo.portaAdesivo = true;
                                             EstadoJogo.luzesApagadas = true;
-                                            System.out.println("Levando o jogador ao painel Parte1...");
-                                            layout.show(painelPrincipal, "Parte1"); // Leva o jogador ao painel Parte1
+                                            layout.show(painelPrincipal, "Parte1");
                                         }
-                                    }, 500); // 500ms = 0,5 segundos
-
+                                    }, 500);
                                 }
-                            }, 500); // 500ms = 0,5 segundos
+                            }, 500);
                         }
-                    }, 500); // 500ms = 0,5 segundos
+                    }, 500);
                 }
-            }, 1000); // 1000ms = 1 segundo
+            }, 1000);
         });
-        botao1.setVisible(false); // Deixa o botão invisível
+        botao1.setVisible(false);
         add(botao1);
 
-        // Botão 2 (aparece apenas se o jogador tiver o cinturão)
         botao2 = new JButton("");
-        botao2.setBounds(100, 300, 300, 300); // Posição e tamanho
+        botao2.setBounds(100, 300, 300, 300);
         botao2.addActionListener(e -> System.out.println("Botão 2 clicado!"));
-        botao2.setOpaque(false); // Torna o botão transparente
-        botao2.setContentAreaFilled(false); // Remove a área de fundo
-        botao2.setBorderPainted(false); // Remove as bordas do botão
-        botao2.setVisible(false); // Deixa o botão invisível
+        botao2.setOpaque(false);
+        botao2.setContentAreaFilled(false);
+        botao2.setBorderPainted(false);
+        botao2.setVisible(false);
         add(botao2);
 
         botao3 = new JButton("");
-        botao3.setBounds(540, 550, 200, 200); // Posição e tamanho
-        botao3.setOpaque(false); // Torna o botão transparente
-        botao3.setContentAreaFilled(false); // Remove a área de fundo
-        botao3.setBorderPainted(false); // Remove as bordas do botão
-        botao3.setVisible(false); // Deixa o botão invisível
+        botao3.setBounds(540, 550, 200, 200);
+        botao3.setOpaque(false);
+        botao3.setContentAreaFilled(false);
+        botao3.setBorderPainted(false);
+        botao3.setVisible(false);
         botao3.addActionListener(e -> {
             MetroviarioDAO dao = new MetroviarioDAO();
             dao.adicionarPontuacao(UsuarioLogado.getRegistro(), -1);
@@ -154,18 +139,17 @@ public class TremDecisao extends JPanel {
         add(botao3);
 
         JButton botaoVoltar = new JButton("<");
-        botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
-        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
+        botaoVoltar.setBounds(10, 10, 60, 60);
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
         botaoVoltar.setForeground(Color.BLACK);
-        botaoVoltar.setBackground(Color.RED); // Define a cor do texto
-        botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
-        botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
-        botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
+        botaoVoltar.setBackground(Color.RED);
+        botaoVoltar.setContentAreaFilled(true);
+        botaoVoltar.setOpaque(true);
+        botaoVoltar.setBorderPainted(false);
         botaoVoltar.addActionListener(e -> {
-        System.out.println("Botão voltar clicado!");
-        layout.show(painelPrincipal, "Jogo"); // Volta para o painel anterior
+        layout.show(painelPrincipal, "Jogo");
         });
-        add(botaoVoltar); // Adiciona o botão ao painel
+        add(botaoVoltar);
 
         JButton botaoMenu = new JButton("Menu");
         botaoMenu.setBounds(580, 10, 100, 60);
@@ -177,7 +161,6 @@ public class TremDecisao extends JPanel {
         botaoMenu.setBorderPainted(false);
         botaoMenu.setLayout(null);
         botaoMenu.addActionListener(e -> {
-            System.out.println("Botão Menu clicado!");
             layout.show(painelPrincipal, "Menu");
         });
         add(botaoMenu);
@@ -187,7 +170,7 @@ public class TremDecisao extends JPanel {
     public void setVisible(boolean aFlag) {
         super.setVisible(aFlag);
         if (aFlag) {
-            botao1.setVisible(Inventario.contem("Fita")); // Corrigido!
+            botao1.setVisible(Inventario.contem("Fita"));
             botao2.setVisible(Inventario.contem("Cinturão"));
             botao3.setVisible(Inventario.contem("Chave"));
         }
@@ -196,12 +179,10 @@ public class TremDecisao extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Desenha a imagem de fundo
         if (imagemFundo != null) {
             g.drawImage(imagemFundo, 0, 0, getWidth(), getHeight(), this);
         }
 
-        // Desenha o cinturão grande no centro se estiver no inventário
         if (Inventario.contem("Cinturão")) {
             Image imgCinturaoGrande = new ImageIcon("imagens/Fotos editadas/ItensCinturao2.png").getImage();
             int largura = 300, altura = 120;
@@ -217,7 +198,6 @@ public class TremDecisao extends JPanel {
             int y = (getHeight() / 2) + 160;
             g.drawImage(imgChave, x, y, largura, altura, this);
         }
-        // Desenha a fita grande no centro se estiver no inventário
         if (Inventario.contem("Fita")) {
             Image imgFitaGrande = new ImageIcon("imagens/Fotos editadas/ItensFita2.png").getImage();
             int largura = 300, altura = 120;
@@ -226,7 +206,6 @@ public class TremDecisao extends JPanel {
             g.drawImage(imgFitaGrande, x, y, largura, altura, this);
         }
 
-        // (restante do seu código para sobrepor imagens grandes)
         if (imgAdesivo != null) {
             g.drawImage(imgAdesivo, 0, 0, getWidth(), getHeight(), this);
         }
@@ -238,12 +217,10 @@ public class TremDecisao extends JPanel {
             botao1.setBounds(x, y, largura, altura);
         }
 
-        // Desenha a mensagem temporária, se houver
         if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
             g.setFont(new Font("Arial", Font.BOLD, 32));
             int x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
             int y = 100;
-            // Borda preta
             g.setColor(Color.BLACK);
             for (int dx = -2; dx <= 2; dx++) {
                 for (int dy = -2; dy <= 2; dy++) {
@@ -252,7 +229,6 @@ public class TremDecisao extends JPanel {
                     }
                 }
             }
-            // Texto branco
             g.setColor(Color.WHITE);
             g.drawString(mensagemTemporaria, x, y);
         }

@@ -19,16 +19,8 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
     public JogoDireitaChaveCBTC(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/09 - Chave do CBTC - MCS.jpg", layout, painelPrincipal);
 
-        // Verifica se há um usuário logado
-        if (!UsuarioLogado.isLogado()) {
-            JOptionPane.showMessageDialog(this,
-                    "Erro: Usuário não está logado!",
-                    "Erro",
-                    JOptionPane.ERROR_MESSAGE);
-            layout.show(painelPrincipal, "Menu");
-            return;
-        }
-
+        // verifica usuário logado
+       
         registroUsuario = UsuarioLogado.getRegistro();
         sequencia = SequenciaDecisoes.getInstance();
         sequencia.setRegistroUsuario(registroUsuario);
@@ -37,22 +29,22 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
         System.out.println("Construtor - Registro do usuário: " + registroUsuario);
         System.out.println("========================");
 
-        // Botão Voltar para Parte1
+        // botao voltar  Parte1
         JButton botaoVoltar = new JButton("<");
-        botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
-        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
+        botaoVoltar.setBounds(10, 10, 60, 60); // define a posição e o tamanho do botão
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // define a fonte do texto
         botaoVoltar.setForeground(Color.BLACK);
-        botaoVoltar.setBackground(Color.RED); // Define a cor do texto
-        botaoVoltar.setContentAreaFilled(true); // Fundo visível
-        botaoVoltar.setOpaque(true); // Garante que o fundo seja opaco
-        botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
+        botaoVoltar.setBackground(Color.RED); // define a cor do texto
+        botaoVoltar.setContentAreaFilled(true); // fundo visível
+        botaoVoltar.setOpaque(true); // garante que o fundo opaco
+        botaoVoltar.setBorderPainted(false); // remove as bordas do botão
         botaoVoltar.addActionListener(e -> {
             System.out.println("Botão voltar clicado!");
             mensagemTemporaria = "";
-            mostrarPontuacaoFinal(); // Mostra o resultado final
-            layout.show(painelPrincipal, "JogoDireita"); // Volta para o painel anterior
+            mostrarPontuacaoFinal(); // mostra o resultado final
+            layout.show(painelPrincipal, "JogoDireita"); // volta para o painel anterior
         });
-        add(botaoVoltar); // Adiciona o botão ao painel
+        add(botaoVoltar); // adiciona o botão 
 
         JButton botaoMenu = new JButton("Menu");
         botaoMenu.setBounds(580, 10, 100, 60);
@@ -69,13 +61,13 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
         });
         add(botaoMenu);
         
-        // Botão chaveCBTCRM
+        // botao chaveCBTCRM
         JButton chaveCBTCRM = new JButton();
-        chaveCBTCRM.setBounds(700, 385, 75, 75); // Posição e tamanho do botão
-        chaveCBTCRM.setContentAreaFilled(false); // Remove a área de preenchimento
-        chaveCBTCRM.setOpaque(false); // Torna o botão completamente transparente
-        chaveCBTCRM.setBorderPainted(false); // Remove as bordas do botão
-        chaveCBTCRM.setFocusPainted(false); // Remove o foco visual
+        chaveCBTCRM.setBounds(700, 385, 75, 75); 
+        chaveCBTCRM.setContentAreaFilled(false); 
+        chaveCBTCRM.setOpaque(false); 
+        chaveCBTCRM.setBorderPainted(false); 
+        chaveCBTCRM.setFocusPainted(false); 
         chaveCBTCRM.addActionListener(e -> {
             System.out.println("Botão chaveCBTCRM clicado!");
             mostrarImagemChaveCBTCRM();
@@ -83,7 +75,7 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
                 pontosAdicionadosChaveRM = true;
-                EstadoJogo.chaveCBTCRM = true; // Marca que a chave foi inserida
+                EstadoJogo.chaveCBTCRM = true; // marca que a chave foi inserida
 
                 mensagemTemporaria = "Você ganhou 1 ponto!";
                 mensagemFim = System.currentTimeMillis() + 3000;
@@ -91,21 +83,21 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
                 repaint();
             }
         });
-        add(chaveCBTCRM); // Adiciona o botão ao painel
+        add(chaveCBTCRM); // 
 
-        // Botão chaveCBTCAM
+        // botao chaveCBTCAM
         JButton chaveCBTCAM = new JButton();
-        chaveCBTCAM.setBounds(495, 385, 75, 75); // Posição e tamanho do botão
-        chaveCBTCAM.setContentAreaFilled(false); // Remove a área de preenchimento
-        chaveCBTCAM.setOpaque(false); // Torna o botão completamente transparente
-        chaveCBTCAM.setBorderPainted(false); // Remove as bordas do botão
-        chaveCBTCAM.setFocusPainted(false); // Remove o foco visual
+        chaveCBTCAM.setBounds(495, 385, 75, 75); 
+        chaveCBTCAM.setContentAreaFilled(false); 
+        chaveCBTCAM.setOpaque(false); 
+        chaveCBTCAM.setBorderPainted(false); 
+        chaveCBTCAM.setFocusPainted(false); 
         chaveCBTCAM.addActionListener(e -> {
             System.out.println("Botão chaveCBTCAM clicado!");
             mostrarImagemChaveCBTCAM();
-            // Verifica se é a chave AM final
+            // verifica se é a chave AM final
             if(EstadoJogo.portaAdesivo == true && EstadoJogo.chaveInserida == true) {
-            EstadoJogo.chaveInserida = true; // Marca que a chave foi inserida
+            EstadoJogo.chaveInserida = true; // marca que a chave foi inserida
             if (EstadoJogo.chaveInserida && !pontosAdicionadosChaveCBTCAM) {
                 MetroviarioDAO dao = new MetroviarioDAO();
                 dao.adicionarPontuacao(UsuarioLogado.getRegistro(), 1);
@@ -123,27 +115,27 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
 
         // Botão chaveCBTCMCS
         JButton chaveCBTCMCS = new JButton();
-        chaveCBTCMCS.setBounds(600, 370, 75, 75); // Posição e tamanho do botão
-        chaveCBTCMCS.setContentAreaFilled(false); // Remove a área de preenchimento
-        chaveCBTCMCS.setOpaque(false); // Torna o botão completamente transparente
-        chaveCBTCMCS.setBorderPainted(false); // Remove as bordas do botão
-        chaveCBTCMCS.setFocusPainted(false); // Remove o foco visual
+        chaveCBTCMCS.setBounds(600, 370, 75, 75); 
+        chaveCBTCMCS.setContentAreaFilled(false); 
+        chaveCBTCMCS.setOpaque(false); 
+        chaveCBTCMCS.setBorderPainted(false); 
+        chaveCBTCMCS.setFocusPainted(false); 
         chaveCBTCMCS.addActionListener(e -> {
             System.out.println("Botão chaveCBTCMCS clicado!");
             mostrarImagemPrincipal(); // Retorna para a imagem principal
-            adicionarPontuacao(-1); // Remove 1 ponto
+            adicionarPontuacao(-1); 
         });
-        add(chaveCBTCMCS); // Adiciona o botão ao painel
+        add(chaveCBTCMCS); 
 
-        // Configura a imagem sobreposta para chaveCBTCRM
+        // configura a imagem sobreposta para chaveCBTCRM
         imagemChaveCBTCRM = new JLabel();
-        imagemChaveCBTCRM.setVisible(false); // Inicialmente invisível
-        add(imagemChaveCBTCRM); // Adiciona a imagem ao painel
+        imagemChaveCBTCRM.setVisible(false); //  invisível
+        add(imagemChaveCBTCRM); // adiciona a imagem 
 
-        // Configura a imagem sobreposta para chaveCBTCAM
+        // configura a imagem sobreposta para chaveCBTCAM
         imagemChaveCBTCAM = new JLabel();
-        imagemChaveCBTCAM.setVisible(false); // Inicialmente invisível
-        add(imagemChaveCBTCAM); // Adiciona a imagem ao painel
+        imagemChaveCBTCAM.setVisible(false); //  invisível
+        add(imagemChaveCBTCAM); // adiciona a imagem 
 
         setLayout(null); // Define layout absoluto para posicionamento manual
     }
@@ -170,10 +162,10 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
         System.out.println("========================");
 
         if (registroUsuario != null && !registroUsuario.isEmpty()) {
-            // Determina qual tarefa está sendo realizada
+            // determina qual tarefa está sendo realizada
             String tarefa = sequencia.isTarefaCompletada("INSERIR_CHAVE") ? TAREFA_CBCT_AM_FINAL : TAREFA_CBCT_RM;
 
-            // Registra a pontuação apenas se for positiva ou se for a primeira tentativa
+            // registra a pontuação apenas se for positiva ou se for a primeira tentativa
             if (pontos > 0 || !sequencia.isTarefaCompletada(tarefa)) {
                 sequencia.registrarPontuacao(tarefa, pontos);
                 pontosAcumulados += pontos;
@@ -211,17 +203,17 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
 
-        // Desenha a imagem atual, se houver
+        // desenha a imagem atual, se houver
         if (imagemAtual != null) {
             g.drawImage(imagemAtual, 0, 0, getWidth(), getHeight(), this);
         }
 
-        // Exibe a mensagem temporária se estiver ativa
+        // exibe a mensagem temporária se estiver ativa
         if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
             g.setFont(new Font("Arial", Font.BOLD, 32));
             int x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
             int y = 100;
-            // Desenha a borda preta (várias vezes ao redor)
+            // desenha a borda preta 
             g.setColor(Color.BLACK);
             for (int dx = -2; dx <= 2; dx++) {
                 for (int dy = -2; dy <= 2; dy++) {
@@ -230,7 +222,7 @@ public class JogoDireitaChaveCBTC extends BasePainelComBotao {
                     }
                 }
             }
-            // Desenha o texto branco por cima
+            // desenha o texto branco 
             g.setColor(Color.WHITE);
             g.drawString(mensagemTemporaria, x, y);
         }

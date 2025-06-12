@@ -9,38 +9,39 @@ import javax.swing.*;
 
 public class JogoAlavanca extends BasePainelComBotao {
 
-    private boolean imagemAlternada = false; // Controle para alternar entre as imagens
-    private BufferedImage imagem1; // Imagem inicial
-    private BufferedImage imagem2; // Imagem alternada
-    private BufferedImage imagemAtual; // Imagem atualmente exibida
+    private boolean imagemAlternada = false; // controla se tá na img1 ou img2
+    private BufferedImage imagem1; // imagem inicial
+    private BufferedImage imagem2; // imagem alternada
+    private BufferedImage imagemAtual; // imagem q tá sendo exibida
 
     public JogoAlavanca(CardLayout layout, JPanel painelPrincipal) {
         super("imagens/Fotos editadas/alavanca de comando 3.jpg", layout, painelPrincipal);
 
         try {
-            // Carrega as imagens apenas uma vez
+            // carrega as imagens só uma vez p/ economizar recurso
             imagem1 = ImageIO.read(new File("imagens/Fotos editadas/alavanca de comando 3.jpg"));
             imagem2 = ImageIO.read(new File("imagens/Fotos editadas/alavanca de comando 2.jpg"));
-            imagemAtual = imagem1; // Define a imagem inicial
+            imagemAtual = imagem1; // começa mostrando a primeira imagem
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-         // Botão Voltar para Parte1
-       JButton botaoVoltar = new JButton("<");
-        botaoVoltar.setBounds(10, 10, 60, 60); // Define a posição e o tamanho do botão
-        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // Define a fonte do texto
+        // botao p/ voltar pra tela Parte1
+        JButton botaoVoltar = new JButton("<");
+        botaoVoltar.setBounds(10, 10, 60, 60); // pos e tam do bt
+        botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20)); // fonte do texto
         botaoVoltar.setForeground(Color.BLACK);
-        botaoVoltar.setBackground(Color.RED); // Define a cor do texto
-        botaoVoltar.setContentAreaFilled(true); // Remove o fundo visível
-        botaoVoltar.setOpaque(true); // Garante que o botão seja transparente
-        botaoVoltar.setBorderPainted(false); // Remove as bordas do botão
+        botaoVoltar.setBackground(Color.RED); // cor do bt
+        botaoVoltar.setContentAreaFilled(true); // deixa fundo visível
+        botaoVoltar.setOpaque(true); // garante opacidade
+        botaoVoltar.setBorderPainted(false); // tira borda
         botaoVoltar.addActionListener(e -> {
-            System.out.println("Botão voltar clicado!");
-            layout.show(painelPrincipal, "Jogo"); // Volta para o painel anterior
+            System.out.println("botão voltar clicado!");
+            layout.show(painelPrincipal, "Jogo"); // volta pra tela anterior
         });
-        add(botaoVoltar); // Adiciona o botão ao painel
-        
+        add(botaoVoltar); // add btn no painel
+
+        // btn p/ ir pro menu principal
         JButton botaoMenu = new JButton("Menu");
         botaoMenu.setBounds(580, 10, 100, 60);
         botaoMenu.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -51,36 +52,35 @@ public class JogoAlavanca extends BasePainelComBotao {
         botaoMenu.setBorderPainted(false);
         botaoMenu.setLayout(null);
         botaoMenu.addActionListener(e -> {
-            System.out.println("Botão Menu clicado!");
+            System.out.println("botão menu clicado!");
             layout.show(painelPrincipal, "Menu");
         });
         add(botaoMenu);
-        
-        // Adiciona um MouseListener para alternar a imagem ao clicar
+
+        // mouse click alterna entre as imagens
         addMouseListener(new MouseAdapter() {
             @Override
             public void mouseClicked(MouseEvent e) {
-                // Alterna o estado da imagem
-                imagemAlternada = !imagemAlternada;
+                imagemAlternada = !imagemAlternada; // troca o estado
 
-                // Atualiza a imagem com base no estado
+                // muda a img conforme o estado
                 if (imagemAlternada) {
                     imagemAtual = imagem2;
                 } else {
                     imagemAtual = imagem1;
                 }
-                repaint(); // Re-renderiza o painel para exibir a nova imagem
+                repaint(); // redesenha o painel p/ mostrar a nova img
             }
         });
     }
 
     @Override
     protected void paintComponent(Graphics g) {
-        super.paintComponent(g);
+        super.paintComponent(g); // limpa antes de desenhar, evita sobreposição
         if (imagemAtual != null) {
             g.drawImage(imagemAtual, 0, 0, getWidth(), getHeight(), this);
         }
-        // Desenha o inventário no canto superior direito
+        // desenha inventário no canto sup dir, usa largura p/ alinhar certinho
         InventarioUI.desenhar((Graphics2D) g, getWidth());
     }
 }

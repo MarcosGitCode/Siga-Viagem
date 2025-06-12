@@ -8,7 +8,7 @@ public class TremEmergencia extends JPanel {
     public TremEmergencia(CardLayout layout, JPanel painelPrincipal) {
         setLayout(null);
         mensagemTemporaria = "Você ganhou 1 ponto!";
-        // Botão Voltar para JogoEsquerda
+        
         JButton botaoVoltar = new JButton("<");
         botaoVoltar.setBounds(10, 10, 60, 60);
         botaoVoltar.setFont(new Font("Arial", Font.PLAIN, 20));
@@ -38,7 +38,7 @@ public class TremEmergencia extends JPanel {
         });
         add(botaoMenu);
         
-        // Carrega a imagem de fundo
+        
         String caminho = "imagens/Fotos editadas/16 - Dispositivos de emergência.jpg";
         ImageIcon imagemOriginal = new ImageIcon(caminho);
         imagemFundo = imagemOriginal.getImage().getScaledInstance(1280, 856, Image.SCALE_SMOOTH);
@@ -47,19 +47,19 @@ public class TremEmergencia extends JPanel {
     @Override
     protected void paintComponent(Graphics g) {
         super.paintComponent(g);
-        // Desenha a imagem de fundo
+        
         if (imagemFundo != null) {
             g.drawImage(imagemFundo, 0, 0, 1280, 856, this);
         }
-        // Desenha o inventário no canto superior direito
+        
         InventarioUI.desenhar((Graphics2D) g, getWidth());
 
-        // Desenha a mensagem temporária, se houver
+        
         if (mensagemTemporaria != null && !mensagemTemporaria.isEmpty()) {
             g.setFont(new Font("Arial", Font.BOLD, 32));
             int x = getWidth() / 2 - g.getFontMetrics().stringWidth(mensagemTemporaria) / 2;
             int y = 100;
-            // Desenha a borda preta (várias vezes ao redor)
+            
             g.setColor(Color.BLACK);
             for (int dx = -2; dx <= 2; dx++) {
                 for (int dy = -2; dy <= 2; dy++) {
@@ -68,7 +68,7 @@ public class TremEmergencia extends JPanel {
                     }
                 }
             }
-            // Desenha o texto branco por cima
+            
             g.setColor(Color.WHITE);
             g.drawString(mensagemTemporaria, x, y);
         }

@@ -5,7 +5,7 @@ import java.sql.SQLException;
 
 public class TesteConexao {
     public static void main(String[] args) {
-        // Teste 1: Conexão com banco
+        
         try (Connection conn = Conexao.conectar()) {
             if (conn != null) {
                 System.out.println("✓ Conexão estabelecida com sucesso!");
@@ -18,7 +18,7 @@ public class TesteConexao {
             return;
         }
 
-        // Teste 2: Listar TODOS os administradores primeiro
+        
         try (Connection conn = Conexao.conectar();
                 PreparedStatement stmt = conn.prepareStatement("SELECT * FROM administradores")) {
 

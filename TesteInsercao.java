@@ -4,22 +4,18 @@ import java.sql.SQLException;
 
 public class TesteInsercao {
     public static void main(String[] args) {
-        // Inserir alguns metroviários com pontuações
         try (Connection conn = Conexao.conectar()) {
-            // Primeiro limpar pontuações existentes
             String sqlLimpar = "UPDATE metroviarios SET pontuacao_total = 0";
             try (PreparedStatement stmtLimpar = conn.prepareStatement(sqlLimpar)) {
                 stmtLimpar.executeUpdate();
             }
 
-            // Atualizar pontuações
             String sqlUpdate = "UPDATE metroviarios SET pontuacao_total = ? WHERE registro = ?";
             try (PreparedStatement stmt = conn.prepareStatement(sqlUpdate)) {
-                // Inserir algumas pontuações de teste
-                atualizarPontuacao(stmt, "R12345-6", 100); // Nikolas
-                atualizarPontuacao(stmt, "R01758-2", 85); // Guilherme Calderan
-                atualizarPontuacao(stmt, "R22222-2", 90); // Marcos
-                atualizarPontuacao(stmt, "R33333-3", 95); // Guilherme Nunes
+                atualizarPontuacao(stmt, "R12345-6", 100);
+                atualizarPontuacao(stmt, "R01758-2", 85);
+                atualizarPontuacao(stmt, "R22222-2", 90);
+                atualizarPontuacao(stmt, "R33333-3", 95);
             }
 
             System.out.println("Pontuações inseridas com sucesso!");
